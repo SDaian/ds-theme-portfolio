@@ -1,12 +1,23 @@
+"use client";
 import {
   HiOutlinePhone as PhoneIcon,
   HiOutlineMapPin as MapPinIcon,
   HiOutlineEnvelope as EnvelopeIcon,
 } from 'react-icons/hi2';
+import { useForm, SubmitHandler } from 'react-hook-form';
+
+type Inputs = {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+};
 
 const ContactSection = () => {
-  const handleSubmit = () => {
-    console.log('submit');
+  const { register, handleSubmit } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = (formData) => {
+    const { name, email, subject, message } = formData;
+    window.location.href = `mailto:scuarissid@gmail.com?subject=${subject}&body=${message}`;
   };
 
   return (
@@ -35,31 +46,31 @@ const ContactSection = () => {
           </div>
 
           <form
-            onSubmit={handleSubmit()}
+            onSubmit={handleSubmit(onSubmit)}
             className='flex flex-col space-y-2 md:w-fit md:mx-auto'
           >
             <div className='flex gap-2 md:gap-0 flex-col md:flex-row md:space-x-2'>
               <input
-                // {...register('name')}
+                {...register('name')}
                 className='contactInput'
                 placeholder='Name'
                 type='text'
               />
               <input
-                // {...register('email')}
+                {...register('email')}
                 className='contactInput'
                 placeholder='Email'
                 type='email'
               />
             </div>
             <input
-              // {...register('subject')}
+              {...register('subject')}
               className='contactInput'
               placeholder='Subject'
               type='text'
             />
             <textarea
-              // {...register('message')}
+              {...register('message')}
               className='contactInput'
               placeholder='Message'
             />

@@ -42,7 +42,7 @@ const Navbar = () => {
               </div>
             </Link>
             <div className='md:hidden'>
-              <button className='border-none p-2 text-gray-700 rounded-md outline-none focus:border-gray-400 focus:border' onClick={() => setNavbar(!navbar)}>
+              <button className='border-none p-2 text-gray-700 rounded-md outline-none focus:border-gray-400 focus:border dark:text-white' onClick={() => setNavbar(!navbar)}>
                 {navbar ? <IoMdClose size={30} /> : <IoMdMenu size={30} />}
               </button>
             </div>
