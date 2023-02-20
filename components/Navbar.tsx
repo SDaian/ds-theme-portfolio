@@ -1,9 +1,8 @@
 'use client';
 import React, { useState } from 'react';
 import { Link } from 'react-scroll/modules';
-import { useTheme } from 'next-themes';
-import { RiMoonFill, RiSunLine } from 'react-icons/ri';
 import { IoMdMenu, IoMdClose } from 'react-icons/io';
+import ThemeSwitch from './ThemeSwitch';
 
 type NavItem = {
   label: string;
@@ -26,9 +25,6 @@ const NAV_ITEMS: NavItem[] = [
 ];
 
 const Navbar = () => {
-  const { systemTheme, theme, setTheme } = useTheme();
-  const currenteTheme = theme === 'system' ? systemTheme : theme;
-
   const [navbar, setNavbar] = useState(false);
 
   return (
@@ -42,7 +38,10 @@ const Navbar = () => {
               </div>
             </Link>
             <div className='md:hidden'>
-              <button className='border-none p-2 text-gray-700 rounded-md outline-none focus:border-gray-400 focus:border dark:text-white' onClick={() => setNavbar(!navbar)}>
+              <button
+                className='border-none p-2 text-gray-700 rounded-md outline-none focus:border-gray-400 focus:border dark:text-white'
+                onClick={() => setNavbar(!navbar)}
+              >
                 {navbar ? <IoMdClose size={30} /> : <IoMdMenu size={30} />}
               </button>
             </div>
@@ -56,33 +55,11 @@ const Navbar = () => {
           >
             <div className='items-center justify-center space-y-6 md:flex md:space-x-6 md:space-y-0'>
               {NAV_ITEMS.map((item, i) => (
-                <Link
-                  key={i}
-                  to={item.page}
-                  className={
-                    'block lg:inline-block text-neutral-900 hover:text-neutral-500 dark:text-neutral-100'
-                  }
-                >
+                <Link key={i} to={item.page} className='navbarButton'>
                   {item.label}
                 </Link>
               ))}
-              {currenteTheme === 'dark' ? (
-                <button
-                  onClick={() => setTheme('light')}
-                  className='bg-slate-100 p-2 rounded-xl'
-                >
-                  {' '}
-                  <RiSunLine size={25} color='black' />
-                </button>
-              ) : (
-                <button
-                  onClick={() => setTheme('dark')}
-                  className='bg-slate-100 p-2 rounded-xl'
-                >
-                  {' '}
-                  <RiMoonFill size={25} />
-                </button>
-              )}
+              <ThemeSwitch />
             </div>
           </div>
         </div>

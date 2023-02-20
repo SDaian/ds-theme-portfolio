@@ -17,7 +17,7 @@ export default function RootLayout({
         head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <head />
-      <body>
+      <body className='transition-colors duration-300'>
         <ThemeProvider enableSystem={true} attribute='class'>
           <Navbar />
           {children}

@@ -15,4 +15,8 @@
   .contactButton {
     @apply transition duration-150 bg-[#14B8A6] border border-[#14B8A6] hover:text-white hover:bg-[#14B8A6]/80 py-5 px-10 rounded text-white font-semibold;
   }
+
+  .navbarButton {
+    @apply transition block lg:inline-block text-neutral-900 hover:text-neutral-500 dark:text-neutral-100 cursor-pointer;
+  }
 }
