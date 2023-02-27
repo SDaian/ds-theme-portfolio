@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-scroll/modules';
 import { IoMdMenu, IoMdClose } from 'react-icons/io';
+import { motion } from 'framer-motion';
+import { useTheme } from 'next-themes';
 import ThemeSwitch from './ThemeSwitch';
 
 type NavItem = {
@@ -25,6 +27,8 @@ const NAV_ITEMS: NavItem[] = [
 ];
 
 const Navbar = () => {
+  const { systemTheme, theme, setTheme } = useTheme();
+  const currentTheme = theme === 'system' ? systemTheme : theme;
   const [navbar, setNavbar] = useState(false);
 
   return (
@@ -33,17 +37,25 @@ const Navbar = () => {
         <div>
           <div className='flex items-center justify-between py-2 md:block'>
             <Link to='home'>
-              <div className='md:py-3 md:block'>
+              <motion.div
+                initial={{ x: -500, opacity: 0, scale: 0.5 }}
+                animate={{ x: 0, opacity: 1, scale: 1 }}
+                transition={{ duration: 0.9 }}
+                className='md:py-3 md:block'
+              >
                 <h2 className='text-2xl font-bold'>Daian Scuarissi</h2>
-              </div>
+              </motion.div>
             </Link>
             <div className='md:hidden'>
-              <button
+              <motion.button
+                initial={{ x: 500, opacity: 0, scale: 0.5 }}
+                animate={{ x: 0, opacity: 1, scale: 1 }}
+                transition={{ duration: 0.9 }}
                 className='border-none p-2 text-gray-700 rounded-md outline-none focus:border-gray-400 focus:border dark:text-white'
                 onClick={() => setNavbar(!navbar)}
               >
                 {navbar ? <IoMdClose size={30} /> : <IoMdMenu size={30} />}
-              </button>
+              </motion.button>
             </div>
           </div>
         </div>
@@ -53,14 +65,24 @@ const Navbar = () => {
               navbar ? 'block' : 'hidden'
             }`}
           >
-            <div className='items-center justify-center space-y-6 md:flex md:space-x-6 md:space-y-0'>
+            <motion.div
+              initial={{ x: 500, opacity: 0, scale: 0.5 }}
+              animate={{ x: 0, opacity: 1, scale: 1 }}
+              transition={{ duration: 0.9 }}
+              className='items-center justify-center space-y-6 md:flex md:space-x-6 md:space-y-0'
+            >
               {NAV_ITEMS.map((item, i) => (
                 <Link key={i} to={item.page} className='navbarButton'>
                   {item.label}
                 </Link>
               ))}
-              <ThemeSwitch />
-            </div>
+              <ThemeSwitch
+                currentTheme={currentTheme}
+                systemTheme={systemTheme}
+                theme={theme}
+                setTheme={setTheme}
+              />
+            </motion.div>
           </div>
         </div>
       </div>

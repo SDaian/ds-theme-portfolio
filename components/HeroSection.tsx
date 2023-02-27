@@ -14,6 +14,7 @@ const HeroSection = () => {
             alt='Daian Scuarissi image'
             width={300}
             height={300}
+            priority
           />
         </div>
         <div className='md:mt-2 md:w-3/5'>
