@@ -1,13 +1,27 @@
-import { useTheme } from 'next-themes';
+'use client';
+import { useState, useEffect } from 'react';
 import { RiMoonFill, RiSunLine } from 'react-icons/ri';
 
-const ThemeSwitch = () => {
-  const { systemTheme, theme, setTheme } = useTheme();
-  const currenteTheme = theme === 'system' ? systemTheme : theme;
+type ThemeSwitchProps = {
+  currentTheme?: string;
+  setTheme: (theme: string) => void;
+  systemTheme?: string;
+  theme?: string;
+};
 
+const ThemeSwitch = ({ setTheme, currentTheme }: ThemeSwitchProps) => {
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return null
+  }
   return (
     <>
-      {currenteTheme === 'dark' ? (
+      {currentTheme === 'dark' ? (
         <button
           onClick={() => setTheme('light')}
           className='bg-slate-100 p-2 rounded-xl'
