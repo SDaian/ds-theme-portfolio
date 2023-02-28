@@ -66,7 +66,7 @@ const AboutSection = () => {
             <div className='flex flex-wrap flex-row justify-center md:justify-start'>
               {skills.map((item, idx) => (
                 <p
-                  className='bg-gray-200 px-4 py-2 mr-2 mt-2 text-gray-500 rounded font-semibold'
+                  className='bg-gray-200 px-4 py-2 mr-2 mt-2 text-gray-500 rounded font-semibold cursor-pointer hover:bg-teal-500 hover:text-white'
                   key={idx}
                 >
                   {item.skill}
