@@ -27,7 +27,7 @@ const NAV_ITEMS: NavItem[] = [
   {
     label: 'Contact',
     page: 'contact',
-  }
+  },
 ];
 
 const Navbar = () => {
@@ -58,6 +58,7 @@ const Navbar = () => {
                   transition={{ duration: 0.9 }}
                   className='border-none p-2 text-gray-700 rounded-md outline-none focus:border-gray-400 focus:border dark:text-white'
                   onClick={() => setNavbar(!navbar)}
+                  aria-label='toggle menu'
                 >
                   {navbar ? <IoMdClose size={30} /> : <IoMdMenu size={30} />}
                 </motion.button>

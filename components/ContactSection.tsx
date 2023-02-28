@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import {
   HiOutlinePhone as PhoneIcon,
   HiOutlineMapPin as MapPinIcon,
@@ -74,7 +74,11 @@ const ContactSection = () => {
               className='contactInput'
               placeholder='Message'
             />
-            <button type='submit' className='contactButton'>
+            <button
+              aria-label='contact me'
+              type='submit'
+              className='contactButton'
+            >
               Submit
             </button>
           </form>
