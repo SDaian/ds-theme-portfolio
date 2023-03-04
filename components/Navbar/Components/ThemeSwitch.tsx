@@ -1,15 +1,14 @@
-'use client';
 import { useState, useEffect } from 'react';
 import { RiMoonFill, RiSunLine } from 'react-icons/ri';
 
 type ThemeSwitchProps = {
-  currentTheme?: string;
   setTheme: (theme: string) => void;
+  currentTheme?: string;
   systemTheme?: string;
   theme?: string;
 };
 
-const ThemeSwitch = ({ setTheme, currentTheme }: ThemeSwitchProps) => {
+export const ThemeSwitch = ({ setTheme, currentTheme }: ThemeSwitchProps) => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -43,5 +42,3 @@ const ThemeSwitch = ({ setTheme, currentTheme }: ThemeSwitchProps) => {
     </>
   );
 };
-
-export default ThemeSwitch;
