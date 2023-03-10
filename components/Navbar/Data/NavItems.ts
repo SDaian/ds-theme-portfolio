@@ -10,8 +10,8 @@ export const NAV_ITEMS: NavItem[] = [
     page: 'about',
   },
   {
-    label: 'Projects',
-    page: 'projects',
+    label: 'Experience',
+    page: 'experience',
   },
   {
     label: 'Contact',

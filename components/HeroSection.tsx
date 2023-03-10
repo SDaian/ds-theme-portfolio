@@ -26,20 +26,33 @@ const HeroSection = () => {
             <span className='font-semibold text-teal-600'>
               Software Engineer{' '}
             </span>
-            based in Madrid, Spain. Turning ideas into visually stunning and performant web applications.
-
+            based in Madrid, Spain. Turning ideas into visually stunning and
+            performant web applications.
           </p>
-          <Link
-            to='projects'
-            className='text-neutral-100 font-semibold px-6 py-3 bg-teal-600 rounded shadow hover:bg-teal-700 cursor-pointer'
-            activeClass='active'
-            spy={true}
-            smooth={true}
-            offset={-100}
-            duration={500}
-          >
-            Projects
-          </Link>
+          <div className='flex justify-center md:justify-start gap-2'>
+            <Link
+              to='experience'
+              className='text-neutral-100 font-semibold px-6 py-3 bg-teal-600 rounded shadow hover:bg-teal-700 cursor-pointer'
+              activeClass='active'
+              spy={true}
+              smooth={true}
+              offset={-100}
+              duration={500}
+            >
+              Experience
+            </Link>
+            <Link
+              to='projects'
+              className='text-neutral-100 font-semibold px-6 py-3 bg-teal-600 rounded shadow hover:bg-teal-700 cursor-pointer'
+              activeClass='active'
+              spy={true}
+              smooth={true}
+              offset={-100}
+              duration={500}
+            >
+              Projects
+            </Link>
+          </div>
         </div>
       </div>
       <div className='flex flex-row justify-center'>

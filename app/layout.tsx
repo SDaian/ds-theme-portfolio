@@ -13,7 +13,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <head />
       <body className='transition-colors duration-300'>
         <ThemeProvider enableSystem={true} attribute='class'>
           <Navbar />

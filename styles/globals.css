@@ -19,4 +19,56 @@
   .navbarButton {
     @apply transition block lg:inline-block text-neutral-900 hover:text-neutral-500 dark:text-neutral-100 cursor-pointer;
   }
+
+  .timelineVertical {
+    @apply md:before:content-[''] md:before:absolute before:top-0 before:left-0 md:before:left-2/4 before:w-[4px] before:h-full before:bg-teal-500 before:translate-x-[-50%];
+  }
+
+  .ribbon {
+    @apply before:content-[''] before:absolute before:border-8 before:border-transparent before:top-6 before:w-0 before:h-0;
+  }
+
+  .timeline-item:nth-child(odd) .date {
+    @apply left-[145px] md:left-[130%];
+  }
+
+  .timeline-item:nth-child(even) .date {
+    @apply left-[145px] md:left-[-130%] md:text-right;
+  }
+
+  .timeline-item:nth-child(odd) .image {
+    @apply mr-4 md:mr-0 md:ml-4;
+  }
+
+  .timeline-item:nth-child(even) .image {
+    @apply mr-4;
+  }
+
+  .timeline-item:nth-child(odd) .ribbon {
+    @apply before:right-full before:border-r-slate-200 md:before:border-r-0 md:before:left-full md:before:border-l-slate-200;
+  }
+
+  .timeline-item:nth-child(even) .ribbon {
+    @apply before:right-full before:border-r-slate-200;
+  }
+
+  .buttonResume {
+    @apply before:content-[''] before:absolute before:w-[110%] before:h-[350%] before:bg-gradient-to-r before:from-teal-300 before:to-teal-700
+    after:content-['Download_Resume'] after:absolute after:flex after:items-center after:justify-center
+    after:text-xl after:text-black after:w-[96%] after:h-[86%] after:bg-white after:font-semibold;
+  }
+
+  .buttonResume::after {
+    border-radius: 0.4em;
+  }
+
+  .buttonResume:hover::before{
+    @apply animate-pulse;
+  }
+
+  @keyframes spin {
+    to{
+      transform: rotate(360deg);
+    }
+  }
 }
