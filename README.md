@@ -1,3 +1,39 @@
+# DS Theme Portfolio
+
+## Solution
+
+### Project Structure
+
+```bash
+src
+  ┣ app/
+  ┣ components/
+  ┣ styles/
+  ┣ public/
+```
+
+### Technologies Used
+
+- [React.JS](https://reactjs.org/)
+- [Next.JS](https://material.angular.io/)
+- [TailwindCSS](https://tailwindcss.com/)
+- [Typescript](https://www.typescriptlang.org/)
+- [Framer Motion](https://www.framer.com/motion/)
+- [Prettier](https://prettier.io/)
+- [ESLint](https://eslint.org/)
+
+## Development
+
+Highly suggest use [pnPm](https://pnpm.io/). Fast, disk space efficient package manager
+
+`pnpm dev` to serve in http://localhost:3000
+
+`pnpm format` to check format using Prettier
+
+`pnpm format:fix` to fix format using Prettier
+
+---
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
