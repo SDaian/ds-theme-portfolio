@@ -9,7 +9,7 @@ type NavItemsProps = {
   navbar: boolean;
 };
 
-export const NavItems = ({navbar}: NavItemsProps) => {
+export const NavItems = ({ navbar }: NavItemsProps) => {
   const { systemTheme, theme, setTheme } = useTheme();
   const currentTheme = theme === 'system' ? systemTheme : theme;
 

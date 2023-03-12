@@ -60,7 +60,9 @@ const ExperienceSection = () => {
                   <HiBriefcase className='inline-block text-white w-7 h-7' />
                 </div>
                 <div className='relative content bg-slate-200 p-4 grow md:grow-0 md:w-2/5 ribbon rounded-xl'>
-                  <h3 className='text-blue-600 font-semibold cursor-pointer flex items-center gap-2 text-xl mb-2'>Company <HiLink /></h3>
+                  <h3 className='text-blue-600 font-semibold cursor-pointer flex items-center gap-2 text-xl mb-2'>
+                    Company <HiLink />
+                  </h3>
                   <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Facere vero velit ea dolor cum adipisci quisquam, nam,

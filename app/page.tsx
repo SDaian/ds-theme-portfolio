@@ -23,8 +23,8 @@ export const metadata: Metadata = {
     siteName: 'Daian Scuarissi - Software Engineer',
   },
   alternates: {
-    canonical: 'https://daian-scuarissi.vercel.app/'
-  }
+    canonical: 'https://daian-scuarissi.vercel.app/',
+  },
 };
 
 export default function Home() {
