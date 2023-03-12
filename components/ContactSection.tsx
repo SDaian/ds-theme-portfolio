@@ -17,7 +17,7 @@ const ContactSection = () => {
   const { register, handleSubmit } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
     const { name, email, subject, message } = formData;
-    window.location.href = `mailto:scuarissid@gmail.com?subject=${subject}&body=${message}`;
+    window.location.href = `mailto:scuarissid@gmail.com?subject=${subject}&body=Hi, ny name is ${name} ${email}. ${message}`;
   };
 
   return (

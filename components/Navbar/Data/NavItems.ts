@@ -1,4 +1,4 @@
-import { NavItem } from "../Models/NavItem";
+import { NavItem } from '../Models/NavItem';
 
 export const NAV_ITEMS: NavItem[] = [
   {

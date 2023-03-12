@@ -62,12 +62,12 @@
     border-radius: 0.4em;
   }
 
-  .buttonResume:hover::before{
+  .buttonResume:hover::before {
     @apply animate-pulse;
   }
 
   @keyframes spin {
-    to{
+    to {
       transform: rotate(360deg);
     }
   }

@@ -46,7 +46,11 @@ const AboutSection = () => {
               proficient in frontend frameworks such as{' '}
               <span className='text-teal-500'>Angular</span> and{' '}
               <span className='text-teal-500'>React</span>, and I am always
-              looking to <span className="text-teal-500 underline underline-offset-4">learn and improve my skills</span>.
+              looking to{' '}
+              <span className='text-teal-500 underline underline-offset-4'>
+                learn and improve my skills
+              </span>
+              .
             </p>{' '}
             <p className='mb-2'>
               In the future, I hope to continue growing as a software engineer
