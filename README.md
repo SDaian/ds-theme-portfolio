@@ -4,7 +4,7 @@
 
 Check preview on [https://daian-scuarissi.vercel.app/](https://daian-scuarissi.vercel.app/)
 
-### Project Structure
+## Project Structure
 
 ```bash
 src
@@ -14,7 +14,7 @@ src
   ┣ public/
 ```
 
-### Technologies Used
+## Technologies Used
 
 - [React.JS](https://reactjs.org/)
 - [Next.JS](https://material.angular.io/)
