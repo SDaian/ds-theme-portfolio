@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 const skills = [
   { skill: 'Angular' },
   { skill: 'React' },
@@ -67,15 +69,29 @@ const AboutSection = () => {
             <h3 className='text-center text-2xl font-bold mb-6 md:text-left'>
               My Skills
             </h3>
-            <div className='flex flex-wrap flex-row justify-center md:justify-start'>
-              {skills.map((item, idx) => (
-                <p
-                  className='bg-gray-200 px-4 py-2 mr-2 mt-2 text-gray-500 rounded font-semibold cursor-pointer hover:bg-teal-500 hover:text-white'
-                  key={idx}
-                >
-                  {item.skill}
-                </p>
-              ))}
+            <div className='flex flex-col gap-8'>
+              <div className='flex flex-wrap flex-row justify-center md:justify-start'>
+                {skills.map((item, idx) => (
+                  <p
+                    className='bg-gray-200 px-4 py-2 mr-2 mt-2 text-gray-500 rounded font-semibold cursor-pointer hover:bg-teal-500 hover:text-white'
+                    key={idx}
+                  >
+                    {item.skill}
+                  </p>
+                ))}
+              </div>
+              <div className='flex flex-col items-center md:items-start'>
+                <h3 className='text-center text-2xl font-bold mb-6 md:text-left'>
+                  My (dreaming) Setup
+                </h3>
+                <Image
+                  className='shadow-2xl rounded-lg'
+                  src='/setup-image.png'
+                  alt='Daian Scuarissi setup image'
+                  width={420}
+                  height={300}
+                />
+              </div>
             </div>
           </div>
         </div>
