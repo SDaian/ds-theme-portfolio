@@ -8,7 +8,6 @@ export const ResumeButton = () => {
         target='_blank'
         rel='noopener noreferrer'
       >
-        {/* <button className='buttonResume overflow-hidden relative cursor-pointer p-8 w-80 h-8 rounded-2xl shadow-lg flex items-center justify-center'></button> */}
         <button
           type='button'
           data-te-ripple-init
