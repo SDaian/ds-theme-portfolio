@@ -12,12 +12,7 @@ const ExperienceSection = () => {
   const isInView = useInView(ref, { once: true });
 
   useEffect(() => {
-    if (isInView) {
-      controls.start('visible');
-    } else {
-      controls.start('hidden');
-    }
-    console.log('Element is in view: ', isInView);
+    isInView ? controls.start('visible') : controls.start('hidden');
   }, [controls, isInView]);
 
   return (
