@@ -24,7 +24,7 @@ const AboutSection = () => {
           <hr className='w-6 h-1 mx-auto my-4 bg-teal-500 border-0 rounded'></hr>
         </h2>
         <div className='flex flex-col space-y-10 items-stretch justify-center align-top md:flex-row md:text-left md:p-4 md:space-y-0 md:space-x-10'>
-          <div className='md:w-1/2 text-lg'>
+          <div className='md:w-1/2 text-lg text-center md:text-left'>
             <h3 className='text-center text-2xl font-bold mb-6 md:text-left'>
               Get to know me!
             </h3>
