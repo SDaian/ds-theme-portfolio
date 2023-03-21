@@ -1,9 +1,16 @@
 'use client';
 import Image from 'next/image';
 import { Link } from 'react-scroll/modules';
+import { Cursor, useTypewriter } from 'react-simple-typewriter';
 import { HiArrowDown } from 'react-icons/hi';
 
 const HeroSection = () => {
+  const [text] = useTypewriter({
+    words: ['Software Enginner', 'Traveller', 'Football Player'],
+    loop: true,
+    delaySpeed: 5000,
+  });
+
   return (
     <section aria-label='home' id='home'>
       <div className='flex flex-col text-center items-center justify-center mt-16 sm:py-32 py-16 md:flex-row md:space-x-4 md:text-left md:py-52'>
@@ -23,11 +30,15 @@ const HeroSection = () => {
           </h1>
           <p className='text-lg mt-4 mb-6 md:text-2xl'>
             I&#39;m a{' '}
-            <span className='font-semibold text-teal-600'>
-              Software Engineer{' '}
+            <span className='mr-1'>
+              <span className='font-semibold text-teal-600'>{text}</span>
+              <Cursor cursorColor='#319795' />
             </span>
-            based in Madrid, Spain. Turning ideas into visually stunning and
-            performant web applications.
+            based in Madrid, Spain.
+            <span className='block'>
+              Turning ideas into visually stunning and performant web
+              applications.
+            </span>
           </p>
           <div className='flex justify-center md:justify-start gap-2'>
             <Link
