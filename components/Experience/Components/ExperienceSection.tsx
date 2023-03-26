@@ -2,7 +2,7 @@
 import { useEffect, useRef } from 'react';
 import { HiBriefcase, HiBolt, HiLink } from 'react-icons/hi2';
 import { motion, useAnimation, useInView } from 'framer-motion';
-import { ResumeButton } from './ResumeButton';
+import { ResumeButton } from '../../ResumeButton';
 
 const ExperienceSection = () => {
   const array = [1, 2];
