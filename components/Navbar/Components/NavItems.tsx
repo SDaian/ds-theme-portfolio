@@ -1,3 +1,4 @@
+import { SocialIcons } from '@/components/Shared/SocialIcons';
 import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import { Link } from 'react-scroll/modules';
@@ -31,6 +32,9 @@ export const NavItems = ({ navbar }: NavItemsProps) => {
               {item.label}
             </Link>
           ))}
+          <div className='md:hidden flex'>
+            <SocialIcons className={'text-black'} />
+          </div>
           <ThemeSwitch
             currentTheme={currentTheme}
             systemTheme={systemTheme}
