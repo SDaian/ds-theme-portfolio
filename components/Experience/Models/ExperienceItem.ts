@@ -5,5 +5,5 @@ export type ExperienceItem = {
   to: string;
   role: string;
   description: string;
-  actual: false;
+  actual: boolean;
 };
