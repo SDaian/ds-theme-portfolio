@@ -21,7 +21,7 @@
   }
 
   .timelineVertical {
-    @apply md:before:content-[''] md:before:absolute before:top-0 before:left-0 md:before:left-2/4 before:w-[4px] before:h-full before:bg-teal-500 before:translate-x-[-50%];
+    @apply before:absolute md:before:content-[''] md:before:absolute before:top-0 before:left-[30px] md:before:left-2/4 before:w-[4px] before:h-full before:bg-teal-500 before:translate-x-[-50%];
   }
 
   .ribbon {

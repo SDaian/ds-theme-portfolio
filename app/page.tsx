@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 
 import AboutSection from '@/components/AboutSection';
 import ContactSection from '@/components/ContactSection';
-import ExperienceSection from '@/components/ExperienceSection';
+import ExperienceSection from '@/components/Experience/Components/ExperienceSection';
 import HeroSection from '@/components/HeroSection';
 
 export const metadata: Metadata = {
