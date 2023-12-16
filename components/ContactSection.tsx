@@ -25,7 +25,7 @@ const ContactSection = () => {
       <div className='my-12 pb-12 md:pt-16 md:pb-40'>
         <h2 className='text-center font-bold text-4xl'>
           Let&#39;s stay in touch!{' '}
-          <hr className='w-6 h-1 mx-auto my-4 bg-teal-500 border-0 rounded'></hr>
+          <hr className='w-6 h-1 mx-auto my-4 bg-brand border-0 rounded'></hr>
         </h2>
         <div className='flex flex-col space-y-5'>
           <div className='space-y-2'>
