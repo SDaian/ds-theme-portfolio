@@ -2,26 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --brand: rgb(20, 184, 166);
+  --brand-lighter: rgb(46, 210, 192);
+}
+
 @layer components {
   .contactIcon {
-    @apply text-[#14B8A6] h-5 w-5;
+    @apply text-brand h-5 w-5;
   }
 
   .contactInput {
     @apply outline-none bg-neutral-200/30 rounded-sm border-b px-6 py-4 border-[#242424] text-black placeholder-gray-500 transition-all
-      focus:border-[#14B8A6] focus:text-black hover:border-[#14B8A6] dark:text-white dark:placeholder-gray-50;
+      focus:border-brand focus:text-black hover:border-brand dark:text-white dark:placeholder-gray-50;
   }
 
   .contactButton {
-    @apply transition duration-150 bg-[#14B8A6] border border-[#14B8A6] hover:text-white hover:bg-[#14B8A6]/80 py-5 px-10 rounded text-white font-semibold;
+    @apply transition duration-150 bg-brand border border-brand hover:text-white hover:bg-brand-lighter py-5 px-10 rounded text-white font-semibold;
   }
 
   .navbarButton {
-    @apply transition block lg:inline-block text-neutral-900 hover:text-neutral-500 dark:text-neutral-100 cursor-pointer;
+    @apply transition block lg:inline-block text-neutral-900 dark:text-neutral-100 cursor-pointer
+    after:content-[''] after:block after:w-[0px] after:h-[3px] after:bg-brand after:transition-[100%];
+  }
+
+  .navbarButton:hover::after {
+    @apply w-full;
   }
 
   .timelineVertical {
-    @apply before:absolute md:before:content-[''] md:before:absolute before:top-0 before:left-[30px] md:before:left-2/4 before:w-[4px] before:h-full before:bg-teal-500 before:translate-x-[-50%];
+    @apply before:absolute md:before:content-[''] md:before:absolute before:top-0 before:left-[30px] md:before:left-2/4 before:w-[4px] before:h-full before:bg-brand before:translate-x-[-50%];
   }
 
   .ribbon {

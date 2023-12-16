@@ -21,7 +21,7 @@ const AboutSection = () => {
       <div className='my-12 pb-12 md:pt-16 md:pb-40'>
         <h2 className='text-center font-bold text-4xl'>
           About Me
-          <hr className='w-6 h-1 mx-auto my-4 bg-teal-500 border-0 rounded'></hr>
+          <hr className='w-6 h-1 mx-auto my-4 bg-brand border-0 rounded'></hr>
         </h2>
         <div className='flex flex-col space-y-10 items-stretch justify-center align-top md:flex-row md:text-left md:p-4 md:space-y-0 md:space-x-10'>
           <div className='md:w-1/2 text-lg text-center md:text-left'>
@@ -31,9 +31,9 @@ const AboutSection = () => {
             <p className='mb-2'>
               Hey there, I&#39;m{' '}
               <span className='font-bold'>Daian Scuarissi</span>, a{' '}
-              <span className='text-teal-500'>software engineer</span> with over
-              5 years of experience developing applications and web interfaces.
-              My expertise lies in frontend technologies such as HTML, CSS,
+              <span className='text-brand'>software engineer</span> with over 5
+              years of experience developing applications and web interfaces. My
+              expertise lies in frontend technologies such as HTML, CSS,
               JavaScript, Angular, and React. I have a passion for creating
               engaging and intuitive user experiences and am always looking for
               ways to improve my skills and stay up-to-date with the latest
@@ -44,10 +44,10 @@ const AboutSection = () => {
               of a responsive web application using Angular and the
               implementation of a dynamic user interface using React. I am also
               proficient in frontend frameworks such as{' '}
-              <span className='text-teal-500'>Angular</span> and{' '}
-              <span className='text-teal-500'>React</span>, and I am always
-              looking to{' '}
-              <span className='text-teal-500 underline underline-offset-4'>
+              <span className='text-brand'>Angular</span> and{' '}
+              <span className='text-brand'>React</span>, and I am always looking
+              to{' '}
+              <span className='text-brand underline underline-offset-4'>
                 learn and improve my skills
               </span>
               .
@@ -72,7 +72,7 @@ const AboutSection = () => {
                 <div className='flex flex-wrap flex-row justify-center md:justify-start'>
                   {skills.map((item, idx) => (
                     <p
-                      className='bg-gray-200 px-4 py-2 mr-2 mt-2 text-gray-500 rounded font-semibold cursor-pointer hover:bg-teal-500 hover:text-white'
+                      className='bg-gray-200 px-4 py-2 mr-2 mt-2 text-gray-500 rounded font-semibold cursor-pointer hover:bg-brand hover:text-white'
                       key={idx}
                     >
                       {item.skill}

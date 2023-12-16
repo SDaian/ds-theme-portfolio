@@ -20,7 +20,7 @@ export const SocialIcons = ({ className }: SocialIconsProps) => {
           >
             <Icon
               size={30}
-              className={`inline-block w-6 h-6 mx-2 text-neutral-500 hover:text-neutral-600 dark:text-neutral-100 ${className}`}
+              className={`inline-block w-6 h-6 mx-2 md:text-neutral-500 hover:text-neutral-600 dark:text-neutral-100 ${className}`}
             />
           </a>
         );

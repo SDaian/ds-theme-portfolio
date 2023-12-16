@@ -11,6 +11,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        brand: 'var(--brand)',
+        'brand-lighter': 'var(--brand-lighter)',
+      },
       animation: {
         bounce:
           'bounce 0.5s alternate cubic-bezier(0.95, 0.05, 0.795, 0.035) infinite',
