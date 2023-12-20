@@ -6,6 +6,7 @@ import ExperienceSection from '@/components/Experience/Components/ExperienceSect
 import HeroSection from '@/components/HeroSection';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://daian-scuarissi.vercel.app/'),
   title: 'Daian Scuarissi | Software Engineer | Frontend Developer',
   description:
     'Software Engineer based in Madrid, Spain. Turning ideas into visually stunning and performant web applications using Angular or React.',
@@ -21,10 +22,18 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Daian Scuarissi - Software Engineer',
     siteName: 'Daian Scuarissi - Software Engineer',
+    description:
+      'Software Engineer based in Madrid, Spain. Turning ideas into visually stunning and performant web applications using Angular or React.',
+    url: '/',
+    images: 'hero-image-2.jpg',
   },
   alternates: {
-    canonical: 'https://daian-scuarissi.vercel.app/',
+    canonical: '/',
   },
+  referrer: 'origin-when-cross-origin',
+  authors: [{ name: 'Daian Scuarissi' }],
+  creator: 'Daian Scuarissi',
+  publisher: 'Daian Scuarissi',
 };
 
 export default function Home() {
