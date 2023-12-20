@@ -1,6 +1,7 @@
 'use client';
 import '../styles/globals.css';
 import { ThemeProvider } from 'next-themes';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -20,6 +21,7 @@ export default function RootLayout({
           <AnalyticsWrapper />
           <Footer />
         </ThemeProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
