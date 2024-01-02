@@ -47,18 +47,18 @@ const ContactSection = () => {
 
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className='flex flex-col space-y-2 md:w-fit md:mx-auto'
+            className='flex flex-col space-y-2 md:w-4/5 md:mx-auto'
           >
             <div className='flex gap-2 md:gap-0 flex-col md:flex-row md:space-x-2'>
               <input
                 {...register('name')}
-                className='contactInput'
+                className='contactInput md:w-1/2'
                 placeholder='Name'
                 type='text'
               />
               <input
                 {...register('email')}
-                className='contactInput'
+                className='contactInput md:w-1/2'
                 placeholder='Email'
                 type='email'
               />

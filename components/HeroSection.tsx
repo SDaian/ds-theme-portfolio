@@ -6,7 +6,7 @@ import { HiArrowDown } from 'react-icons/hi';
 const HeroSection = () => {
   return (
     <section aria-label='home' id='home'>
-      <div className='flex flex-col text-center items-center justify-around mt-16 sm:py-32 py-16 md:flex-row md:space-x-4 md:text-left md:py-52'>
+      <div className='flex flex-col text-center items-center justify-around mt-[85px] sm:py-32 py-16 md:flex-row md:space-x-4 md:text-left md:py-52 md:min-h-[85vh]'>
         {/* <div className='md:w-1/2 md:mt-2'> */}
         <Image
           className='rounded-full shadow-2xl'
@@ -67,7 +67,7 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
-      <div className='flex flex-row justify-center'>
+      <div className='md:flex flex-row justify-center hidden'>
         <Link to='about' activeClass='active'>
           <HiArrowDown size={35} className='animate-bounce' />
         </Link>

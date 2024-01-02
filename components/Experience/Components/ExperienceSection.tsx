@@ -19,7 +19,17 @@ const ExperienceSection = () => {
           <div className='container max-w-5xl mx-auto p-0 relative timelineVertical'>
             {array.map(
               (
-                { company, companyUrl, from, to, role, description, actual },
+                {
+                  company,
+                  companyUrl,
+                  from,
+                  to,
+                  role,
+                  description,
+                  actual,
+                  client,
+                  keywords,
+                },
                 i
               ) => (
                 <div
@@ -41,21 +51,33 @@ const ExperienceSection = () => {
                             rel='noreferrer'
                             aria-label={`company URL: ${company}`}
                           >
-                            <h3 className='text-blue-600 font-semibold cursor-pointer flex items-center gap-2 text-xl md:mb-2'>
+                            <h3 className='text-blue-600 font-semibold cursor-pointer flex items-center gap-2 text-xl md:mb-0'>
                               {company}
                               <HiLink />
                             </h3>
                           </a>
-                          <div className='flex justify-between items-center mb-1'>
+                          <div className='flex justify-between items-center mb-1 md:mb-0'>
                             <span className='text-slate-500 text-sm md:text-base'>
                               {from} - {actual ? 'Present' : to}
                             </span>
                           </div>
                         </div>
-                        <span className='mt-2 dark:text-black'>
-                          Role: {role}
+
+                        <span className='dark:text-black'>
+                          Role: <span className='font-bold'>{role}</span>{' '}
+                          {client && <span>| Client: {client}</span>}
                         </span>
-                        <p className='dark:text-black'>{description}</p>
+
+                        {description.map((item, idx) => (
+                          <p key={idx} className='dark:text-black mt-2'>
+                            - {item}
+                          </p>
+                        ))}
+                        {keywords && (
+                          <div className='dark: text-black mt-2'>
+                            Keywords: <span>{keywords}</span>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </Reveal>

@@ -28,7 +28,7 @@ const Navbar = () => {
         <SocialIcons className={'text-black'} />
       </nav>
       <nav className='flex flex-grow md:justify-end basis-0 w-full'>
-        <NavItems navbar={navbar} />
+        <NavItems navbar={navbar} setNavbar={setNavbar} />
       </nav>
     </header>
   );

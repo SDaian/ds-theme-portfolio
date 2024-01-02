@@ -10,7 +10,13 @@ type LogoProps = {
 export const Logo = ({ navbar, setNavbar }: LogoProps) => {
   return (
     <div className='flex flex-grow items-center justify-between py-2 md:block'>
-      <Link to='home'>
+      <Link
+        to='home'
+        className='cursor-pointer'
+        smooth={true}
+        offset={-100}
+        duration={500}
+      >
         <motion.div
           initial={{ x: -500, opacity: 0, scale: 0.5 }}
           animate={{ x: 0, opacity: 1, scale: 1 }}
