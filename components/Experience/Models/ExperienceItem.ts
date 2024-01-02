@@ -4,6 +4,8 @@ export type ExperienceItem = {
   from: string;
   to: string;
   role: string;
-  description: string;
+  description: string[];
   actual: boolean;
+  client?: string;
+  keywords?: string;
 };

@@ -8,9 +8,10 @@ import { ThemeSwitch } from './ThemeSwitch';
 
 type NavItemsProps = {
   navbar: boolean;
+  setNavbar: (navbar: boolean) => void;
 };
 
-export const NavItems = ({ navbar }: NavItemsProps) => {
+export const NavItems = ({ navbar, setNavbar }: NavItemsProps) => {
   const { systemTheme, theme, setTheme } = useTheme();
   const currentTheme = theme === 'system' ? systemTheme : theme;
 
@@ -28,7 +29,15 @@ export const NavItems = ({ navbar }: NavItemsProps) => {
           className='items-center justify-center space-y-6 md:flex md:space-x-6 md:space-y-0'
         >
           {NAV_ITEMS.map((item, i) => (
-            <Link key={i} to={item.page} className='navbarButton'>
+            <Link
+              key={i}
+              to={item.page}
+              smooth={true}
+              offset={-100}
+              duration={500}
+              className='navbarButton'
+              onClick={() => setNavbar(!navbar)}
+            >
               {item.label}
             </Link>
           ))}
