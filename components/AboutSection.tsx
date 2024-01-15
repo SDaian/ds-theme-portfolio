@@ -28,7 +28,7 @@ const AboutSection = () => {
             <h3 className='text-center text-2xl font-bold mb-6 md:text-left'>
               Get to know me!
             </h3>
-            <p className='mb-2'>
+            <p className='mb-2 font-semibold'>
               Hey there, I&#39;m{' '}
               <span className='font-bold'>Daian Scuarissi</span>, a{' '}
               <span className='text-brand'>software engineer</span> with over 5
@@ -39,7 +39,7 @@ const AboutSection = () => {
               ways to improve my skills and stay up-to-date with the latest
               technologies.
             </p>{' '}
-            <p className='mb-2'>
+            <p className='mb-2 font-semibold'>
               I have worked on a variety of projects, including the development
               of a responsive web application using Angular and the
               implementation of a dynamic user interface using React. I am also
@@ -52,7 +52,7 @@ const AboutSection = () => {
               </span>
               .
             </p>{' '}
-            <p className='mb-2'>
+            <p className='mb-2 font-semibold'>
               In the future, I hope to continue growing as a software engineer
               and to work on challenging and rewarding projects that allow me to
               showcase my skills and experience.{' '}
@@ -60,7 +60,6 @@ const AboutSection = () => {
                 I am always open to new opportunities and am eager to learn from
                 other experienced professionals in the field
               </span>
-              .
             </p>
           </div>
           <div className='md:w-1/2'>
