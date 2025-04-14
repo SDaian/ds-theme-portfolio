@@ -13,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en'>
+    <html lang='en' suppressHydrationWarning>
       <body className='transition-colors duration-300'>
         <ThemeProvider enableSystem={true} attribute='class'>
           <Navbar />

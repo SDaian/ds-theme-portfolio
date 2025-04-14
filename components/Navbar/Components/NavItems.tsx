@@ -1,5 +1,5 @@
 import { SocialIcons } from '@/components/Shared/SocialIcons';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { useTheme } from 'next-themes';
 import { Link } from 'react-scroll/modules';
 
