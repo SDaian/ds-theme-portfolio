@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { motion, useAnimation, useInView } from 'framer-motion';
+import React, { JSX, useEffect, useRef } from 'react';
+import { motion, useAnimation, useInView } from 'motion/react';
 
 interface Props {
   children: JSX.Element;
