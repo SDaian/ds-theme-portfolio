@@ -12,7 +12,7 @@ const ExperienceSection = () => {
       <div className='my-12 pb-12 md:pt-16 md:pb-40'>
         <h2 className='text-center font-bold text-4xl'>
           Experience
-          <hr className='w-6 h-1 mx-auto my-4 bg-brand border-0 rounded'></hr>
+          <hr className='w-6 h-1 mx-auto my-4 bg-brand border-0 rounded-sm'></hr>
         </h2>
 
         <section className='overflow-hidden md:px-4 md:py-12'>

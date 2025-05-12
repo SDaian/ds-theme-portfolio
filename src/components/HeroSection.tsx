@@ -33,7 +33,7 @@ const HeroSection = () => {
           <div className='flex justify-center md:justify-start gap-2 flex-wrap'>
             <Link
               to='experience'
-              className='text-neutral-100 font-semibold px-6 py-3 bg-brand rounded shadow hover:bg-teal-700 cursor-pointer'
+              className='text-neutral-100 font-semibold px-6 py-3 bg-brand rounded-sm shadow-sm hover:bg-teal-700 cursor-pointer'
               activeClass='active'
               spy={true}
               smooth={true}
@@ -44,7 +44,7 @@ const HeroSection = () => {
             </Link>
             <Link
               to='projects'
-              className='text-neutral-100 font-semibold px-6 py-3 bg-brand rounded shadow hover:bg-teal-700 cursor-pointer'
+              className='text-neutral-100 font-semibold px-6 py-3 bg-brand rounded-sm shadow-sm hover:bg-teal-700 cursor-pointer'
               activeClass='active'
               spy={true}
               smooth={true}
@@ -55,7 +55,7 @@ const HeroSection = () => {
             </Link>
             <Link
               to='contact'
-              className='text-neutral-100 font-semibold px-6 py-3 bg-brand rounded shadow hover:bg-teal-700 cursor-pointer'
+              className='text-neutral-100 font-semibold px-6 py-3 bg-brand rounded-sm shadow-sm hover:bg-teal-700 cursor-pointer'
               activeClass='active'
               spy={true}
               smooth={true}

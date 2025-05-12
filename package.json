@@ -1,52 +1,41 @@
 {
-  "name": "temp",
+  "name": "ds-portfolio-blog",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "lint": "next lint"
   },
   "dependencies": {
-    "@sanity/client": "^6.24.1",
-    "@types/node": "18.11.18",
-    "@types/react": "19.0.0",
-    "@types/react-dom": "19.0.0",
-    "@typescript-eslint/parser": "^5.56.0",
-    "@vercel/analytics": "^0.1.11",
-    "@vercel/speed-insights": "^1.0.2",
-    "eslint": "8.32.0",
-    "eslint-config-next": "15.0.4",
-    "motion": "^12.7.0",
-    "next": "15.0.4",
-    "next-sanity": "^9.8.24",
-    "next-themes": "^0.4.1",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "react-hook-form": "^7.43.1",
-    "react-icons": "^4.7.1",
-    "react-scroll": "^1.8.9",
-    "react-simple-typewriter": "^5.0.1",
-    "sanity": "^3.62.0",
-    "typescript": "^5.0.0",
-    "vercel": "^33.0.0"
+    "@mdx-js/loader": "^3.1.0",
+    "@mdx-js/react": "^3.1.0",
+    "@next/mdx": "^15.3.1",
+    "@types/mdx": "^2.0.13",
+    "@types/react-scroll": "^1.8.10",
+    "@vercel/analytics": "^1.5.0",
+    "@vercel/speed-insights": "^1.2.0",
+    "motion": "^12.9.2",
+    "next": "15.3.1",
+    "next-themes": "^0.4.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.56.1",
+    "react-icons": "^5.5.0",
+    "react-scroll": "^1.9.3"
   },
   "devDependencies": {
-    "@types/react-scroll": "^1.8.6",
-    "@typescript-eslint/eslint-plugin": "^5.54.1",
-    "autoprefixer": "^10.4.13",
-    "eslint-config-prettier": "^8.7.0",
-    "postcss": "^8.4.21",
-    "prettier": "^2.8.4",
-    "tailwindcss": "^3.4.13"
-  },
-  "pnpm": {
-    "overrides": {
-      "@types/react": "19.0.0",
-      "@types/react-dom": "19.0.0"
-    }
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4.1.4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.1",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.4",
+    "typescript": "^5"
   }
 }

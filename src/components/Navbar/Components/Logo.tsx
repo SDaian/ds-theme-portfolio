@@ -1,3 +1,4 @@
+'use client';
 import { motion } from 'motion/react';
 import { IoMdClose, IoMdMenu } from 'react-icons/io';
 import { Link } from 'react-scroll';
@@ -9,7 +10,7 @@ type LogoProps = {
 
 export const Logo = ({ navbar, setNavbar }: LogoProps) => {
   return (
-    <div className='flex flex-grow items-center justify-between py-2 md:block'>
+    <div className='flex grow items-center justify-between py-2 md:block'>
       <Link
         to='home'
         className='cursor-pointer'
@@ -31,7 +32,7 @@ export const Logo = ({ navbar, setNavbar }: LogoProps) => {
           initial={{ x: 500, opacity: 0, scale: 0.5 }}
           animate={{ x: 0, opacity: 1, scale: 1 }}
           transition={{ duration: 0.9 }}
-          className='border-none p-2 text-gray-700 rounded-md outline-none focus:border-gray-400 focus:border dark:text-white'
+          className='border-none p-2 text-gray-700 rounded-md outline-hidden focus:border-gray-400 focus:border dark:text-white'
           onClick={() => setNavbar(!navbar)}
           aria-label='toggle menu'
         >
