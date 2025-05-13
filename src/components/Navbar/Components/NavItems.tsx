@@ -1,7 +1,8 @@
+'use client';
 import { SocialIcons } from '@/components/Shared/SocialIcons';
 import { motion } from 'motion/react';
 import { useTheme } from 'next-themes';
-import { Link } from 'react-scroll/modules';
+import { Link } from 'react-scroll';
 
 import { NAV_ITEMS } from '../Data/NavItems';
 import { ThemeSwitch } from './ThemeSwitch';
