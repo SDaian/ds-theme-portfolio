@@ -1,5 +1,7 @@
+import { Button } from '@/styles/components/ui/button';
+import { Moon, Sun } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { RiMoonFill, RiSunLine } from 'react-icons/ri';
+// import { RiMoonFill, RiSunLine } from 'react-icons/ri';
 
 type ThemeSwitchProps = {
   setTheme: (theme: string) => void;
@@ -19,26 +21,18 @@ export const ThemeSwitch = ({ setTheme, currentTheme }: ThemeSwitchProps) => {
     return null;
   }
   return (
-    <>
+    <Button
+      variant='ghost'
+      size='icon'
+      onClick={() => setTheme(currentTheme === 'dark' ? 'light' : 'dark')}
+      aria-label='Toggle theme'
+      className='w-9 h-9 rounded-full'
+    >
       {currentTheme === 'dark' ? (
-        <button
-          aria-label='Switch to light mode'
-          onClick={() => setTheme('light')}
-          className='bg-slate-100 p-2 rounded-xl'
-        >
-          {' '}
-          <RiSunLine size={25} color='black' />
-        </button>
+        <Sun className='h-5 w-5 text-slate-300 hover:text-emerald-500 transition-colors' />
       ) : (
-        <button
-          aria-label='Switch to dark mode'
-          onClick={() => setTheme('dark')}
-          className='bg-slate-100 p-2 rounded-xl'
-        >
-          {' '}
-          <RiMoonFill size={25} />
-        </button>
+        <Moon className='h-5 w-5 text-slate-700 hover:text-emerald-500 transition-colors' />
       )}
-    </>
+    </Button>
   );
 };

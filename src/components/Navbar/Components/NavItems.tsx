@@ -1,11 +1,8 @@
-'use client';
 import { SocialIcons } from '@/components/Shared/SocialIcons';
 import { motion } from 'motion/react';
-import { useTheme } from 'next-themes';
 import { Link } from 'react-scroll';
 
 import { NAV_ITEMS } from '../Data/NavItems';
-import { ThemeSwitch } from './ThemeSwitch';
 
 type NavItemsProps = {
   navbar: boolean;
@@ -13,9 +10,10 @@ type NavItemsProps = {
 };
 
 export const NavItems = ({ navbar, setNavbar }: NavItemsProps) => {
-  const { systemTheme, theme, setTheme } = useTheme();
-  const currentTheme = theme === 'system' ? systemTheme : theme;
+  // const { systemTheme, theme, setTheme } = useTheme();
+  // const currentTheme = theme === 'system' ? systemTheme : theme;
 
+  console.log('navbar', navbar);
   return (
     <div>
       <div
@@ -45,12 +43,12 @@ export const NavItems = ({ navbar, setNavbar }: NavItemsProps) => {
           <div className='md:hidden flex'>
             <SocialIcons className={'text-black'} />
           </div>
-          <ThemeSwitch
+          {/* <ThemeSwitch
             currentTheme={currentTheme}
             systemTheme={systemTheme}
             theme={theme}
             setTheme={setTheme}
-          />
+          /> */}
         </motion.div>
       </div>
     </div>
