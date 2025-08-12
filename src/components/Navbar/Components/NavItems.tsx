@@ -13,7 +13,6 @@ export const NavItems = ({ navbar, setNavbar }: NavItemsProps) => {
   // const { systemTheme, theme, setTheme } = useTheme();
   // const currentTheme = theme === 'system' ? systemTheme : theme;
 
-  console.log('navbar', navbar);
   return (
     <div>
       <div

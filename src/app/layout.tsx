@@ -1,14 +1,24 @@
-import { Inter } from 'next/font/google';
+import { Geist, Inter } from 'next/font/google';
 
 import { ThemeProvider } from 'next-themes';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
-
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { AnalyticsWrapper } from '@/components/Analytics';
+
+const geist = Geist({
+  subsets: ['latin'],
+  weight: ['400', '700', '800'],
+  variable: '--font-geist',
+});
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '700', '800'],
+  variable: '--font-inter',
+});
 
 export default function RootLayout({
   children,
@@ -18,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <body
-        className={`${inter.className} antialiased transition-colors duration-300`}
+        className={`${geist.variable} ${inter.variable} antialiased transition-colors duration-300`}
       >
         <ThemeProvider
           attribute='class'

@@ -89,6 +89,7 @@ const AboutSection = () => {
                   alt='Daian Scuarissi setup image'
                   width={420}
                   height={300}
+                  style={{ width: 'auto', height: 'auto' }}
                 />
               </div>
             </div>
