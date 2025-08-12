@@ -15,11 +15,12 @@ const HeroSection = () => {
           width={300}
           height={300}
           priority
+          style={{ width: 'auto', height: 'auto' }}
         />
         {/* </div> */}
         {/* <div className='md:mt-2 md:w-3/5'> */}
         <div>
-          <h1 className='font-black text-4xl mt-6 md:text-8xl md:mt-0'>
+          <h1 className='font-bold text-4xl mt-6 md:text-8xl md:mt-0'>
             Hey, I&#39;m Daian<span className='text-brand'>.</span>
           </h1>
           <p className='text-lg mt-4 mb-6 md:text-2xl'>
