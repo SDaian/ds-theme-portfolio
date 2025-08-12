@@ -1,4 +1,5 @@
-import { HiArrowDownTray } from 'react-icons/hi2';
+import { Button } from '@/styles/components/ui/button';
+import { Download } from 'lucide-react';
 
 export const ResumeButton = () => {
   return (
@@ -8,15 +9,12 @@ export const ResumeButton = () => {
         target='_blank'
         rel='noopener noreferrer'
       >
-        <button
-          type='button'
-          data-te-ripple-init
-          data-te-ripple-color='light'
-          className='w-80 h-12 flex items-center justify-center rounded-xl bg-blue-500 px-6 pt-2.5 pb-2 text-lg font-semibold leading-normal text-white shadow-md transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-hidden focus:ring-0 active:bg-primary-800 active:shadow-lg'
+        <Button
+          size='lg'
+          className='flex-1 md:flex-initial bg-brand hover:bg-brand/80 px-12 py-6 text-lg'
         >
-          <HiArrowDownTray className='mr-2 h-6 w-6' />
-          Download Resume
-        </button>
+          Download CV <Download className='ml-2 h-6 w-6' />
+        </Button>
       </a>
     </section>
   );

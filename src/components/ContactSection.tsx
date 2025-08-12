@@ -1,10 +1,7 @@
 'use client';
-import {
-  HiOutlinePhone as PhoneIcon,
-  HiOutlineMapPin as MapPinIcon,
-  HiOutlineEnvelope as EnvelopeIcon,
-} from 'react-icons/hi2';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { Button } from '@/styles/components/ui/button';
+import { Mail, MapPin, Phone } from 'lucide-react';
 
 type Inputs = {
   name: string;
@@ -21,27 +18,36 @@ const ContactSection = () => {
   };
 
   return (
-    <section aria-label='contact' id='contact'>
-      <div className='my-12 pb-12 md:pt-16 md:pb-40'>
-        <h2 className='text-center font-bold text-4xl'>
-          Let&#39;s stay in touch!{' '}
-          <hr className='w-6 h-1 mx-auto my-4 bg-brand border-0 rounded-sm'></hr>
-        </h2>
+    <section
+      aria-labelledby='contact-heading'
+      id='contact'
+      className='scroll-mt-16'
+    >
+      <div className='container mx-auto py-16 md:py-24'>
+        <header className='text-center mb-16'>
+          <h2
+            id='contact-heading'
+            className='text-4xl md:text-5xl font-bold mb-4'
+          >
+            Let&#39;s stay in touch!
+          </h2>
+          <div className='w-16 h-1 mx-auto bg-brand rounded-full' />
+        </header>
         <div className='flex flex-col space-y-5'>
           <div className='space-y-2'>
             <div className='flex items-center space-x-3 justify-center'>
-              <PhoneIcon className='contactIcon' />
-              <p className='text-base'>{`+34 661 984 272`}</p>
+              <Phone className='contactIcon' />
+              <p className='text-lg'>{`+34 641 936 070`}</p>
             </div>
 
             <div className='flex items-center space-x-3 justify-center'>
-              <MapPinIcon className='contactIcon' />
-              <p className='text-base'>{`Madrid, Spain`}</p>
+              <MapPin className='contactIcon' />
+              <p className='text-lg'>{`Madrid, Spain`}</p>
             </div>
 
             <div className='flex items-center space-x-3 justify-center'>
-              <EnvelopeIcon className='contactIcon' />
-              <p className='text-base'>{`scuarissid@gmail.com`}</p>
+              <Mail className='contactIcon' />
+              <p className='text-lg'>{`scuarissid@gmail.com`}</p>
             </div>
           </div>
 
@@ -52,35 +58,37 @@ const ContactSection = () => {
             <div className='flex gap-2 md:gap-0 flex-col md:flex-row md:space-x-2'>
               <input
                 {...register('name')}
-                className='contactInput md:w-1/2'
+                className='w-full dark:text-black px-4 py-3 rounded-lg border bg-white focus:ring-brand focus:border-transparent transition-colors'
                 placeholder='Name'
                 type='text'
               />
               <input
                 {...register('email')}
-                className='contactInput md:w-1/2'
+                className='w-full dark:text-black  px-4 py-3 rounded-lg border bg-white focus:ring-brand focus:border-transparent transition-colors'
                 placeholder='Email'
                 type='email'
               />
             </div>
             <input
               {...register('subject')}
-              className='contactInput'
+              className='w-full dark:text-black px-4 py-3 rounded-lg border bg-white focus:ring-brand focus:border-transparent transition-colors'
               placeholder='Subject'
               type='text'
             />
             <textarea
               {...register('message')}
-              className='contactInput'
+              className='w-full dark:text-black px-4 py-3 rounded-lg border bg-white focus:ring-brand focus:border-transparent transition-colors'
               placeholder='Message'
             />
-            <button
-              aria-label='contact me'
-              type='submit'
-              className='contactButton'
-            >
-              Submit
-            </button>
+            <div className='flex justify-end'>
+              <Button
+                aria-label='contact me'
+                type='submit'
+                className='bg-brand hover:bg-brand/80 px-12 py-6 rounded-lg text-white text-lg'
+              >
+                Submit
+              </Button>
+            </div>
           </form>
         </div>
       </div>

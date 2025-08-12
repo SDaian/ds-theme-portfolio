@@ -59,7 +59,7 @@ export const Reveal = ({
             bottom: 4,
             left: 0,
             right: 0,
-            background: 'var(--brand)',
+            background: 'var(--color-brand)',
             zIndex: 20,
           }}
         ></motion.div>

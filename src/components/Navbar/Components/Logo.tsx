@@ -1,6 +1,6 @@
 'use client';
+import { Menu, X } from 'lucide-react';
 import { motion } from 'motion/react';
-import { IoMdClose, IoMdMenu } from 'react-icons/io';
 import { Link } from 'react-scroll';
 
 type LogoProps = {
@@ -40,7 +40,7 @@ export const Logo = ({ navbar, setNavbar }: LogoProps) => {
           onClick={() => setNavbar(!navbar)}
           aria-label='toggle menu'
         >
-          {navbar ? <IoMdClose size={30} /> : <IoMdMenu size={30} />}
+          {navbar ? <X size={30} /> : <Menu size={30} />}
         </motion.button>
       </div>
     </div>

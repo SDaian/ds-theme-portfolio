@@ -1,9 +1,4 @@
-import { IconType } from 'react-icons';
-import {
-  AiOutlineGithub,
-  AiOutlineTwitter,
-  AiOutlineLinkedin,
-} from 'react-icons/ai';
+import { Github, Linkedin, Twitter, LucideIcon } from 'lucide-react';
 
 export type SocialItem = {
   name: string;
@@ -11,11 +6,11 @@ export type SocialItem = {
   icon: string;
 };
 
-export const returnLibraryIcons = (lib: string) => {
-  const LibraryIcons: { [key: string]: IconType } = {
-    Github: AiOutlineGithub,
-    Twitter: AiOutlineTwitter,
-    Linkedin: AiOutlineLinkedin,
+export const returnLibraryIcons = (lib: string): LucideIcon => {
+  const LibraryIcons: { [key: string]: LucideIcon } = {
+    Github: Github,
+    Twitter: Twitter,
+    Linkedin: Linkedin,
   };
 
   return LibraryIcons[lib];

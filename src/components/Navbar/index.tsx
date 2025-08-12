@@ -26,14 +26,14 @@ const Navbar = () => {
         <NavItems navbar={navbar} setNavbar={setNavbar} />
       </nav>
       <div
-        className={`hidden grow basis-0 w-full md:flex md:justify-end gap-2`}
+        className={`hidden grow basis-0 w-full md:flex md:justify-end gap-2 items-center`}
       >
         <Button
           variant='default'
-          className='bg-brand hover:bg-brand-lighter text-white'
+          className='bg-brand hover:bg-brand-lighter text-white px-8 py-6'
           onClick={() => window.open('/resume-daian-scuarissi.pdf', '_blank')}
         >
-          <Download className='mr-2 h-4 w-4' /> Download CV
+          Download CV <Download className='ml-2 h-4 w-4' />
         </Button>
         <ThemeSwitch
           currentTheme={currentTheme}
