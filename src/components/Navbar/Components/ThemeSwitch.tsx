@@ -1,7 +1,6 @@
 import { Button } from '@/styles/components/ui/button';
 import { Moon, Sun } from 'lucide-react';
 import { useState, useEffect } from 'react';
-// import { RiMoonFill, RiSunLine } from 'react-icons/ri';
 
 type ThemeSwitchProps = {
   setTheme: (theme: string) => void;

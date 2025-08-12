@@ -1,5 +1,3 @@
-import { IconType } from 'react-icons/lib';
-
 import { SocialItems } from './Data/SocialItems';
 import { returnLibraryIcons } from './Models/SocialItem';
 
@@ -9,7 +7,7 @@ export const SocialIcons = ({ className }: SocialIconsProps) => {
   return (
     <div className='flex flex-row items-center justify-center space-x-2 mb-1'>
       {SocialItems.map((item) => {
-        const Icon: IconType = returnLibraryIcons(item.name);
+        const Icon = returnLibraryIcons(item.name);
         return (
           <a
             key={item.name}
