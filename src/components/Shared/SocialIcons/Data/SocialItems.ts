@@ -13,7 +13,7 @@ export const SocialItems: Array<SocialItem> = [
   },
   {
     name: 'Twitter',
-    link: 'https://twitter.com/ASDaian',
+    link: 'https://x.com/ASDaian',
     icon: 'AiOutlineTwitter',
   },
 ];

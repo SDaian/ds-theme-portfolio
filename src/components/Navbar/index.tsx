@@ -16,7 +16,14 @@ const Navbar = () => {
   return (
     <header className='py-1 px-5 md:px-8 lg:px-20 flex flex-col md:flex-row items-center fixed top-0 w-full justify-between z-40 shadow-2xs backdrop-blur-md dark:shadow-slate-500'>
       <div className='flex grow sm:basis-0 basis-full w-full'>
-        <Logo navbar={navbar} setNavbar={setNavbar} />
+        <Logo 
+          navbar={navbar} 
+          setNavbar={setNavbar}
+          currentTheme={currentTheme}
+          systemTheme={systemTheme}
+          theme={theme}
+          setTheme={setTheme}
+        />
       </div>
       {/* <nav className='hidden xl:block sm:hidden'>
         <SocialIcons className={'text-black'} />
