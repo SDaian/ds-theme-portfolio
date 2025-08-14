@@ -16,8 +16,8 @@ const Navbar = () => {
   return (
     <header className='py-1 px-5 md:px-8 lg:px-20 flex flex-col md:flex-row items-center fixed top-0 w-full justify-between z-40 shadow-2xs backdrop-blur-md dark:shadow-slate-500'>
       <div className='flex grow sm:basis-0 basis-full w-full'>
-        <Logo 
-          navbar={navbar} 
+        <Logo
+          navbar={navbar}
           setNavbar={setNavbar}
           currentTheme={currentTheme}
           systemTheme={systemTheme}
@@ -37,7 +37,7 @@ const Navbar = () => {
       >
         <Button
           variant='default'
-          className='bg-brand hover:bg-brand-lighter text-white px-8 py-6'
+          className='bg-brand hover:bg-brand-lighter text-white px-8 py-4'
           onClick={() => window.open('/resume-daian-scuarissi.pdf', '_blank')}
         >
           Download CV <Download className='ml-2 h-4 w-4' />

@@ -1,0 +1,13 @@
+<svg width="1200" height="627" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1E40AF;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="627" fill="url(#grad)"/>
+  <text x="600" y="250" font-family="Arial, sans-serif" font-size="72" font-weight="bold" text-anchor="middle" fill="white">Welcome to My Blog</text>
+  <text x="600" y="320" font-family="Arial, sans-serif" font-size="32" text-anchor="middle" fill="white" opacity="0.9">First blog post using MDX with Next.js</text>
+  <text x="600" y="400" font-family="Arial, sans-serif" font-size="24" text-anchor="middle" fill="white" opacity="0.7">By Daian Scuarissi</text>
+  <text x="600" y="500" font-family="Arial, sans-serif" font-size="18" text-anchor="middle" fill="white" opacity="0.6">daian-scuarissi.vercel.app</text>
+</svg>
