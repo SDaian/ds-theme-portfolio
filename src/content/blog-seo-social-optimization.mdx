@@ -1,0 +1,373 @@
+---
+title: 'Building a Blog with MDX and Next.js - Part 2: SEO & Social Optimization'
+description: 'Learn how to optimize your MDX blog for search engines and social media sharing with proper meta tags, Open Graph, Twitter Cards, and performance tips.'
+publishedAt: '2025-08-14'
+author: 'Daian Scuarissi'
+tags: ['seo', 'mdx', 'nextjs', 'social-media', 'open-graph', 'performance']
+image: '/setup-image.png'
+---
+
+In [Part 1](/blog/building-blog-mdx-nextjs), we covered the technical implementation of building a blog with MDX and Next.js 15. Now, let's focus on optimizing your blog for search engines and social media sharing to maximize its reach and impact.
+
+## The Importance of SEO and Social Optimization
+
+A well-implemented blog is only half the battle. Without proper SEO and social media optimization, your content might not reach its intended audience. This includes:
+
+- **Search engine visibility** for organic traffic
+- **Social media sharing** with rich previews
+- **Performance optimization** for better rankings
+- **Structured data** for search engines
+- **Mobile optimization** for all devices
+
+## Metadata Generation
+
+Next.js 15's `generateMetadata` function is crucial for SEO. Here's a comprehensive implementation:
+
+```typescript
+// src/app/blog/[slug]/page.tsx
+import type { Metadata } from 'next';
+import { getBlogPostMetadata } from '@/lib/mdx';
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const post = getBlogPostMetadata(slug);
+  
+  return {
+    title: `${post.title} | Your Name`,
+    description: post.description,
+    authors: [{ name: post.author }],
+    creator: post.author,
+    publisher: post.author,
+    keywords: post.tags,
+    
+    // Open Graph for Facebook, LinkedIn
+    openGraph: {
+      type: 'article',
+      title: `${post.title} | Your Name`,
+      description: post.description,
+      url: `/blog/${slug}`,
+      siteName: 'Your Site Name',
+      images: [{
+        url: post.image || '/default-og.png',
+        width: 1200,
+        height: 627,
+        alt: post.title,
+      }],
+      publishedTime: post.publishedAt,
+      modifiedTime: post.modifiedAt,
+      authors: [post.author],
+      tags: post.tags,
+    },
+    
+    // Twitter Card
+    twitter: {
+      card: 'summary_large_image',
+      title: `${post.title} | Your Name`,
+      description: post.description,
+      images: [post.image || '/default-og.png'],
+      creator: '@yourusername',
+    },
+    
+    // Canonical URL
+    alternates: {
+      canonical: `/blog/${slug}`,
+    },
+    
+    // Additional meta tags
+    other: {
+      'article:author': post.author,
+      'article:published_time': post.publishedAt,
+      ...(post.modifiedAt && { 'article:modified_time': post.modifiedAt }),
+      'article:tag': post.tags.join(','),
+    },
+  };
+}
+```
+
+## Root Layout Metadata
+
+Set up your root layout with essential metadata:
+
+```typescript
+// src/app/layout.tsx
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  metadataBase: new URL('https://yoursite.com'),
+  title: 'Your Site Name',
+  description: 'Your site description',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://yoursite.com',
+    siteName: 'Your Site Name',
+    images: [{
+      url: '/og-default.png',
+      width: 1200,
+      height: 627,
+    }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    creator: '@yourusername',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
+```
+
+## Social Media Image Requirements
+
+Different platforms have different image requirements:
+
+### LinkedIn and Facebook
+- **Format**: PNG or JPG (not SVG)
+- **Dimensions**: 1200x627 pixels (1.91:1 ratio)
+- **File size**: Under 1MB
+- **Content**: Clear, readable text and branding
+
+### Twitter/X
+- **Format**: PNG, JPG, or WebP
+- **Dimensions**: 1200x627 pixels for large cards
+- **File size**: Under 1MB
+- **Alt text**: Included via meta tags
+
+### Creating Social Images
+
+Here's a simple approach using HTML and CSS that can be converted to images:
+
+```html
+<!-- og-template.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            margin: 0;
+            width: 1200px;
+            height: 627px;
+            background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto;
+            color: white;
+            padding: 60px;
+            box-sizing: border-box;
+        }
+        .title {
+            font-size: 64px;
+            font-weight: 800;
+            text-align: center;
+            line-height: 1.1;
+            margin-bottom: 30px;
+        }
+        .subtitle {
+            font-size: 28px;
+            opacity: 0.9;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .author {
+            font-size: 22px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="title">Your Blog Post Title</div>
+    <div class="subtitle">Engaging subtitle or description</div>
+    <div class="author">By Your Name</div>
+</body>
+</html>
+```
+
+## Structured Data
+
+Add JSON-LD structured data for better search engine understanding:
+
+```typescript
+// src/components/StructuredData.tsx
+interface StructuredDataProps {
+  post: BlogPost;
+  url: string;
+}
+
+export function StructuredData({ post, url }: StructuredDataProps) {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.description,
+    image: post.image,
+    author: {
+      "@type": "Person",
+      name: post.author,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Your Site Name",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://yoursite.com/logo.png",
+      },
+    },
+    datePublished: post.publishedAt,
+    dateModified: post.modifiedAt || post.publishedAt,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": url,
+    },
+    keywords: post.tags.join(", "),
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+    />
+  );
+}
+```
+
+## Content Optimization
+
+### Description Best Practices
+- **Length**: 120-160 characters for search engines
+- **LinkedIn**: Minimum 100 characters for optimal sharing
+- **Include keywords**: Naturally incorporate relevant terms
+- **Call to action**: Hint at the value readers will get
+
+### Title Optimization
+- **HTML title**: Include your brand name for recognition
+- **Open Graph title**: Can be different, optimized for social sharing
+- **Length**: 50-60 characters for search results
+- **Keywords**: Include primary keywords near the beginning
+
+### Tags and Keywords
+- **Relevant tags**: Use specific, relevant tags
+- **Keyword density**: Natural integration, avoid stuffing
+- **Semantic keywords**: Include related terms and synonyms
+
+## Performance Optimization
+
+### Image Optimization
+```typescript
+// next.config.ts
+const nextConfig = {
+  images: {
+    formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 31536000, // 1 year
+  },
+};
+```
+
+### Core Web Vitals
+- **Largest Contentful Paint (LCP)**: < 2.5 seconds
+- **First Input Delay (FID)**: < 100 milliseconds
+- **Cumulative Layout Shift (CLS)**: < 0.1
+
+### Static Generation
+Ensure all blog posts are statically generated:
+
+```typescript
+export function generateStaticParams() {
+  // Return all blog post slugs
+  return getAllBlogSlugs().map((slug) => ({ slug }));
+}
+
+export const dynamicParams = false;
+```
+
+## Social Media Testing Tools
+
+### LinkedIn Post Inspector
+- **URL**: https://www.linkedin.com/post-inspector/
+- **Tests**: Open Graph tags, image accessibility
+- **Requirements**: PNG/JPG images, 100+ character descriptions
+
+### Facebook Sharing Debugger
+- **URL**: https://developers.facebook.com/tools/debug/
+- **Tests**: Open Graph implementation
+- **Features**: Cache clearing, preview generation
+
+### Twitter Card Validator
+- **URL**: https://cards-dev.twitter.com/validator
+- **Tests**: Twitter Card tags
+- **Features**: Live preview of cards
+
+### Testing with curl
+```bash
+# Check meta tags
+curl -s "https://yoursite.com/blog/post-slug" | grep -i "meta.*property.*og\|meta.*name.*twitter\|title"
+
+# Check image accessibility  
+curl -I "https://yoursite.com/og-image.png"
+```
+
+## Common Issues and Solutions
+
+### LinkedIn Not Showing Images
+- **Problem**: SVG images not supported
+- **Solution**: Use PNG or JPG format
+- **Check**: Image must be publicly accessible
+
+### Description Too Short Warning
+- **Problem**: LinkedIn requires 100+ characters
+- **Solution**: Expand description with relevant keywords
+- **Tip**: Include tags naturally in the description
+
+### Cache Issues
+- **Problem**: Social platforms cache metadata
+- **Solution**: Use platform-specific cache clearing tools
+- **Prevention**: Test before publishing
+
+### Mobile Optimization
+- **Viewport**: Set proper viewport meta tag
+- **Images**: Responsive images with Next.js Image component
+- **Performance**: Optimize for mobile Core Web Vitals
+
+## Monitoring and Analytics
+
+### Search Console
+- Set up Google Search Console
+- Monitor search performance
+- Track Core Web Vitals
+- Identify indexing issues
+
+### Social Analytics
+- LinkedIn Analytics for post performance
+- Twitter Analytics for engagement
+- Facebook Insights for reach
+
+### Performance Monitoring
+```typescript
+// Add to your layout
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/react';
+
+export default function Layout({ children }) {
+  return (
+    <html>
+      <body>
+        {children}
+        <Analytics />
+        <SpeedInsights />
+      </body>
+    </html>
+  );
+}
+```
+
+## Conclusion
+
+SEO and social media optimization are crucial for your blog's success. By implementing proper metadata, optimizing images for social sharing, adding structured data, and monitoring performance, you create a blog that not only performs well technically but also reaches and engages your target audience effectively.
+
+Remember to test your implementations using the various tools mentioned, monitor your performance metrics, and iterate based on the data you collect.
+
+---
+
+*This concludes our two-part series on building and optimizing a blog with MDX and Next.js. With both the technical implementation and optimization strategies in place, you have everything needed to create a successful, professional blog.*

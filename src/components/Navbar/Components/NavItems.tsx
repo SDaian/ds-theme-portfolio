@@ -29,6 +29,20 @@ export const NavItems = ({ navbar, setNavbar }: NavItemsProps) => {
           className='items-center justify-center space-y-6 md:flex md:space-x-6 md:space-y-0'
         >
           {NAV_ITEMS.map((item, i) => {
+            // Handle external links (like /blog)
+            if (item.isExternal) {
+              return (
+                <NextLink
+                  key={i}
+                  href={item.page}
+                  className='navbarButton'
+                  onClick={() => setNavbar(!navbar)}
+                >
+                  {item.label}
+                </NextLink>
+              );
+            }
+            
             if (isHomePage) {
               // On home page, use react-scroll for smooth scrolling
               return (

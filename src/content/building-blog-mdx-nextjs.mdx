@@ -1,0 +1,251 @@
+---
+title: 'Building a Blog with MDX and Next.js - Part 1: Implementation'
+description: 'A comprehensive guide to setting up a modern blog using MDX and Next.js 15, covering project setup, dynamic routing, frontmatter processing, and styling.'
+publishedAt: '2025-08-14'
+author: 'Daian Scuarissi'
+tags: ['mdx', 'nextjs', 'react', 'typescript', 'blog', 'web-development']
+image: '/setup-image.png'
+---
+
+Building a modern blog doesn't have to be complicated. In this first part of a two-part series, I'll walk you through the technical implementation of building a blog using **MDX** and **Next.js 15**, creating a system that combines the simplicity of Markdown with the power of React components.
+
+## Why MDX and Next.js?
+
+**MDX** allows you to write JSX directly in your Markdown files, giving you the flexibility to include interactive React components alongside your content. Combined with **Next.js 15's App Router**, we get:
+
+- **Static generation** for optimal performance
+- **Dynamic routing** for blog posts
+- **TypeScript support** out of the box
+- **Component integration** within Markdown
+- **Hot reloading** for great developer experience
+
+## Project Setup
+
+The foundation starts with Next.js 15 and the necessary MDX packages:
+
+```bash
+npx create-next-app@latest my-blog --typescript --tailwind --eslint --app
+cd my-blog
+pnpm add @next/mdx @mdx-js/loader @mdx-js/react @types/mdx
+pnpm add remark-frontmatter remark-mdx-frontmatter gray-matter
+```
+
+## MDX Configuration
+
+First, configure Next.js to handle MDX files with frontmatter support:
+
+```typescript
+// next.config.ts
+import type { NextConfig } from 'next';
+import createMDX from '@next/mdx';
+import remarkFrontmatter from 'remark-frontmatter';
+import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
+
+const nextConfig: NextConfig = {
+  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
+};
+
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
+  },
+});
+
+export default withMDX(nextConfig);
+```
+
+## Dynamic Routing Structure
+
+The blog uses Next.js App Router's dynamic routing with the following structure:
+
+```
+src/
+├── app/
+│   └── blog/
+│       └── [slug]/
+│           └── page.tsx
+├── content/
+│   ├── post-one.mdx
+│   └── post-two.mdx
+└── lib/
+    └── mdx.ts
+```
+
+## Frontmatter Processing
+
+Create a utility to process MDX files and extract frontmatter:
+
+```typescript
+// src/lib/mdx.ts
+import { readFileSync } from 'fs';
+import { join } from 'path';
+import matter from 'gray-matter';
+
+export interface BlogPost {
+  slug: string;
+  title: string;
+  description: string;
+  publishedAt: string;
+  modifiedAt?: string;
+  author: string;
+  tags: string[];
+  image?: string;
+  content: string;
+}
+
+export function getBlogPost(slug: string): BlogPost {
+  const contentDirectory = join(process.cwd(), 'src/content');
+  const filePath = join(contentDirectory, `${slug}.mdx`);
+  
+  const fileContent = readFileSync(filePath, 'utf8');
+  const { data, content } = matter(fileContent);
+  
+  return {
+    slug,
+    title: data.title || 'Untitled',
+    description: data.description || '',
+    publishedAt: data.publishedAt || new Date().toISOString(),
+    modifiedAt: data.modifiedAt,
+    author: data.author || 'Daian Scuarissi',
+    tags: data.tags || [],
+    image: data.image,
+    content,
+  };
+}
+```
+
+## Dynamic Page Component
+
+The dynamic page component handles content rendering:
+
+```typescript
+// src/app/blog/[slug]/page.tsx
+import { getBlogPostMetadata } from '@/lib/mdx';
+
+type Props = {
+  params: Promise<{ slug: string }>;
+};
+
+export default async function Page({ params }: Props) {
+  const { slug } = await params;
+  const { default: Post } = await import(`../../../content/${slug}.mdx`);
+  const post = getBlogPostMetadata(slug);
+
+  return (
+    <article className="max-w-4xl mx-auto px-4 py-8">
+      <header className="mb-8">
+        <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
+        <div className="text-gray-600 mb-4">
+          <time dateTime={post.publishedAt}>
+            Published on {formatDate(post.publishedAt)}
+          </time>
+          {post.modifiedAt && (
+            <>
+              {' • '}
+              <time dateTime={post.modifiedAt}>
+                Updated on {formatDate(post.modifiedAt)}
+              </time>
+            </>
+          )}
+          {' • '}
+          <span>By {post.author}</span>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {post.tags.map((tag) => (
+            <span
+              key={tag}
+              className="px-3 py-1 text-xs bg-blue-100 text-blue-800 rounded-full"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </header>
+      <hr className="mb-8" />
+      <div className="prose prose-lg max-w-none">
+        <Post />
+      </div>
+    </article>
+  );
+}
+```
+
+## Static Generation
+
+For optimal performance, we generate static pages at build time:
+
+```typescript
+export function generateStaticParams() {
+  return [
+    { slug: 'welcome' },
+    { slug: 'building-blog-mdx-nextjs' }
+  ];
+}
+
+export const dynamicParams = false;
+```
+
+## Styling with Tailwind CSS
+
+The blog uses Tailwind's typography plugin for beautiful content styling:
+
+```bash
+pnpm add @tailwindcss/typography
+```
+
+```javascript
+// tailwind.config.js
+module.exports = {
+  plugins: [require('@tailwindcss/typography')],
+}
+```
+
+## Component Integration
+
+One of MDX's key benefits is the ability to embed React components directly in your content:
+
+```mdx
+---
+title: 'My Post'
+---
+
+# My Blog Post
+
+Here's some regular Markdown content.
+
+<CustomButton onClick={() => alert('Hello!')}>
+  Click me!
+</CustomButton>
+
+And back to regular Markdown.
+```
+
+## Development Experience
+
+The setup provides an excellent developer experience:
+
+- **Hot reloading** for instant feedback
+- **TypeScript integration** for type safety
+- **Frontmatter validation** through TypeScript interfaces
+- **Component reusability** across posts
+- **Syntax highlighting** for code blocks
+
+## Performance Benefits
+
+This approach delivers excellent performance:
+
+- **Static generation** at build time
+- **Optimized images** with Next.js Image component
+- **Tree-shaking** of unused code
+- **Automatic code splitting** per route
+- **CDN-friendly** static assets
+
+## Conclusion
+
+This implementation provides a solid foundation for building a modern blog with MDX and Next.js 15. We've covered the essential setup, configuration, and core functionality needed to get your blog up and running.
+
+The combination of MDX and Next.js gives you the simplicity of writing in Markdown with the power of React components, excellent performance through static generation, and a great developer experience.
+
+---
+
+*This is Part 1 of a two-part series. In Part 2, we'll cover SEO optimization, social media integration, and advanced features for maximizing your blog's reach and performance.*

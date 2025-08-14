@@ -63,7 +63,7 @@ export default async function Page({ params }: Props) {
   const post = getBlogPostMetadata(slug);
 
   return (
-    <article className='mt-[65px] max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12'>
+    <article className='mt-[65px] max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12'>
       <header className='mb-8'>
         <h1 className='text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4'>
           {post.title}
@@ -105,7 +105,11 @@ export default async function Page({ params }: Props) {
 }
 
 export function generateStaticParams() {
-  return [{ slug: 'welcome' }];
+  return [
+    { slug: 'welcome' },
+    { slug: 'building-blog-mdx-nextjs' },
+    { slug: 'blog-seo-social-optimization' },
+  ];
 }
 
 export const dynamicParams = false;

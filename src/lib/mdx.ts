@@ -82,3 +82,15 @@ export function formatDate(date: string): string {
     day: 'numeric',
   });
 }
+
+export function getAllBlogPosts(): BlogPost[] {
+  const blogSlugs = [
+    'welcome',
+    'building-blog-mdx-nextjs',
+    'blog-seo-social-optimization'
+  ];
+  
+  return blogSlugs
+    .map(slug => getBlogPost(slug))
+    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+}
