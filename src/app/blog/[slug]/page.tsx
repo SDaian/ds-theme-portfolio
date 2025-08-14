@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     keywords: post.tags,
     openGraph: {
       type: 'article',
-      title: post.title,
+      title: `${post.title} | Daian Scuarissi`,
       description: post.description,
       url: blogUrl,
       siteName: 'Daian Scuarissi - Software Engineer',
@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
-      title: post.title,
+      title: `${post.title} | Daian Scuarissi`,
       description: post.description,
       images: [ogImage],
       creator: '@daianscuarissi',
