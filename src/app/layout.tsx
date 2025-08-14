@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { Geist, Inter } from 'next/font/google';
 
 import { ThemeProvider } from 'next-themes';
@@ -7,6 +8,12 @@ import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { AnalyticsWrapper } from '@/components/Analytics';
+
+export const metadata: Metadata = {
+  metadataBase: new URL('https://daian-scuarissi.vercel.app'),
+  title: 'Daian Scuarissi - Software Engineer',
+  description: 'Personal portfolio and blog of Daian Scuarissi, a passionate software engineer.',
+};
 
 const geist = Geist({
   subsets: ['latin'],

@@ -34,7 +34,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         },
       ],
       publishedTime: post.publishedAt,
+      modifiedTime: post.modifiedAt,
       authors: [post.author],
+      tags: post.tags,
     },
     twitter: {
       card: 'summary_large_image',
@@ -49,6 +51,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     other: {
       'article:author': post.author,
       'article:published_time': post.publishedAt,
+      ...(post.modifiedAt && { 'article:modified_time': post.modifiedAt }),
       'article:tag': post.tags.join(','),
     },
   };
