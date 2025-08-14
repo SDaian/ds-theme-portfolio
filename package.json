@@ -20,6 +20,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "geist": "^1.4.2",
+    "gray-matter": "^4.0.3",
     "lucide-react": "^0.510.0",
     "motion": "^12.9.2",
     "next": "15.3.1",
@@ -28,6 +29,8 @@
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.56.1",
     "react-scroll": "^1.9.3",
+    "remark-frontmatter": "^5.0.0",
+    "remark-mdx-frontmatter": "^5.2.0",
     "tailwind-merge": "^3.3.0"
   },
   "devDependencies": {
