@@ -1,6 +1,8 @@
 import { SocialIcons } from '@/components/Shared/SocialIcons';
 import { motion } from 'motion/react';
 import { Link } from 'react-scroll';
+import NextLink from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import { NAV_ITEMS } from '../Data/NavItems';
 
@@ -10,8 +12,8 @@ type NavItemsProps = {
 };
 
 export const NavItems = ({ navbar, setNavbar }: NavItemsProps) => {
-  // const { systemTheme, theme, setTheme } = useTheme();
-  // const currentTheme = theme === 'system' ? systemTheme : theme;
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
 
   return (
     <div>
@@ -26,28 +28,39 @@ export const NavItems = ({ navbar, setNavbar }: NavItemsProps) => {
           transition={{ duration: 0.9 }}
           className='items-center justify-center space-y-6 md:flex md:space-x-6 md:space-y-0'
         >
-          {NAV_ITEMS.map((item, i) => (
-            <Link
-              key={i}
-              to={item.page}
-              smooth={true}
-              offset={-100}
-              duration={500}
-              className='navbarButton'
-              onClick={() => setNavbar(!navbar)}
-            >
-              {item.label}
-            </Link>
-          ))}
+          {NAV_ITEMS.map((item, i) => {
+            if (isHomePage) {
+              // On home page, use react-scroll for smooth scrolling
+              return (
+                <Link
+                  key={i}
+                  to={item.page}
+                  smooth={true}
+                  offset={-100}
+                  duration={500}
+                  className='navbarButton'
+                  onClick={() => setNavbar(!navbar)}
+                >
+                  {item.label}
+                </Link>
+              );
+            } else {
+              // On other pages, use Next.js Link to navigate to home with hash
+              return (
+                <NextLink
+                  key={i}
+                  href={`/#${item.page}`}
+                  className='navbarButton'
+                  onClick={() => setNavbar(!navbar)}
+                >
+                  {item.label}
+                </NextLink>
+              );
+            }
+          })}
           <div className='md:hidden flex'>
             <SocialIcons className={'text-black'} />
           </div>
-          {/* <ThemeSwitch
-            currentTheme={currentTheme}
-            systemTheme={systemTheme}
-            theme={theme}
-            setTheme={setTheme}
-          /> */}
         </motion.div>
       </div>
     </div>

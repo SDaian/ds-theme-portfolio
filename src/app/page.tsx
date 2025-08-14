@@ -4,6 +4,7 @@ import AboutSection from '@/components/AboutSection';
 import ContactSection from '@/components/ContactSection';
 import ExperienceSection from '@/components/Experience/Components/ExperienceSection';
 import HeroSection from '@/components/HeroSection';
+import { HashScrollHandler } from '@/components/HashScrollHandler';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://daian-scuarissi.vercel.app/'),
@@ -39,6 +40,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main className='mx-auto md:max-w-[1400px] px-6 sm:px-6'>
+      <HashScrollHandler />
       <HeroSection />
       <AboutSection />
       <ExperienceSection />
