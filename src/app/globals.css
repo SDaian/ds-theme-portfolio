@@ -95,6 +95,63 @@
   @apply before:absolute md:before:content-[''] md:before:absolute before:top-0 before:left-[30px] md:before:left-2/4 before:w-[4px] before:h-full before:bg-brand before:translate-x-[-50%];
 }
 
+/* Enhanced prose styling for blog posts */
+.prose {
+  @apply text-gray-700 dark:text-gray-300 leading-relaxed;
+}
+
+.prose h1 {
+  @apply text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mt-8 mb-6 leading-tight;
+}
+
+.prose h2 {
+  @apply text-2xl md:text-3xl font-semibold text-gray-900 dark:text-gray-100 mt-8 mb-4 leading-tight;
+}
+
+.prose h3 {
+  @apply text-xl md:text-2xl font-semibold text-gray-900 dark:text-gray-100 mt-6 mb-3 leading-tight;
+}
+
+.prose p {
+  @apply text-gray-700 dark:text-gray-300 mb-4 leading-relaxed;
+}
+
+.prose ul, .prose ol {
+  @apply mb-4 space-y-2;
+}
+
+.prose li {
+  @apply text-gray-700 dark:text-gray-300 leading-relaxed;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-brand pl-4 py-2 bg-gray-50 dark:bg-gray-800 rounded-r-md my-6 text-gray-600 dark:text-gray-400 italic;
+}
+
+.prose a {
+  @apply text-brand hover:text-brand-lighter underline underline-offset-2 transition-colors;
+}
+
+.prose strong {
+  @apply font-semibold text-gray-900 dark:text-gray-100;
+}
+
+.prose code:not(pre code) {
+  @apply bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-sm font-mono text-gray-800 dark:text-gray-200 border;
+}
+
+.prose pre {
+  @apply bg-gray-900 dark:bg-gray-950 rounded-lg p-6 overflow-x-auto my-6 border border-gray-200 dark:border-gray-700;
+}
+
+.prose pre code {
+  @apply text-gray-100 font-mono text-sm leading-relaxed bg-transparent p-0 border-0;
+}
+
+.prose hr {
+  @apply border-t border-gray-200 dark:border-gray-700 my-8;
+}
+
 @utility ribbon {
   @apply before:content-[''] before:absolute before:border-8 before:border-transparent before:top-6 before:w-0 before:h-0;
 
