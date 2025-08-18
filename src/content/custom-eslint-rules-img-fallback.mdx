@@ -1,0 +1,175 @@
+---
+title: 'Building Custom ESLint Rules: Enforcing Image Fallbacks in Angular Templates'
+description: 'Learn how to create custom ESLint rules to enforce coding standards. This guide walks through building a rule that requires default attributes on img elements for better fallback support in Angular applications.'
+publishedAt: '2025-08-18'
+author: 'Daian Scuarissi'
+tags: ['eslint', 'angular', 'custom-rules', 'code-quality', 'tooling']
+image: '/eslint-custom-rules.png'
+---
+
+Creating custom ESLint rules is a powerful way to enforce coding standards and best practices specific to your project. In this post, I'll walk through building a custom ESLint rule that enforces the presence of a `default` attribute on `img` elements in Angular templates.
+
+## The Problem
+
+When working with images in web applications, it's crucial to have fallback mechanisms for when images fail to load. In our Angular application, we wanted to enforce that every `img` element includes a `default` attribute that provides fallback image support.
+
+## The Solution: A Custom ESLint Rule
+
+Here's the custom ESLint rule we created:
+
+```javascript
+/**
+ * Custom ESLint rule to enforce default attribute on img elements
+ */
+
+module.exports = {
+  meta: {
+    type: 'problem',
+    docs: {
+      description:
+        'Require default attribute on img elements for fallback image support',
+      category: 'Best Practices',
+    },
+    fixable: null,
+    schema: [],
+    messages: {
+      missingDefault:
+        'img element must have a "default" attribute for fallback image support',
+    },
+  },
+
+  create(context) {
+    return {
+      Element(node) {
+        // Check if it's an img element
+        if (node.name === 'img') {
+          // Check if it has a default attribute (handle Angular template AST structure)
+          const hasDefault = node.attributes.some((attr) => {
+            // Handle both regular attributes and Angular bound attributes
+            return (
+              (attr.type === 'Attribute' && attr.name === 'default') ||
+              (attr.type === 'TextAttribute' && attr.name === 'default') ||
+              (attr.type === 'BoundAttribute' && attr.name === 'default')
+            );
+          });
+
+          if (!hasDefault) {
+            context.report({
+              node,
+              messageId: 'missingDefault',
+            });
+          }
+        }
+      },
+    };
+  },
+};
+```
+
+## Breaking Down the Implementation
+
+### 1. Rule Metadata
+
+The `meta` object defines essential information about our rule:
+
+- **type**: Set to `'problem'` since missing fallback images can cause UX issues
+- **docs**: Provides description and categorization for documentation
+- **fixable**: Set to `null` as this rule reports issues but doesn't auto-fix them
+- **messages**: Defines the error message shown to developers
+
+### 2. The Core Logic
+
+The `create` function returns an object with visitor methods. We use the `Element` visitor to inspect every HTML element in the template:
+
+```javascript
+Element(node) {
+  if (node.name === 'img') {
+    // Rule logic here
+  }
+}
+```
+
+### 3. Angular Template Support
+
+The most interesting part is handling Angular's template AST structure. Angular templates can have different attribute types:
+
+- **Attribute**: Standard HTML attributes (`default="fallback.jpg"`)
+- **TextAttribute**: Simple text attributes
+- **BoundAttribute**: Angular property bindings (`[default]="fallbackImage"`)
+
+Our rule checks for all these variants:
+
+```javascript
+const hasDefault = node.attributes.some((attr) => {
+  return (
+    (attr.type === 'Attribute' && attr.name === 'default') ||
+    (attr.type === 'TextAttribute' && attr.name === 'default') ||
+    (attr.type === 'BoundAttribute' && attr.name === 'default')
+  );
+});
+```
+
+## ESLint Configuration
+
+Here's how we integrated the custom rule into our ESLint configuration:
+
+```javascript
+{
+  files: ['**/*.html'],
+  languageOptions: {
+    parser: angularTemplateParser,
+  },
+  plugins: {
+    '@angular-eslint/template': angularPlugin,
+    'custom': {
+      rules: {
+        'require-img-default': requireImgDefault,
+      },
+    },
+  },
+  rules: {
+    'custom/require-img-default': 'error',
+    // Other rules...
+  },
+}
+```
+
+## Why This Approach Works
+
+### 1. **Consistency Enforcement**
+
+Every developer on the team now gets immediate feedback when they forget to add fallback image support.
+
+### 2. **Angular-Specific Handling**
+
+The rule understands Angular's template syntax, supporting both static attributes and property bindings.
+
+### 3. **Clear Error Messages**
+
+Developers get a descriptive error message explaining exactly what's missing and why it matters.
+
+### 4. **Build Integration**
+
+As part of the linting process, this rule prevents code with missing image fallbacks from reaching production.
+
+## Benefits Realized
+
+1. **Improved UX**: No more broken image icons when images fail to load
+2. **Consistent Codebase**: Every image element follows the same fallback pattern
+3. **Developer Education**: New team members immediately learn about image fallback best practices
+4. **Automated Enforcement**: No need for manual code review checks for this specific issue
+
+## Key Takeaways
+
+Creating custom ESLint rules is more accessible than you might think. The key is:
+
+1. **Understand the AST structure** of what you're parsing (HTML, JavaScript, etc.)
+2. **Define clear metadata** with helpful error messages
+3. **Test thoroughly** with different syntax variations
+4. **Integrate properly** into your build process
+
+Custom ESLint rules are a powerful tool for maintaining code quality and enforcing team conventions. They transform subjective code review comments into objective, automated checks that run on every commit.
+
+---
+
+_Have you created custom ESLint rules for your projects? What coding standards do you enforce automatically?_

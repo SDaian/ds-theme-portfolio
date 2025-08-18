@@ -87,7 +87,8 @@ export function getAllBlogPosts(): BlogPost[] {
   const blogSlugs = [
     'welcome',
     'building-blog-mdx-nextjs',
-    'blog-seo-social-optimization'
+    'blog-seo-social-optimization',
+    'custom-eslint-rules-img-fallback'
   ];
   
   return blogSlugs

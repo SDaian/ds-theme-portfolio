@@ -109,6 +109,7 @@ export function generateStaticParams() {
     { slug: 'welcome' },
     { slug: 'building-blog-mdx-nextjs' },
     { slug: 'blog-seo-social-optimization' },
+    { slug: 'custom-eslint-rules-img-fallback' },
   ];
 }
 
