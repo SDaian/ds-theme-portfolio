@@ -36,7 +36,7 @@ const HeroSection = () => {
             <Link to='experience'>
               <Button
                 size='lg'
-                className='flex-1 md:flex-initial bg-brand hover:bg-brand/80 px-8 py-6 text-lg'
+                className='cursor-pointer flex-1 md:flex-initial bg-brand hover:bg-brand/80 px-8 py-6 text-lg'
               >
                 View My Work
                 <ArrowRight className='ml-2 h-4 w-4' />
@@ -47,7 +47,7 @@ const HeroSection = () => {
               <Button
                 size='lg'
                 variant='outline'
-                className='flex-1 md:flex-initial px-8 bg-transparent py-6 text-lg'
+                className='cursor-pointer flex-1 md:flex-initial px-8 bg-transparent py-6 text-lg'
               >
                 Get In Touch
               </Button>
