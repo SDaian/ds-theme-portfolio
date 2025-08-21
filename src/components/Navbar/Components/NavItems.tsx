@@ -5,6 +5,7 @@ import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { NAV_ITEMS } from '../Data/NavItems';
+import { useScrollSpy } from '@/hooks/useScrollSpy';
 
 type NavItemsProps = {
   navbar: boolean;
@@ -14,13 +15,20 @@ type NavItemsProps = {
 export const NavItems = ({ navbar, setNavbar }: NavItemsProps) => {
   const pathname = usePathname();
   const isHomePage = pathname === '/';
+  
+  // Get section IDs for home page navigation
+  const sectionIds = NAV_ITEMS
+    .filter(item => !item.isExternal)
+    .map(item => item.page);
+  
+  const activeSection = useScrollSpy(sectionIds);
 
   return (
     <div>
       <div
         className={`flex-1 justify-self-center pb-3 mt-0 md:block md:pb-0 md:mt-0 ${
           navbar ? 'block' : 'hidden'
-        }`}
+        } md:block`}
       >
         <motion.div
           initial={{ x: 500, opacity: 0, scale: 0.5 }}
@@ -31,11 +39,12 @@ export const NavItems = ({ navbar, setNavbar }: NavItemsProps) => {
           {NAV_ITEMS.map((item, i) => {
             // Handle external links (like /blog)
             if (item.isExternal) {
+              const isActive = pathname === item.page || pathname.startsWith(item.page + '/');
               return (
                 <NextLink
                   key={i}
                   href={item.page}
-                  className='navbarButton'
+                  className={`navbarButton ${isActive ? 'navbarButton--active' : ''}`}
                   onClick={() => setNavbar(!navbar)}
                 >
                   {item.label}
@@ -45,6 +54,7 @@ export const NavItems = ({ navbar, setNavbar }: NavItemsProps) => {
             
             if (isHomePage) {
               // On home page, use react-scroll for smooth scrolling
+              const isActive = activeSection === item.page;
               return (
                 <Link
                   key={i}
@@ -52,7 +62,7 @@ export const NavItems = ({ navbar, setNavbar }: NavItemsProps) => {
                   smooth={true}
                   offset={-100}
                   duration={500}
-                  className='navbarButton'
+                  className={`navbarButton ${isActive ? 'navbarButton--active' : ''}`}
                   onClick={() => setNavbar(!navbar)}
                 >
                   {item.label}

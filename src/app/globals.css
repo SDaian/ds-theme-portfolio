@@ -87,7 +87,15 @@
     after:content-[''] after:block after:w-[0px] after:h-[3px] after:bg-brand after:transition-[100%];
 
   &:hover::after {
-    @apply w-full;
+    @apply md:w-full;
+  }
+}
+
+@utility navbarButton--active {
+  @apply text-brand font-semibold;
+
+  &::after {
+    @apply w-0 md:w-full;
   }
 }
 
@@ -116,7 +124,8 @@
   @apply text-gray-700 dark:text-gray-300 mb-4 leading-relaxed;
 }
 
-.prose ul, .prose ol {
+.prose ul,
+.prose ol {
   @apply mb-4 space-y-2;
 }
 
@@ -209,7 +218,6 @@
     @apply mr-4;
   }
 }
-
 
 @layer base {
   body {

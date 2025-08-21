@@ -29,7 +29,7 @@ const Navbar = () => {
         <SocialIcons className={'text-black'} />
       </nav> */}
 
-      <nav className='flex md:hidden lg:flex grow md:justify-center basis-0 w-full'>
+      <nav className='flex grow md:justify-center basis-0 w-full'>
         <NavItems navbar={navbar} setNavbar={setNavbar} />
       </nav>
       <div

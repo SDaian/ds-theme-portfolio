@@ -32,7 +32,7 @@ const ProfileImage = () => (
       width={420}
       height={300}
       style={{ width: 'auto', height: 'auto' }}
-      priority={false}
+      priority
     />
   </div>
 );
@@ -73,7 +73,7 @@ const AboutContent = () => (
         Hey there, I&apos;m{' '}
         <span className='font-bold text-brand'>Daian Scuarissi</span>, a{' '}
         <span className='text-brand font-semibold'>software engineer</span> with
-        over 5 years of experience developing applications and web interfaces.
+        over 7 years of experience developing applications and web interfaces.
         My expertise lies in frontend technologies, and I have a passion for
         creating engaging and intuitive user experiences.
       </p>
@@ -90,8 +90,8 @@ const AboutContent = () => (
       </p>
 
       <p className='font-medium leading-relaxed'>
-        Looking ahead, I&apos;m excited to continue growing as a software engineer
-        and tackle challenging projects that showcase my expertise.{' '}
+        Looking ahead, I&apos;m excited to continue growing as a software
+        engineer and tackle challenging projects that showcase my expertise.{' '}
         <span className='underline underline-offset-4 decoration-2'>
           I&apos;m always open to new opportunities and eager to collaborate
         </span>{' '}
