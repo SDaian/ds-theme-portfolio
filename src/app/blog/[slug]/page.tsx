@@ -110,6 +110,7 @@ export function generateStaticParams() {
     { slug: 'building-blog-mdx-nextjs' },
     { slug: 'blog-seo-social-optimization' },
     { slug: 'custom-eslint-rules-img-fallback' },
+    { slug: 'angular-image-custom-directive' },
   ];
 }
 

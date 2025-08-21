@@ -1,0 +1,222 @@
+---
+title: 'Building an Angular Image Custom Directive with Fallback Support'
+description: 'Learn how to create a robust Angular directive for handling image loading with automatic fallback support using signals and effects. This practical implementation enhances user experience by gracefully handling broken images.'
+publishedAt: '2025-08-21'
+author: 'Daian Scuarissi'
+tags: ['angular', 'directive', 'signals', 'image-handling', 'ux', 'typescript']
+image: '/setup-image.png'
+---
+
+Image loading failures are a common UX challenge in web applications. Broken image icons can make your app look unprofessional and confuse users. In this post, I'll show you how to build a robust Angular directive that handles image preloading with automatic fallback support using Angular's latest signals API.
+
+## The Problem
+
+When images fail to load due to network issues, broken URLs, or server problems, browsers typically show a broken image icon. This creates a poor user experience and can make your application appear broken or unreliable.
+
+## The Solution: ImageCustomDirective
+
+Here's the Angular directive that solves this problem elegantly:
+
+```typescript
+import { Directive, effect, input, signal } from '@angular/core';
+
+@Directive({
+  selector: 'img[default], [withFallbackImage]',
+  host: {
+    '(error)': 'onError()',
+    '[src]': 'currentSrc()',
+  },
+})
+export class ImageCustomDirective {
+  // Input signals
+  readonly src = input.required<string>();
+  readonly default = input.required<string>();
+  readonly currentSrc = signal<string>('');
+
+  constructor() {
+    effect(() => {
+      this.currentSrc.set(this.src());
+    });
+  }
+
+  onError(): void {
+    this.currentSrc.set(this.default());
+  }
+}
+```
+
+## Breaking Down the Implementation
+
+### 1. Modern Angular Signals
+
+This directive leverages Angular's new signals API introduced in Angular 16+. The signals provide reactive state management:
+
+- `src = input.required<string>()` - Creates a required input signal for the primary image URL
+- `default = input.required<string>()` - Creates a required input signal for the fallback image URL
+- `currentSrc = signal<string>('')` - Creates a writable signal to track the currently displayed image
+
+### 2. Reactive Effects
+
+The `effect()` function creates a reactive computation that automatically runs when the `src` signal changes:
+
+```typescript
+effect(() => {
+  this.currentSrc.set(this.src());
+});
+```
+
+This ensures that whenever a new primary image URL is provided, it's immediately set as the current source.
+
+### 3. Host Binding Integration
+
+The directive uses Angular's host binding to integrate seamlessly with the DOM:
+
+```typescript
+host: {
+  '(error)': 'onError()',
+  '[src]': 'currentSrc()',
+}
+```
+
+- `(error)`: Binds to the image's error event, triggering our fallback logic
+- `[src]`: Binds the image's src attribute to our reactive `currentSrc()` signal
+
+### 4. Automatic Fallback
+
+When an image fails to load, the `onError()` method automatically switches to the fallback:
+
+```typescript
+onError(): void {
+  this.currentSrc.set(this.default());
+}
+```
+
+## Usage Examples
+
+The directive supports flexible selector patterns:
+
+### Basic Usage with Default Attribute
+
+```html
+<img
+  src="https://example.com/image.jpg"
+  default="/assets/fallback.png"
+  alt="Product image"
+/>
+```
+
+### Alternative Selector
+
+```html
+<img
+  withFallbackImage
+  src="https://example.com/image.jpg"
+  default="/assets/fallback.png"
+  alt="User avatar"
+/>
+```
+
+### Dynamic URLs
+
+```html
+<img
+  [src]="user.profileImage"
+  default="/assets/default-avatar.png"
+  alt="User profile"
+/>
+```
+
+## Connection to Code Quality Standards
+
+This implementation actually builds upon concepts I explored in my previous post about [Building Custom ESLint Rules](/blog/custom-eslint-rules-img-fallback). In that post, I created a custom ESLint rule to enforce the presence of `default` attributes on `img` elements.
+
+The ESLint rule ensures developers don't forget to add fallback support, while this directive provides the actual runtime implementation. Together, they create a comprehensive solution:
+
+1. **Build-time enforcement**: The custom ESLint rule catches missing `default` attributes during development
+2. **Runtime handling**: This directive provides the actual fallback mechanism
+
+This is a perfect example of how tooling and implementation work together to maintain code quality and user experience standards.
+
+## Benefits of This Approach
+
+### 1. **Seamless Integration**
+
+The directive integrates naturally with existing `img` elements without requiring component changes.
+
+### 2. **Modern Angular Features**
+
+Uses the latest signals API for reactive state management and better performance.
+
+### 3. **Type Safety**
+
+Full TypeScript support with required inputs ensures proper usage.
+
+### 4. **Performance Optimized**
+
+Signals provide efficient reactivity with minimal overhead.
+
+### 5. **Developer Experience**
+
+Simple API that's intuitive and matches standard HTML patterns.
+
+## Advanced Features You Could Add
+
+The basic implementation can be extended with additional features:
+
+### Loading States
+
+```typescript
+readonly loading = signal<boolean>(false);
+
+effect(() => {
+  this.loading.set(true);
+  // Set loading to false after image loads
+});
+```
+
+### Retry Logic
+
+```typescript
+readonly retryCount = signal<number>(0);
+readonly maxRetries = input<number>(2);
+
+onError(): void {
+  if (this.retryCount() < this.maxRetries()) {
+    this.retryCount.update(count => count + 1);
+    // Retry logic here
+  } else {
+    this.currentSrc.set(this.default());
+  }
+}
+```
+
+### Lazy Loading Integration
+
+```typescript
+readonly lazy = input<boolean>(false);
+```
+
+## Real-World Impact
+
+This directive has proven valuable in production applications by:
+
+- **Eliminating broken image icons** that hurt user experience
+- **Providing consistent fallback behavior** across the entire application
+- **Reducing support requests** related to "missing images"
+- **Improving perceived reliability** of the application
+
+## Building on Previous Learnings
+
+This post builds naturally on my previous explorations of web development best practices. Just as I covered the technical setup in [Building a Blog with MDX and Next.js](/blog/building-blog-mdx-nextjs), this directive represents another practical solution to common development challenges.
+
+The combination of build-time enforcement (through custom ESLint rules) and runtime handling (through this directive) demonstrates how multiple tools can work together to solve problems comprehensively.
+
+## Conclusion
+
+The `ImageCustomDirective` showcases Angular's modern reactive capabilities while solving a real UX problem. By combining signals, effects, and host bindings, we created a reusable solution that improves image handling across any Angular application.
+
+The directive's simplicity belies its effectiveness - with just a few lines of code, you can eliminate broken image icons and provide a more polished user experience.
+
+---
+
+_Have you implemented similar image handling solutions in your Angular applications? What other UX challenges have you solved with custom directives?_

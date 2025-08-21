@@ -88,10 +88,14 @@ export function getAllBlogPosts(): BlogPost[] {
     'welcome',
     'building-blog-mdx-nextjs',
     'blog-seo-social-optimization',
-    'custom-eslint-rules-img-fallback'
+    'custom-eslint-rules-img-fallback',
+    'angular-image-custom-directive',
   ];
-  
+
   return blogSlugs
-    .map(slug => getBlogPost(slug))
-    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+    .map((slug) => getBlogPost(slug))
+    .sort(
+      (a, b) =>
+        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    );
 }
