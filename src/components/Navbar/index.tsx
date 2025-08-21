@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { motion } from 'motion/react';
 
 import { NavItems } from './Components/NavItems';
 import { Logo } from './Components/Logo';
@@ -32,7 +33,10 @@ const Navbar = () => {
       <nav className='flex grow md:justify-center basis-0 w-full'>
         <NavItems navbar={navbar} setNavbar={setNavbar} />
       </nav>
-      <div
+      <motion.div
+        initial={{ x: 500, opacity: 0, scale: 0.5 }}
+        animate={{ x: 0, opacity: 1, scale: 1 }}
+        transition={{ duration: 0.9 }}
         className={`hidden grow basis-0 w-full md:flex md:justify-end gap-2 items-center`}
       >
         <Button
@@ -48,7 +52,7 @@ const Navbar = () => {
           theme={theme}
           setTheme={setTheme}
         />
-      </div>
+      </motion.div>
     </header>
   );
 };

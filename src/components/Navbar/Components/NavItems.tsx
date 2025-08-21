@@ -15,12 +15,12 @@ type NavItemsProps = {
 export const NavItems = ({ navbar, setNavbar }: NavItemsProps) => {
   const pathname = usePathname();
   const isHomePage = pathname === '/';
-  
+
   // Get section IDs for home page navigation
-  const sectionIds = NAV_ITEMS
-    .filter(item => !item.isExternal)
-    .map(item => item.page);
-  
+  const sectionIds = NAV_ITEMS.filter((item) => !item.isExternal).map(
+    (item) => item.page
+  );
+
   const activeSection = useScrollSpy(sectionIds);
 
   return (
@@ -31,27 +31,30 @@ export const NavItems = ({ navbar, setNavbar }: NavItemsProps) => {
         } md:block`}
       >
         <motion.div
-          initial={{ x: 500, opacity: 0, scale: 0.5 }}
-          animate={{ x: 0, opacity: 1, scale: 1 }}
+          initial={{ y: -500, opacity: 0, scale: 0.5 }}
+          animate={{ y: 0, opacity: 1, scale: 1 }}
           transition={{ duration: 0.9 }}
           className='items-center justify-center space-y-6 md:flex md:space-x-6 md:space-y-0'
         >
           {NAV_ITEMS.map((item, i) => {
             // Handle external links (like /blog)
             if (item.isExternal) {
-              const isActive = pathname === item.page || pathname.startsWith(item.page + '/');
+              const isActive =
+                pathname === item.page || pathname.startsWith(item.page + '/');
               return (
                 <NextLink
                   key={i}
                   href={item.page}
-                  className={`navbarButton ${isActive ? 'navbarButton--active' : ''}`}
+                  className={`navbarButton ${
+                    isActive ? 'navbarButton--active' : ''
+                  }`}
                   onClick={() => setNavbar(!navbar)}
                 >
                   {item.label}
                 </NextLink>
               );
             }
-            
+
             if (isHomePage) {
               // On home page, use react-scroll for smooth scrolling
               const isActive = activeSection === item.page;
@@ -62,7 +65,9 @@ export const NavItems = ({ navbar, setNavbar }: NavItemsProps) => {
                   smooth={true}
                   offset={-100}
                   duration={500}
-                  className={`navbarButton ${isActive ? 'navbarButton--active' : ''}`}
+                  className={`navbarButton ${
+                    isActive ? 'navbarButton--active' : ''
+                  }`}
                   onClick={() => setNavbar(!navbar)}
                 >
                   {item.label}
