@@ -111,6 +111,7 @@ export function generateStaticParams() {
     { slug: 'blog-seo-social-optimization' },
     { slug: 'custom-eslint-rules-img-fallback' },
     { slug: 'angular-image-custom-directive' },
+    { slug: 'angular-performance-optimization-strategies' },
   ];
 }
 

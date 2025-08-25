@@ -47,7 +47,7 @@ export const EXPERIENCE_ITEMS: ExperienceItem[] = [
       'Collaborated on an Open-source project used by more than 1M developers and 80k organizations for Application monitoring and error tracking, developing new features, fixing bugs, and resolving incoming issues, working together with product and design teams.',
       'Built on top of React, StyledComponents, TypeScript, Vercel, Docker. NodeJs. Python.',
       'Unit test of components/views using Jest.',
-      'Version control using Gitlab.',
+      'Version control using Github.',
     ],
     client: 'Sentry',
     actual: false,

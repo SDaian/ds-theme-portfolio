@@ -90,6 +90,7 @@ export function getAllBlogPosts(): BlogPost[] {
     'blog-seo-social-optimization',
     'custom-eslint-rules-img-fallback',
     'angular-image-custom-directive',
+    'angular-performance-optimization-strategies',
   ];
 
   return blogSlugs
