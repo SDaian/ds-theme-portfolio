@@ -112,6 +112,7 @@ export function generateStaticParams() {
     { slug: 'custom-eslint-rules-img-fallback' },
     { slug: 'angular-image-custom-directive' },
     { slug: 'angular-performance-optimization-strategies' },
+    { slug: 'angular-v16-to-v20-migration' },
   ];
 }
 

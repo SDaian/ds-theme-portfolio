@@ -91,6 +91,7 @@ export function getAllBlogPosts(): BlogPost[] {
     'custom-eslint-rules-img-fallback',
     'angular-image-custom-directive',
     'angular-performance-optimization-strategies',
+    'angular-v16-to-v20-migration',
   ];
 
   return blogSlugs

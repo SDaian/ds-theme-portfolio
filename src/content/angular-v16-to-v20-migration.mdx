@@ -1,0 +1,358 @@
+---
+title: 'Angular v16 to v20 Migration: What I Learned the Hard Way'
+description: 'Step-by-step guide for upgrading Angular applications from version 16 to 20, covering breaking changes, new features, and best practices.'
+publishedAt: '2025-08-29'
+author: 'Daian Scuarissi'
+tags: ['angular', 'migration', 'upgrade', 'web-development']
+image: '/setup-image.png'
+---
+
+Recently, I undertook the journey of migrating a chess game application from Angular v16 all the way to Angular v20. What started as a "simple" version upgrade turned into a comprehensive modernization project that taught me valuable lessons about Angular's evolution. Here's everything I learned so you can avoid the pitfalls and leverage the wins.
+
+## The Starting Point: Angular v16 Chess Game
+
+The application was a fully functional chess game with:
+
+- Local multiplayer mode
+- Computer opponent using Stockfish API
+- Complete chess rule implementation (castling, en passant, promotion)
+- Traditional NgModule architecture
+- Constructor dependency injection
+- Classic template syntax with structural directives
+
+## Migration Journey: Phase by Phase
+
+### Phase 1: Dependencies & Build System Overhaul
+
+**The Challenge**: Angular's build system underwent massive changes between v16-v20.
+
+**Key Learnings**:
+
+- Angular 20 completely switches from `browser` builder to `application` builder
+- The new build system uses `@angular/build` package instead of `@angular-devkit/build-angular`
+- Configuration structure changes: `outputPath.base` instead of simple string paths
+- TypeScript upgraded to 5.8.3, requiring compatibility checks
+
+**What Broke**:
+
+```json
+// Old angular.json (v16)
+"build": {
+  "builder": "@angular-devkit/build-angular:browser",
+  "options": {
+    "outputPath": "dist/chess-game"
+  }
+}
+
+// New angular.json (v20)
+"build": {
+  "builder": "@angular/build:application",
+  "options": {
+    "outputPath": {
+      "base": "docs"
+    }
+  }
+}
+```
+
+**💡 Pro Tip**: Always test all build commands (`serve`, `build`, `test`) after major Angular upgrades. The new application builder fundamentally changes how your app is bundled.
+
+### Phase 2: Standalone Component Architecture Migration
+
+**The Challenge**: Moving from NgModule-based architecture to standalone components.
+
+**Key Learnings**:
+
+- Standalone components completely eliminate the need for `app.module.ts`
+- Each component must explicitly import its dependencies
+- Router configuration moves to `main.ts` with `provideRouter`
+- Component inheritance requires careful import management
+
+**The Big "Aha!" Moment**:
+
+```typescript
+// Before: NgModule approach
+@NgModule({
+  declarations: [ChessBoardComponent, ComputerModeComponent],
+  imports: [CommonModule, RouterModule],
+  providers: [ChessBoardService],
+})
+export class AppModule {}
+
+// After: Standalone approach
+@Component({
+  selector: 'app-chess-board',
+  standalone: true, // This is the game changer
+  imports: [MoveListComponent], // Each component manages its own imports
+  templateUrl: './chess-board.component.html',
+})
+export class ChessBoardComponent {}
+```
+
+**What I Wish I Knew Earlier**: When one component extends another and shares templates, the child component needs to import ALL the same dependencies as the parent. This caught me off guard with `ComputerModeComponent` extending `ChessBoardComponent`.
+
+### Phase 3: Constructor Injection → inject() Function
+
+**The Challenge**: Modernizing dependency injection patterns.
+
+**Key Learnings**:
+
+- The new `inject()` function is cleaner and more functional
+- Works better with inheritance and composition
+- Provides better tree-shaking opportunities
+- Eliminates the need for lengthy constructor parameters
+
+**Before & After**:
+
+```typescript
+// Old way (v16)
+export class ChessBoardComponent {
+  constructor(private chessBoardService: ChessBoardService) {}
+}
+
+// New way (v20)
+export class ChessBoardComponent {
+  private chessBoardService = inject(ChessBoardService);
+  constructor() {} // Much cleaner!
+}
+```
+
+**The Inheritance Gotcha**: When using `inject()` in parent classes, child classes can't pass services to `super()` anymore. This broke my `ComputerModeComponent` initially:
+
+```typescript
+// This BROKE after migration
+constructor() {
+  super(inject(ChessBoardService)); // ❌ Parent doesn't accept parameters
+}
+
+// Fixed version
+constructor() {
+  super(); // ✅ Parent handles its own injection
+}
+```
+
+### Phase 4: Template Syntax Revolution
+
+**The Challenge**: Angular introduced completely new control flow syntax.
+
+**Key Learnings**:
+
+- `*ngFor` → `@for` with mandatory `track` expressions
+- `*ngIf` → `@if` with optional `@else` blocks
+- `*ngSwitch` → `@switch` with `@case` statements
+- No additional imports needed - built into Angular core
+
+**The Migration**:
+
+```html
+<!-- Old structural directives -->
+<div *ngFor="let row of chessBoardView; let i = index">
+  <div *ngFor="let piece of row; let j = index">
+    <img *ngIf="piece" [src]="pieceImagePaths[piece]" />
+  </div>
+</div>
+
+<!-- New control flow -->
+@for (row of chessBoardView; track $index; let $parent = $index) {
+<div class="row">
+  @for (piece of row; track $index) {
+  <div class="square">
+    @if (piece) {
+    <img [src]="pieceImagePaths[piece]" [alt]="piece" />
+    }
+  </div>
+  }
+</div>
+}
+```
+
+**Performance Win**: The new control flow syntax is not only cleaner but also provides better performance than structural directives.
+
+### Phase 5: Signal-Based Architecture (Input/Output Functions)
+
+**The Challenge**: Migrating from decorators to functional APIs.
+
+**Key Learnings**:
+
+- `@Input()` → `input()` with better type safety
+- `@Output()` → `output()` with cleaner event handling
+- Signals provide reactive programming benefits
+- Template syntax changes: `gameHistoryPointer()` instead of `gameHistoryPointer`
+
+**The Transformation**:
+
+```typescript
+// Old decorator approach
+export class MoveListComponent {
+  @Input() moveList!: MoveList;
+  @Input() gameHistoryPointer!: number;
+  @Output() showPreviousPositionEvent = new EventEmitter<number>();
+}
+
+// New signal-based approach
+export class MoveListComponent {
+  moveList = input.required<MoveList>();
+  gameHistoryPointer = input.required<number>();
+  showPreviousPositionEvent = output<number>();
+}
+```
+
+**Template Gotcha**: Signal inputs need to be called as functions in templates:
+
+```html
+<!-- This breaks -->
+<div>Current move: {{gameHistoryPointer}}</div>
+
+<!-- This works -->
+<div>Current move: {{gameHistoryPointer()}}</div>
+```
+
+## The Unexpected Challenges
+
+### 1. Component Template Sharing Issues
+
+My `ComputerModeComponent` extended `ChessBoardComponent` and shared its template. After the standalone migration, I got mysterious "component not found" errors.
+
+**The Fix**: When components share templates, each needs its own imports array with all template dependencies.
+
+### 2. Build Output Path Changes
+
+Angular 20's new application builder changed how output paths work. My GitHub Pages deployment broke because the output directory structure changed.
+
+**The Fix**: Updated the build configuration to output to the `docs` directory as expected.
+
+### 3. Self-Closing Tag Migration
+
+Angular 20 introduced automatic migration for self-closing tags:
+
+```html
+<!-- Before -->
+<app-move-list></app-move-list>
+
+<!-- After -->
+<app-move-list />
+```
+
+This seems minor but broke some CSS selectors that relied on the closing tag.
+
+## Performance Improvements Gained
+
+The migration wasn't just about staying current - it delivered real performance benefits:
+
+### Bundle Size Reduction
+
+- **Before**: 600+ kB initial bundle
+- **After**: ~580 kB initial bundle
+- **Why**: Better tree-shaking with standalone components
+
+### Change Detection Optimization
+
+- Used `OnPush` change detection strategy throughout
+- Signal-based architecture reduces unnecessary checks
+- New control flow provides better performance than structural directives
+
+### Build Time Improvements
+
+- Angular 20's new build system is noticeably faster
+- Better incremental compilation
+- Improved hot reload performance
+
+## Migration Tools & Automation
+
+Angular provides excellent migration schematics:
+
+```bash
+# The magic commands that saved hours of manual work
+ng generate @angular/core:control-flow-migration
+ng generate @angular/core:self-closing-tags-migration
+ng generate @angular/core:inject
+ng generate @angular/core:standalone
+ng generate @angular/core:output-migration
+ng generate @angular/core:signal-input-migration
+```
+
+**Pro Tip**: Run these in order and test your app after each one. The standalone migration has multiple steps that need to be run sequentially.
+
+## What I'd Do Differently Next Time
+
+### 1. Start with Dependencies, End with Templates
+
+I initially tried to modernize templates first. Big mistake. Always update dependencies and build configuration first, then work your way up the stack.
+
+### 2. Test Every Phase
+
+Don't batch multiple migrations. After each schematic, run your tests and ensure the app builds. It's much easier to debug issues in isolation.
+
+### 3. Read the Migration Guides
+
+Angular's migration guides are excellent. I wish I'd read them thoroughly before starting instead of learning through trial and error.
+
+### 4. Plan for Breaking Changes
+
+Even "automatic" migrations can break things. Set aside time for manual fixes, especially around:
+
+- Component inheritance patterns
+- Custom dependency injection patterns
+- Complex template interactions
+
+## Final Thoughts: Was It Worth It?
+
+Absolutely. The migrated application is:
+
+- **More Maintainable**: Standalone components are easier to reason about
+- **Better Performing**: Smaller bundles, faster change detection
+- **Future-Proof**: Built on Angular's latest architectural patterns
+- **Developer-Friendly**: The new syntax is cleaner and more intuitive
+
+## Quick Reference: Migration Checklist
+
+If you're planning a similar migration, here's your action plan:
+
+### Phase 1: Foundation
+
+- [ ] Update `package.json` dependencies
+- [ ] Update `angular.json` build configuration
+- [ ] Update `tsconfig.json` for new TypeScript version
+- [ ] Test that `npm run build` and `npm start` work
+
+### Phase 2: Architecture
+
+- [ ] Run `ng generate @angular/core:standalone`
+- [ ] Update `main.ts` to use `bootstrapApplication`
+- [ ] Remove `app.module.ts` and routing modules
+- [ ] Test all routes work correctly
+
+### Phase 3: Modernization
+
+- [ ] Run `ng generate @angular/core:inject`
+- [ ] Run `ng generate @angular/core:control-flow-migration`
+- [ ] Run `ng generate @angular/core:self-closing-tags-migration`
+- [ ] Run signal input/output migrations
+- [ ] Update component templates for signal syntax
+
+### Phase 4: Validation
+
+- [ ] Run comprehensive tests
+- [ ] Check bundle size improvements
+- [ ] Verify all features work correctly
+- [ ] Update documentation and guidelines
+
+## Resources That Saved My Sanity
+
+- [Angular Update Guide](https://update.angular.io/) - Essential for understanding breaking changes
+- [Angular Migration Schematics](https://angular.dev/reference/migrations) - Automated migration tools
+- [Standalone Components Guide](https://angular.dev/guide/components/importing) - Deep dive into the new architecture
+
+The Angular team has done an incredible job making migrations as painless as possible. With the right approach and tools, what seems like a daunting task becomes a manageable and rewarding upgrade that sets your application up for success.
+
+Now go forth and migrate - your future self will thank you! 🚀
+
+## Conclusion
+
+Migrating from Angular v16 to v20 represents more than just a version upgrade - it's a comprehensive modernization that transforms how you build Angular applications. The journey through standalone components, signal-based architecture, new control flow syntax, and modern dependency injection patterns positions your application for the future of Angular development.
+
+Remember that migration is an iterative process. Start with the foundation (dependencies and build system), work through the architecture changes systematically, and thoroughly test each phase before moving forward. The automated migration tools are excellent, but understanding the underlying changes ensures you can handle edge cases and make informed decisions about your application's architecture.
+
+----
+
+_Have you tackled a similar Angular migration in your projects? What challenges did you encounter, and which strategies proved most effective for your team?_
