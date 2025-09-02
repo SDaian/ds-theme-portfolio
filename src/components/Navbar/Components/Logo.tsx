@@ -34,8 +34,8 @@ export const Logo = ({
       className='md:py-3 md:block'
     >
       <h2 className='text-2xl font-bold'>
-        <span className='md:hidden'>DS</span>
-        <span className='hidden md:inline-block'>Daian Scuarissi</span>
+        <span className='lg:hidden'>DS</span>
+        <span className='hidden lg:inline-block'>Daian Scuarissi</span>
         <span className='text-brand'>.</span>
       </h2>
     </motion.div>

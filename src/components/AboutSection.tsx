@@ -61,7 +61,7 @@ const SkillsSection = () => (
 );
 
 const AboutContent = () => (
-  <div className='md:w-1/2 text-lg space-y-6'>
+  <div className='lg:w-1/2 text-lg space-y-6'>
     <header>
       <h3 className='text-center text-2xl font-bold mb-6 md:text-left'>
         Get to know me!
@@ -122,7 +122,7 @@ const AboutSection = () => {
         <div className='flex flex-col lg:flex-row gap-12 lg:gap-16 items-start'>
           <AboutContent />
 
-          <aside className='md:w-1/2 space-y-12'>
+          <aside className='lg:w-1/2 space-y-12'>
             <SkillsSection />
             <ProfileImage />
           </aside>
