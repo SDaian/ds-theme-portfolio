@@ -1,0 +1,510 @@
+---
+title: 'Scaling React Applications with Microfrontends and Vite'
+description: 'Explore how to build and orchestrate microfrontend architectures using React and Vite, enabling independent deployments and team autonomy at scale.'
+publishedAt: '2025-09-02'
+author: 'Daian Scuarissi'
+tags:
+  [
+    'react',
+    'microfrontends',
+    'vite',
+    'architecture',
+    'scaling',
+    'web-development',
+  ]
+image: '/setup-image.png'
+---
+
+Microfrontends are revolutionizing how we build and deploy web applications, enabling teams to work independently while creating cohesive user experiences. In this comprehensive guide, we'll explore how to create a production-ready microfrontend architecture using React and Vite, complete with Hot Module Replacement (HMR) for an optimal development experience.
+
+## What Are Microfrontends?
+
+Imagine building a large e-commerce platform where different teams handle the product catalog, shopping cart, user authentication, and checkout process. Traditional monolithic frontends require all teams to coordinate releases, use the same technology stack, and deploy together. Microfrontends solve this by allowing each team to:
+
+- **Deploy independently** - Ship features without waiting for other teams
+- **Use different technologies** - Choose React, Vue, or Angular per team preference
+- **Scale teams effectively** - Multiple developers can work on different parts simultaneously
+- **Reduce risk** - Isolate failures to specific components rather than the entire application
+
+## Why React + Vite for Microfrontends?
+
+**React** provides the component-based architecture perfect for microfrontend boundaries, while **Vite** offers lightning-fast development with excellent module federation support. This combination delivers:
+
+- ⚡ **Ultra-fast HMR** - See changes instantly during development
+- 📦 **Optimized builds** - Efficient bundling and code splitting
+- 🔧 **Simple configuration** - Less boilerplate, more productivity
+- 🚀 **Modern tooling** - Built for ES modules and modern JavaScript
+
+## Prerequisites and Versions
+
+This tutorial uses the following versions for reproducible results:
+
+- **Node.js**: 18.x or higher
+- **Vite**: 7.1.2
+- **React**: 19.1.1
+- **React DOM**: 19.1.1
+- **TypeScript**: 5.8.3
+- **@originjs/vite-plugin-federation**: 1.4.1
+- **@vitejs/plugin-react-swc**: 4.0.0
+
+## Setting Up Your Microfrontend Architecture
+
+Let's build a practical example with a **host application** that consumes components from a **remote application**.
+
+### Step 1: Project Structure
+
+Create the following directory structure:
+
+```
+my-microfrontend/
+├── host-app/          # Consumer application
+└── remote-app/        # Provider application
+```
+
+### Step 2: Create the Remote Application
+
+The remote app will expose reusable components to other applications.
+
+```bash
+# Create and setup remote app
+npm create vite@7.1.2 remote-app -- --template react-ts
+cd remote-app
+npm install @originjs/vite-plugin-federation@1.4.1 --save-dev
+```
+
+**Configure `remote-app/vite.config.ts`:**
+
+```typescript
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc';
+import federation from '@originjs/vite-plugin-federation';
+
+export default defineConfig({
+  plugins: [
+    react(),
+    federation({
+      name: 'remote_app',
+      filename: 'remoteEntry.js',
+      exposes: {
+        './Button': './src/components/Button',
+        './Header': './src/components/Header',
+      },
+      shared: {
+        'react': { 
+          singleton: true,
+          requiredVersion: '^19.1.1'
+        },
+        'react-dom': { 
+          singleton: true,
+          requiredVersion: '^19.1.1'
+        }
+      },
+    }),
+  ],
+  build: {
+    target: 'esnext',
+    minify: false,
+    cssCodeSplit: false,
+  },
+  server: {
+    port: 5001,
+    strictPort: true,
+    cors: true,
+  },
+});
+```
+
+**Create shared components in `remote-app/src/components/Button.tsx`:**
+
+```typescript
+import React from 'react';
+
+interface ButtonProps {
+  text: string;
+  onClick?: () => void;
+}
+
+const Button: React.FC<ButtonProps> = ({ text, onClick }) => {
+  return (
+    <button
+      onClick={onClick}
+      className='px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600'
+    >
+      {text}
+    </button>
+  );
+};
+
+export default Button;
+```
+
+**And `remote-app/src/components/Header.tsx`:**
+
+```typescript
+import React from 'react';
+
+const Header: React.FC = () => {
+  return (
+    <header className='bg-gray-800 text-white p-4'>
+      <h1 className='text-2xl font-bold'>Remote Header Component</h1>
+      <p>This header is loaded from the remote application!</p>
+    </header>
+  );
+};
+
+export default Header;
+```
+
+**Update package.json scripts:**
+
+```json
+{
+  "scripts": {
+    "dev": "vite",
+    "dev:fed": "vite build --watch --mode dev && vite preview --port 5001 --strictPort",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --port 5001 --strictPort",
+    "serve": "npm run build && npm run preview"
+  }
+}
+```
+
+### Step 3: Create the Host Application
+
+The host app will consume components from the remote application.
+
+```bash
+# Create and setup host app
+npm create vite@7.1.2 host-app -- --template react-ts
+cd host-app
+npm install @originjs/vite-plugin-federation@1.4.1 --save-dev
+```
+
+**Configure `host-app/vite.config.ts`:**
+
+```typescript
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc';
+import federation from '@originjs/vite-plugin-federation';
+
+export default defineConfig({
+  plugins: [
+    react(),
+    federation({
+      name: 'host_app',
+      remotes: {
+        remote_app: 'http://localhost:5001/assets/remoteEntry.js',
+      },
+      shared: {
+        'react': { 
+          singleton: true,
+          requiredVersion: '^19.1.1'
+        },
+        'react-dom': { 
+          singleton: true,
+          requiredVersion: '^19.1.1'
+        }
+      },
+    }),
+  ],
+  build: {
+    target: 'esnext',
+    minify: false,
+    cssCodeSplit: false,
+  },
+  server: {
+    port: 5000,
+    strictPort: true,
+    cors: true,
+  },
+});
+```
+
+**Create type definitions in `host-app/src/types/remote.d.ts`:**
+
+```typescript
+declare module 'remote_app/Button' {
+  import React from 'react';
+
+  interface ButtonProps {
+    text: string;
+    onClick?: () => void;
+  }
+
+  const Button: React.FC<ButtonProps>;
+  export default Button;
+}
+
+declare module 'remote_app/Header' {
+  import React from 'react';
+
+  const Header: React.FC;
+  export default Header;
+}
+```
+
+**Create a component wrapper in `host-app/src/components/RemoteComponentWrapper.tsx`:**
+
+```typescript
+import React, { Suspense } from 'react';
+
+const RemoteHeader = React.lazy(() => import('remote_app/Header'));
+const RemoteButton = React.lazy(() => import('remote_app/Button'));
+
+const LoadingSpinner = () => (
+  <div className='flex justify-center p-4'>
+    <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900'></div>
+  </div>
+);
+
+export const RemoteComponentWrapper = () => {
+  return (
+    <div className='p-4 space-y-4'>
+      <Suspense fallback={<LoadingSpinner />}>
+        <RemoteHeader />
+      </Suspense>
+
+      <div className='mt-4'>
+        <Suspense fallback={<LoadingSpinner />}>
+          <RemoteButton
+            text='Click me!'
+            onClick={() => alert('Remote button clicked!')}
+          />
+        </Suspense>
+      </div>
+    </div>
+  );
+};
+```
+
+**Update `host-app/src/App.tsx`:**
+
+```typescript
+import React from 'react';
+import viteLogo from '/vite.svg';
+import './App.css';
+import { RemoteComponentWrapper } from './components/RemoteComponentWrapper';
+
+function App() {
+  return (
+    <div className='px-6 py-8'>
+      <div className='flex justify-center items-center mb-8'>
+        <img src={viteLogo} alt='Vite' className='h-12' />
+      </div>
+
+      <h1 className='text-3xl font-bold text-center mb-4'>
+        🏠 Host Application
+      </h1>
+
+      <p className='text-center text-gray-600 mb-8'>
+        Welcome to the Host application! Below are components loaded from the
+        remote application:
+      </p>
+
+      <RemoteComponentWrapper />
+    </div>
+  );
+}
+
+export default App;
+```
+
+## The Magic: Development Workflow with HMR
+
+Here's where the real power shines. To enable full Hot Module Replacement across microfrontends:
+
+### Terminal 1 - Remote App (Build Watcher):
+
+```bash
+cd remote-app
+npm run serve
+```
+
+### Terminal 2 - Remote App (HMR Builder):
+
+```bash
+cd remote-app
+npm run dev:fed
+```
+
+### Terminal 3 - Host App:
+
+```bash
+cd host-app
+npm run dev
+```
+
+Now visit `http://localhost:5000` and watch the magic happen! When you modify any component in the remote app, you'll see:
+
+1. **Instant rebuild** of the remote components
+2. **Automatic reload** in the host application
+3. **Preserved state** where possible
+4. **Zero configuration** required
+
+Try changing the button text in `remote-app/src/components/Button.tsx` and watch it update immediately in the host app!
+
+## Best Practices for Production
+
+### 1. **Error Boundaries Are Essential**
+
+Wrap remote components in error boundaries to prevent cascading failures:
+
+```typescript
+import React, { Component, ReactNode } from 'react';
+
+interface Props {
+  children: ReactNode;
+  fallback?: ReactNode;
+}
+
+interface State {
+  hasError: boolean;
+}
+
+class MicrofrontendErrorBoundary extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(): State {
+    return { hasError: true };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        this.props.fallback || (
+          <div className='p-4 text-red-600 border border-red-300 rounded'>
+            Something went wrong loading this component.
+          </div>
+        )
+      );
+    }
+
+    return this.props.children;
+  }
+}
+```
+
+### 2. **Shared Dependencies Strategy**
+
+Be strategic about what you share:
+
+```typescript
+// Good: Share major frameworks with specific versions
+shared: {
+  'react': { 
+    singleton: true,
+    requiredVersion: '^19.1.1'
+  },
+  'react-dom': { 
+    singleton: true,
+    requiredVersion: '^19.1.1'
+  },
+  // Share design system components
+  '@your-company/ui-components': { 
+    singleton: true,
+    requiredVersion: '^2.1.0'
+  }
+}
+
+// Avoid: Sharing too many small utilities
+// This can lead to version conflicts
+```
+
+### 3. **Environment-Specific Configuration**
+
+Use environment variables for different deployment stages:
+
+```typescript
+const remoteUrl =
+  process.env.NODE_ENV === 'production'
+    ? 'https://remote.yourcompany.com/assets/remoteEntry.js'
+    : 'http://localhost:5001/assets/remoteEntry.js';
+```
+
+### 4. **Performance Considerations**
+
+- **Lazy load remote components** to avoid blocking the main thread
+- **Implement loading states** for better user experience
+- **Monitor bundle sizes** to prevent bloated applications
+- **Use caching strategies** for remote entries in production
+
+## Troubleshooting Common Issues
+
+### Issue: Remote components not loading
+
+**Solution:** Verify CORS settings and ensure remote app is running on the correct port.
+
+### Issue: Type errors with remote imports
+
+**Solution:** Ensure your `remote.d.ts` file matches the actual component interfaces.
+
+### Issue: Styles not applying correctly
+
+**Solution:** Configure `cssCodeSplit: false` in build options to prevent CSS conflicts.
+
+## Advanced Patterns
+
+### Bi-directional Communication
+
+Sometimes you need microfrontends to communicate:
+
+```typescript
+// Using custom events
+const sendMessage = (data: any) => {
+  window.dispatchEvent(
+    new CustomEvent('microfrontend:message', {
+      detail: data,
+    })
+  );
+};
+
+// In another microfrontend
+useEffect(() => {
+  const handleMessage = (event: CustomEvent) => {
+    console.log('Received:', event.detail);
+  };
+
+  window.addEventListener('microfrontend:message', handleMessage);
+  return () =>
+    window.removeEventListener('microfrontend:message', handleMessage);
+}, []);
+```
+
+### Route-Based Microfrontends
+
+Combine with React Router for route-based loading:
+
+```typescript
+const RemoteApp = React.lazy(() => import('remote_app/App'));
+
+<Route
+  path='/remote/*'
+  element={
+    <Suspense fallback={<Loading />}>
+      <RemoteApp />
+    </Suspense>
+  }
+/>;
+```
+
+## Conclusion
+
+Microfrontends with React and Vite offer a powerful solution for scaling frontend development. The combination provides:
+
+- **Developer Experience**: Fast HMR and simple configuration
+- **Team Autonomy**: Independent development and deployment cycles
+- **Technology Freedom**: Mix different frameworks as needed
+- **Scalability**: Add new features without impacting existing code
+
+Start small with a simple host-remote setup like we've built, then gradually adopt more advanced patterns as your application grows. The key is finding the right balance between independence and integration for your specific use case.
+
+Remember, microfrontends are not a silver bullet—they add complexity in exchange for scalability. Use them when you have multiple teams, complex applications, or need independent deployment cycles.
+
+Ready to build your own microfrontend architecture? The code from this tutorial is available as a complete working example. Happy coding! 🚀
+
+---
+
+_Have you implemented microfrontends in your projects? Share your experiences and challenges in the comments below!_

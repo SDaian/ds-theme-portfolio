@@ -106,13 +106,14 @@ export default async function Page({ params }: Props) {
 
 export function generateStaticParams() {
   return [
-    { slug: 'welcome' },
-    { slug: 'building-blog-mdx-nextjs' },
-    { slug: 'blog-seo-social-optimization' },
-    { slug: 'custom-eslint-rules-img-fallback' },
-    { slug: 'angular-image-custom-directive' },
-    { slug: 'angular-performance-optimization-strategies' },
+    { slug: 'react-microfrontends-vite' },
     { slug: 'angular-v16-to-v20-migration' },
+    { slug: 'angular-performance-optimization-strategies' },
+    { slug: 'angular-image-custom-directive' },
+    { slug: 'custom-eslint-rules-img-fallback' },
+    { slug: 'blog-seo-social-optimization' },
+    { slug: 'building-blog-mdx-nextjs' },
+    { slug: 'welcome' },
   ];
 }
 

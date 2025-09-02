@@ -85,13 +85,14 @@ export function formatDate(date: string): string {
 
 export function getAllBlogPosts(): BlogPost[] {
   const blogSlugs = [
-    'welcome',
-    'building-blog-mdx-nextjs',
-    'blog-seo-social-optimization',
-    'custom-eslint-rules-img-fallback',
-    'angular-image-custom-directive',
-    'angular-performance-optimization-strategies',
+    'react-microfrontends-vite',
     'angular-v16-to-v20-migration',
+    'angular-performance-optimization-strategies',
+    'angular-image-custom-directive',
+    'custom-eslint-rules-img-fallback',
+    'blog-seo-social-optimization',
+    'building-blog-mdx-nextjs',
+    'welcome',
   ];
 
   return blogSlugs
