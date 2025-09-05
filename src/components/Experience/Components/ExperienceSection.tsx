@@ -2,10 +2,22 @@
 import { ResumeButton } from '../../ResumeButton';
 import { EXPERIENCE_ITEMS } from '../Data/ExperienceItems';
 import { Reveal } from '@/components/Utils/Reveal';
-import { Briefcase, Link, Zap } from 'lucide-react';
+import { Briefcase, Link, Zap, ChevronDown, ChevronUp } from 'lucide-react';
+import { useState } from 'react';
 
 const ExperienceSection = () => {
   const array = EXPERIENCE_ITEMS;
+  const [expandedItems, setExpandedItems] = useState<Set<number>>(new Set());
+
+  const toggleExpanded = (index: number) => {
+    const newExpanded = new Set(expandedItems);
+    if (newExpanded.has(index)) {
+      newExpanded.delete(index);
+    } else {
+      newExpanded.add(index);
+    }
+    setExpandedItems(newExpanded);
+  };
 
   return (
     <section
@@ -72,21 +84,38 @@ const ExperienceSection = () => {
                           </div>
                         </div>
 
-                        <span className='dark:text-black'>
-                          Role: <span className='font-bold'>{role}</span>{' '}
-                          {client && <span>| Client: {client}</span>}
-                        </span>
+                        <div className='flex justify-between items-center'>
+                          <span className='dark:text-black'>
+                            Role: <span className='font-bold'>{role}</span>{' '}
+                            {client && <span>| Client: {client}</span>}
+                          </span>
+                          <button
+                            onClick={() => toggleExpanded(i)}
+                            className='ml-2 p-1 rounded-md hover:bg-slate-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1'
+                            aria-label={expandedItems.has(i) ? 'Hide details' : 'Show details'}
+                          >
+                            {expandedItems.has(i) ? (
+                              <ChevronUp className='w-5 h-5 text-slate-600' />
+                            ) : (
+                              <ChevronDown className='w-5 h-5 text-slate-600' />
+                            )}
+                          </button>
+                        </div>
 
-                        {description.map((item, idx) => (
-                          <p key={idx} className='dark:text-black mt-2'>
-                            - {item}
-                          </p>
-                        ))}
-                        {keywords && (
-                          <div className='dark: text-black mt-2'>
-                            Keywords: <span>{keywords}</span>
-                          </div>
-                        )}
+                        <div className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                          expandedItems.has(i) ? 'max-h-full opacity-100 mt-3' : 'max-h-0 opacity-0'
+                        }`}>
+                          {description.map((item, idx) => (
+                            <p key={idx} className='dark:text-black mt-2'>
+                              - {item}
+                            </p>
+                          ))}
+                          {keywords && (
+                            <div className='dark: text-black mt-2'>
+                              Keywords: <span>{keywords}</span>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </Reveal>

@@ -192,6 +192,13 @@ Invoke the `@agent-design-review` subagent for thorough design validation when:
 - Before finalizing PRs with visual changes
 - Needing comprehensive accessibility and responsiveness testing
 
+### Code Review
+
+Invoke the `@agent-code-reviewer` subagent for code reviewing after:
+
+- Completing any significant feature
+- Before finalizing PRs with visual changes
+
 ## Additional Context
 
 - Design review agent configuration: `/.claude/agents/design-review-agent.md`
@@ -200,4 +207,4 @@ Invoke the `@agent-design-review` subagent for thorough design validation when:
 
 - Add to memory. The website is https://daian-scuarissi.vercel.app/
 - Add to memory. Every time you create a new blog entry, you need to add that to @src/app/blog/[slug]/page.tsx and @src/lib/mdx.ts
-- Add to memory. Every time you create a commit, avoid mention Claude and just add the message to the commit.
+- Add to memory. Every time you create a commit, avoid mention Claude and just add the message to the commit. Never include "Generated with Claude Code" or "Co-Authored-By: Claude" in commit messages.

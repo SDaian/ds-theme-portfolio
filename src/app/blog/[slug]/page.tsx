@@ -106,6 +106,7 @@ export default async function Page({ params }: Props) {
 
 export function generateStaticParams() {
   return [
+    { slug: 'web-accessibility-inclusive-ui' },
     { slug: 'react-microfrontends-vite' },
     { slug: 'angular-v16-to-v20-migration' },
     { slug: 'angular-performance-optimization-strategies' },

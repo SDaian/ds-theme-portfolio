@@ -85,6 +85,7 @@ export function formatDate(date: string): string {
 
 export function getAllBlogPosts(): BlogPost[] {
   const blogSlugs = [
+    'web-accessibility-inclusive-ui',
     'react-microfrontends-vite',
     'angular-v16-to-v20-migration',
     'angular-performance-optimization-strategies',
