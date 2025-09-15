@@ -94,8 +94,6 @@ const AboutContent = () => (
 );
 
 const AboutSection = () => {
-  const asd = 0;
-
   return (
     <section aria-labelledby='about-heading' className='scroll-mt-16' id='about'>
       <div className='container mx-auto py-16 md:py-24'>

@@ -72,8 +72,7 @@ const frontendInterviewData = {
             'Custom hooks are JavaScript functions that start with "use" and can call other hooks. They allow you to extract component logic into reusable functions. Example: A useApi hook that manages data, loading, and error states for API calls. It uses useState for state management and useEffect for the API request, returning an object with data, loading, and error values that components can destructure and use.',
         },
         {
-          question:
-            'What happens when you remove the dependency array in useEffect?',
+          question: 'What happens when you remove the dependency array in useEffect?',
           answer:
             'The dependency array controls when useEffect runs. With an empty array [], it runs once after mount. With dependencies [count], it runs when those values change. With NO dependency array, it runs after every render, which can cause performance issues and infinite loops. Always include a dependency array to control when effects should run.',
         },
@@ -88,8 +87,7 @@ const frontendInterviewData = {
             '<strong>State</strong> is <em>mutable</em> and internal to a component, managed by the component itself and can trigger re-renders when changed - used for local component data.<br/><br/><strong>Props</strong> are <em>immutable</em> (read-only) and passed from parent components, controlled by the parent and received as function arguments - used for communication between components.<br/><br/><strong>Examples:</strong><br/>State: <code>const [count, setCount] = useState(0)</code><br/>Props: <code>function Child({ name, age }) { return &lt;div&gt;{name} is {age} years old&lt;/div&gt;; }</code>',
         },
         {
-          question:
-            'What is the difference between Class and Functional components?',
+          question: 'What is the difference between Class and Functional components?',
           answer:
             "Class components use ES6 classes with lifecycle methods and this.state for state management. Functional components are simpler functions that use hooks for state and lifecycle. Functional components are modern React's preferred approach - they're shorter, have better performance, are easier to test, and use hooks instead of lifecycle methods.",
         },
@@ -135,44 +133,51 @@ const frontendInterviewData = {
       questions: [
         {
           question: 'What are Higher-Order Components (HOCs)?',
-          answer: 'A <strong>HOC</strong> is a function that takes a component and returns a new component with additional functionality. Used to share logic between components without repeating code.<br/><br/><strong>When to use:</strong> For reusing logic like authentication, data handling, or service subscriptions.<br/><br/><strong>Example:</strong> <code>withAuth(Component)</code> - wraps a component with authentication logic.<br/><br/><strong>Pros:</strong> Logic reusability, separation of concerns<br/><strong>Cons:</strong> Can complicate component tree, debugging challenges'
+          answer:
+            'A <strong>HOC</strong> is a function that takes a component and returns a new component with additional functionality. Used to share logic between components without repeating code.<br/><br/><strong>When to use:</strong> For reusing logic like authentication, data handling, or service subscriptions.<br/><br/><strong>Example:</strong> <code>withAuth(Component)</code> - wraps a component with authentication logic.<br/><br/><strong>Pros:</strong> Logic reusability, separation of concerns<br/><strong>Cons:</strong> Can complicate component tree, debugging challenges',
         },
         {
           question: 'What is the Render Props pattern?',
-          answer: 'A pattern that involves passing a function as a prop to a component, which handles dynamic content rendering.<br/><br/><strong>When to use:</strong> When you need to share rendering logic, like dynamic lists or components that depend on external data.<br/><br/><strong>Example:</strong> <code>&lt;DataFetcher render={(data) =&gt; ...} /&gt;</code><br/><br/><strong>Pros:</strong> Flexible rendering, avoids HOCs in many cases<br/><strong>Cons:</strong> More verbose code, less common since Hooks'
+          answer:
+            'A pattern that involves passing a function as a prop to a component, which handles dynamic content rendering.<br/><br/><strong>When to use:</strong> When you need to share rendering logic, like dynamic lists or components that depend on external data.<br/><br/><strong>Example:</strong> <code>&lt;DataFetcher render={(data) =&gt; ...} /&gt;</code><br/><br/><strong>Pros:</strong> Flexible rendering, avoids HOCs in many cases<br/><strong>Cons:</strong> More verbose code, less common since Hooks',
         },
         {
           question: 'What are Compound Components?',
-          answer: 'A pattern where multiple components work together sharing implicit state, usually through a parent component.<br/><br/><strong>When to use:</strong> For creating flexible component APIs like menus, tabs, or accordions.<br/><br/><strong>Example:</strong> <code>&lt;Toggle&gt;&lt;Toggle.On /&gt;&lt;Toggle.Off /&gt;&lt;Toggle.Button /&gt;&lt;/Toggle&gt;</code><br/><br/><strong>Pros:</strong> Intuitive and flexible API, easy to extend<br/><strong>Cons:</strong> Context dependency can complicate logic'
+          answer:
+            'A pattern where multiple components work together sharing implicit state, usually through a parent component.<br/><br/><strong>When to use:</strong> For creating flexible component APIs like menus, tabs, or accordions.<br/><br/><strong>Example:</strong> <code>&lt;Toggle&gt;&lt;Toggle.On /&gt;&lt;Toggle.Off /&gt;&lt;Toggle.Button /&gt;&lt;/Toggle&gt;</code><br/><br/><strong>Pros:</strong> Intuitive and flexible API, easy to extend<br/><strong>Cons:</strong> Context dependency can complicate logic',
         },
         {
           question: 'What is the Container/Presentational pattern?',
-          answer: 'Separates components into two types: <strong>containers</strong> (handle logic and state) and <strong>presentational</strong> (handle UI).<br/><br/><strong>When to use:</strong> To improve maintainability and reusability of components.<br/><br/><strong>Example:</strong><br/>Container: <code>UserContainer</code> (fetches data)<br/>Presentational: <code>UserList</code> (renders UI)<br/><br/><strong>Pros:</strong> Clear separation of concerns, easy to test<br/><strong>Cons:</strong> More files, less common with Hooks'
+          answer:
+            'Separates components into two types: <strong>containers</strong> (handle logic and state) and <strong>presentational</strong> (handle UI).<br/><br/><strong>When to use:</strong> To improve maintainability and reusability of components.<br/><br/><strong>Example:</strong><br/>Container: <code>UserContainer</code> (fetches data)<br/>Presentational: <code>UserList</code> (renders UI)<br/><br/><strong>Pros:</strong> Clear separation of concerns, easy to test<br/><strong>Cons:</strong> More files, less common with Hooks',
         },
         {
           question: 'When should you use Custom Hooks?',
-          answer: '<strong>Custom Hooks</strong> encapsulate reusable logic in functions that use native React hooks.<br/><br/><strong>When to use:</strong> To share logic between components without HOCs or render props.<br/><br/><strong>Example:</strong> <code>useFetch(url)</code> - returns { data, loading }<br/><br/><strong>Pros:</strong> Simplifies logic reuse, cleaner than HOCs/render props<br/><strong>Cons:</strong> Requires good design to avoid coupling<br/><br/><em>Note:</em> Custom hooks have largely replaced HOCs and render props in modern React'
+          answer:
+            '<strong>Custom Hooks</strong> encapsulate reusable logic in functions that use native React hooks.<br/><br/><strong>When to use:</strong> To share logic between components without HOCs or render props.<br/><br/><strong>Example:</strong> <code>useFetch(url)</code> - returns { data, loading }<br/><br/><strong>Pros:</strong> Simplifies logic reuse, cleaner than HOCs/render props<br/><strong>Cons:</strong> Requires good design to avoid coupling<br/><br/><em>Note:</em> Custom hooks have largely replaced HOCs and render props in modern React',
         },
         {
           question: 'What is the difference between Controlled and Uncontrolled components?',
-          answer: '<strong>Controlled components</strong> have their state managed by React. <strong>Uncontrolled components</strong> use refs to access values directly from the DOM.<br/><br/><strong>When to use:</strong><br/>• Controlled: When you need to handle form state in React<br/>• Uncontrolled: For simple forms or external library integration<br/><br/><strong>Examples:</strong><br/>Controlled: <code>value={state} onChange={setState}</code><br/>Uncontrolled: <code>ref={inputRef}</code><br/><br/><strong>Pros/Cons:</strong><br/>• Controlled: More control, more code/renders<br/>• Uncontrolled: Less code, less predictable'
+          answer:
+            '<strong>Controlled components</strong> have their state managed by React. <strong>Uncontrolled components</strong> use refs to access values directly from the DOM.<br/><br/><strong>When to use:</strong><br/>• Controlled: When you need to handle form state in React<br/>• Uncontrolled: For simple forms or external library integration<br/><br/><strong>Examples:</strong><br/>Controlled: <code>value={state} onChange={setState}</code><br/>Uncontrolled: <code>ref={inputRef}</code><br/><br/><strong>Pros/Cons:</strong><br/>• Controlled: More control, more code/renders<br/>• Uncontrolled: Less code, less predictable',
         },
         {
           question: 'How do you implement Global State management?',
-          answer: 'Use a global state system to share data between components without manually passing props.<br/><br/><strong>When to use:</strong> When multiple components need to access or modify the same state.<br/><br/><strong>Options:</strong><br/>• <strong>Context API:</strong> Built-in, good for medium apps<br/>• <strong>Redux:</strong> External library, complex apps<br/>• <strong>Zustand/Jotai:</strong> Lightweight alternatives<br/><br/><strong>Pros:</strong> Avoids prop drilling, ideal for large apps<br/><strong>Cons:</strong> Can complicate data flow, overhead for small apps'
+          answer:
+            'Use a global state system to share data between components without manually passing props.<br/><br/><strong>When to use:</strong> When multiple components need to access or modify the same state.<br/><br/><strong>Options:</strong><br/>• <strong>Context API:</strong> Built-in, good for medium apps<br/>• <strong>Redux:</strong> External library, complex apps<br/>• <strong>Zustand/Jotai:</strong> Lightweight alternatives<br/><br/><strong>Pros:</strong> Avoids prop drilling, ideal for large apps<br/><strong>Cons:</strong> Can complicate data flow, overhead for small apps',
         },
         {
           question: 'How do SOLID principles apply to React development?',
-          answer: '<strong>SOLID principles</strong> guide clean, robust code design in React:<br/><br/><strong>1. Single Responsibility Principle (SRP):</strong><br/>Components and hooks should have one purpose<br/>• <code>&lt;UserCard&gt;</code> only displays user data<br/>• <code>useFetchUsers</code> handles data retrieval<br/><br/><strong>2. Open/Closed Principle (OCP):</strong><br/>Components should be extensible without modification<br/>• Use composition or HOCs to add functionality<br/><br/><strong>3. Liskov Substitution Principle (LSP):</strong><br/>Sub-components should be interchangeable with parent types<br/>• A <code>&lt;Button&gt;</code> variant should work wherever base <code>&lt;Button&gt;</code> is expected<br/><br/><strong>4. Interface Segregation Principle (ISP):</strong><br/>Avoid forcing components to depend on unused props<br/>• Pass only necessary data via props or context<br/><br/><strong>5. Dependency Inversion Principle (DIP):</strong><br/>Depend on abstractions, not implementations<br/>• Inject data service into hook rather than hardcoding API calls<br/><br/><em>Result:</em> React apps become modular, reusable, and easier to maintain.'
-        }
+          answer:
+            '<strong>SOLID principles</strong> guide clean, robust code design in React:<br/><br/><strong>1. Single Responsibility Principle (SRP):</strong><br/>Components and hooks should have one purpose<br/>• <code>&lt;UserCard&gt;</code> only displays user data<br/>• <code>useFetchUsers</code> handles data retrieval<br/><br/><strong>2. Open/Closed Principle (OCP):</strong><br/>Components should be extensible without modification<br/>• Use composition or HOCs to add functionality<br/><br/><strong>3. Liskov Substitution Principle (LSP):</strong><br/>Sub-components should be interchangeable with parent types<br/>• A <code>&lt;Button&gt;</code> variant should work wherever base <code>&lt;Button&gt;</code> is expected<br/><br/><strong>4. Interface Segregation Principle (ISP):</strong><br/>Avoid forcing components to depend on unused props<br/>• Pass only necessary data via props or context<br/><br/><strong>5. Dependency Inversion Principle (DIP):</strong><br/>Depend on abstractions, not implementations<br/>• Inject data service into hook rather than hardcoding API calls<br/><br/><em>Result:</em> React apps become modular, reusable, and easier to maintain.',
+        },
       ],
     },
     {
       title: 'Testing & Best Practices',
       questions: [
         {
-          question:
-            'How do you test React components with Jest and React Testing Library?',
+          question: 'How do you test React components with Jest and React Testing Library?',
           answer:
             "Use React Testing Library for user-centric testing. Key methods: render() to mount components, screen.getByText/getByRole for queries, fireEvent/userEvent for interactions, and waitFor() for async operations. Focus on testing behavior users see rather than implementation details. Example: render(<Counter />), find elements with screen.getByRole('button'), simulate clicks with userEvent.click(), and assert with expect().toBeInTheDocument().",
         },
@@ -199,17 +204,17 @@ const frontendInterviewData = {
         {
           question: 'How do you implement React.memo for performance optimization?',
           answer:
-            '<strong>React.memo</strong> is a higher-order component that memoizes the result and prevents re-renders if props haven\'t changed.<br/><br/><strong>Code Example:</strong><br/><br/><code><pre>// Memoized component to prevent re-renders if props don\'t change<br/>const UserCard = React.memo(({ user, onSelect }) => {<br/>  console.log(`Rendering UserCard for ${user.name}`);<br/>  return (<br/>    &lt;div onClick={() => onSelect(user.id)}&gt;<br/>      {user.name} ({user.email})<br/>    &lt;/div&gt;<br/>  );<br/>});</pre></code><br/><br/><strong>Key Points:</strong><br/>• Only re-renders when <code>user</code> or <code>onSelect</code> props change<br/>• Performs shallow comparison of props by default<br/>• Best for expensive components that receive stable props<br/>• Can provide custom comparison function as second argument',
+            "<strong>React.memo</strong> is a higher-order component that memoizes the result and prevents re-renders if props haven't changed.<br/><br/><strong>Code Example:</strong><br/><br/><code><pre>// Memoized component to prevent re-renders if props don't change<br/>const UserCard = React.memo(({ user, onSelect }) => {<br/>  console.log(`Rendering UserCard for ${user.name}`);<br/>  return (<br/>    &lt;div onClick={() => onSelect(user.id)}&gt;<br/>      {user.name} ({user.email})<br/>    &lt;/div&gt;<br/>  );<br/>});</pre></code><br/><br/><strong>Key Points:</strong><br/>• Only re-renders when <code>user</code> or <code>onSelect</code> props change<br/>• Performs shallow comparison of props by default<br/>• Best for expensive components that receive stable props<br/>• Can provide custom comparison function as second argument",
         },
         {
           question: 'How do you use useMemo and useCallback for performance optimization?',
           answer:
-            '<strong>useMemo</strong> memoizes expensive calculations, while <strong>useCallback</strong> memoizes function references to prevent unnecessary re-renders.<br/><br/><strong>Code Example:</strong><br/><br/><code><pre>// Memoize filtered users to avoid recalculating on every render<br/>const filteredUsers = useMemo(() => {<br/>  console.log(\'Filtering users\');<br/>  return users.filter((user) =><br/>    user.name.toLowerCase().includes(searchTerm.toLowerCase())<br/>  );<br/>}, [users, searchTerm]);<br/><br/>// Memoize the onSelect callback to prevent re-creating it<br/>const handleSelectUser = useCallback((userId) => {<br/>  console.log(`Selected user with ID: ${userId}`);<br/>}, []); // Empty deps if no dependencies needed</pre></code><br/><br/><strong>Key Differences:</strong><br/>• <strong>useMemo:</strong> Memoizes computed values (expensive calculations)<br/>• <strong>useCallback:</strong> Memoizes function references (prevents child re-renders)<br/>• Both depend on dependency arrays to determine when to recalculate<br/>• Use when performance profiling shows actual benefits',
+            "<strong>useMemo</strong> memoizes expensive calculations, while <strong>useCallback</strong> memoizes function references to prevent unnecessary re-renders.<br/><br/><strong>Code Example:</strong><br/><br/><code><pre>// Memoize filtered users to avoid recalculating on every render<br/>const filteredUsers = useMemo(() => {<br/>  console.log('Filtering users');<br/>  return users.filter((user) =><br/>    user.name.toLowerCase().includes(searchTerm.toLowerCase())<br/>  );<br/>}, [users, searchTerm]);<br/><br/>// Memoize the onSelect callback to prevent re-creating it<br/>const handleSelectUser = useCallback((userId) => {<br/>  console.log(`Selected user with ID: ${userId}`);<br/>}, []); // Empty deps if no dependencies needed</pre></code><br/><br/><strong>Key Differences:</strong><br/>• <strong>useMemo:</strong> Memoizes computed values (expensive calculations)<br/>• <strong>useCallback:</strong> Memoizes function references (prevents child re-renders)<br/>• Both depend on dependency arrays to determine when to recalculate<br/>• Use when performance profiling shows actual benefits",
         },
         {
           question: 'How do you implement Code Splitting with React.lazy and Suspense?',
           answer:
-            '<strong>Code Splitting</strong> allows you to load components dynamically, reducing initial bundle size and improving performance by loading components only when needed.<br/><br/><strong>Code Example:</strong><br/><br/><code><pre>const LazyComponent = lazy(() => import(\'./HeavyComponent\'));<br/><br/>function App() {<br/>  return (<br/>    &lt;Suspense fallback={&lt;div&gt;Loading...&lt;/div&gt;}&gt;<br/>      &lt;LazyComponent /&gt;<br/>    &lt;/Suspense&gt;<br/>  );<br/>}</pre></code><br/><br/><strong>Key Points:</strong><br/>• <strong>React.lazy():</strong> Dynamically imports components using dynamic import()<br/>• <strong>Suspense:</strong> Handles loading states while component loads<br/>• <strong>Fallback:</strong> Shows loading UI during component loading<br/>• <strong>Bundle splitting:</strong> Creates separate chunks for better performance<br/>• Best for large components or route-based splitting',
+            "<strong>Code Splitting</strong> allows you to load components dynamically, reducing initial bundle size and improving performance by loading components only when needed.<br/><br/><strong>Code Example:</strong><br/><br/><code><pre>const LazyComponent = lazy(() => import('./HeavyComponent'));<br/><br/>function App() {<br/>  return (<br/>    &lt;Suspense fallback={&lt;div&gt;Loading...&lt;/div&gt;}&gt;<br/>      &lt;LazyComponent /&gt;<br/>    &lt;/Suspense&gt;<br/>  );<br/>}</pre></code><br/><br/><strong>Key Points:</strong><br/>• <strong>React.lazy():</strong> Dynamically imports components using dynamic import()<br/>• <strong>Suspense:</strong> Handles loading states while component loads<br/>• <strong>Fallback:</strong> Shows loading UI during component loading<br/>• <strong>Bundle splitting:</strong> Creates separate chunks for better performance<br/>• Best for large components or route-based splitting",
         },
       ],
     },
@@ -221,26 +226,27 @@ const FrontendInterviewPreparation = () => {
 
   const handleToggle = (sectionIndex: number, questionIndex: number) => {
     const currentId = `${sectionIndex}-${questionIndex}`;
+
     setOpenIndex(openIndex === currentId ? null : currentId);
   };
 
   return (
     <div className='mt-[65px]'>
-      <section className='py-16 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800'>
-        <div className='max-w-6xl mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className='text-center mb-16'>
-            <h1 className='text-4xl font-bold text-gray-900 dark:text-gray-100 mb-6'>
+      <section className='bg-gradient-to-br from-blue-50 to-indigo-100 py-16 dark:from-gray-900 dark:to-gray-800'>
+        <div className='mx-auto max-w-6xl px-4 sm:px-6 lg:px-8'>
+          <div className='mb-16 text-center'>
+            <h1 className='mb-6 text-4xl font-bold text-gray-900 dark:text-gray-100'>
               {frontendInterviewData.title}
             </h1>
-            <p className='text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto'>
+            <p className='mx-auto max-w-2xl text-xl text-gray-600 dark:text-gray-400'>
               {frontendInterviewData.subtitle}
             </p>
           </div>
 
-          <div className='max-w-4xl mx-auto space-y-12'>
+          <div className='mx-auto max-w-4xl space-y-12'>
             {frontendInterviewData.sections.map((section, sectionIndex) => (
               <div key={sectionIndex} className='space-y-6'>
-                <h2 className='text-2xl font-bold text-gray-900 dark:text-gray-100 border-b-2 border-blue-200 dark:border-blue-800 pb-2'>
+                <h2 className='border-b-2 border-blue-200 pb-2 text-2xl font-bold text-gray-900 dark:border-blue-800 dark:text-gray-100'>
                   {section.title}
                 </h2>
 
@@ -252,39 +258,35 @@ const FrontendInterviewPreparation = () => {
                     return (
                       <div
                         key={questionIndex}
-                        className='bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300'
+                        className='rounded-lg bg-white shadow-md transition-shadow duration-300 hover:shadow-lg dark:bg-gray-800'
                       >
                         <button
-                          onClick={() =>
-                            handleToggle(sectionIndex, questionIndex)
-                          }
-                          className='w-full text-left flex items-center justify-between p-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200'
+                          className='flex w-full items-center justify-between p-6 text-left transition-colors duration-200 hover:bg-gray-50 dark:hover:bg-gray-700'
+                          onClick={() => handleToggle(sectionIndex, questionIndex)}
                         >
-                          <h3 className='font-semibold text-lg text-gray-900 dark:text-gray-100 pr-4'>
+                          <h3 className='pr-4 text-lg font-semibold text-gray-900 dark:text-gray-100'>
                             {faq.question}
                           </h3>
 
                           <div className='flex-shrink-0'>
                             {isOpen ? (
-                              <ChevronUp className='w-5 h-5 text-blue-600 dark:text-blue-400' />
+                              <ChevronUp className='h-5 w-5 text-blue-600 dark:text-blue-400' />
                             ) : (
-                              <ChevronDown className='w-5 h-5 text-gray-400 dark:text-gray-500' />
+                              <ChevronDown className='h-5 w-5 text-gray-400 dark:text-gray-500' />
                             )}
                           </div>
                         </button>
 
                         <div
                           className={`overflow-hidden transition-all duration-300 ${
-                            isOpen
-                              ? 'max-h-none opacity-100 pb-6'
-                              : 'max-h-0 opacity-0'
+                            isOpen ? 'max-h-none pb-6 opacity-100' : 'max-h-0 opacity-0'
                           }`}
                         >
                           <div className='px-6'>
-                            <div className='border-t border-gray-200 dark:border-gray-600 pt-4'>
-                              <div 
-                                className='text-gray-600 dark:text-gray-300 leading-relaxed'
+                            <div className='border-t border-gray-200 pt-4 dark:border-gray-600'>
+                              <div
                                 dangerouslySetInnerHTML={{ __html: faq.answer }}
+                                className='leading-relaxed text-gray-600 dark:text-gray-300'
                               />
                             </div>
                           </div>

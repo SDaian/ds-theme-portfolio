@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import { Link } from 'react-scroll';
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
+
 import { ThemeSwitch } from './ThemeSwitch';
 
 type LogoProps = {
@@ -28,10 +29,10 @@ export const Logo = ({
 
   const logoContent = (
     <motion.div
-      initial={{ x: -500, opacity: 0, scale: 0.5 }}
       animate={{ x: 0, opacity: 1, scale: 1 }}
+      className='md:block md:py-3'
+      initial={{ x: -500, opacity: 0, scale: 0.5 }}
       transition={{ duration: 0.9 }}
-      className='md:py-3 md:block'
     >
       <h2 className='text-2xl font-bold'>
         <span className='lg:hidden'>DS</span>
@@ -44,34 +45,28 @@ export const Logo = ({
   return (
     <div className='flex grow items-center justify-between py-2 md:block'>
       {isHomePage ? (
-        <Link
-          to='home'
-          className='cursor-pointer'
-          smooth={true}
-          offset={-100}
-          duration={500}
-        >
+        <Link smooth className='cursor-pointer' duration={500} offset={-100} to='home'>
           {logoContent}
         </Link>
       ) : (
-        <NextLink href='/' className='cursor-pointer'>
+        <NextLink className='cursor-pointer' href='/'>
           {logoContent}
         </NextLink>
       )}
-      <div className='md:hidden flex items-center gap-1'>
+      <div className='flex items-center gap-1 md:hidden'>
         <ThemeSwitch
           currentTheme={currentTheme}
+          setTheme={setTheme}
           systemTheme={systemTheme}
           theme={theme}
-          setTheme={setTheme}
         />
         <motion.button
-          initial={{ x: 500, opacity: 0, scale: 0.5 }}
           animate={{ x: 0, opacity: 1, scale: 1 }}
-          transition={{ duration: 0.9 }}
-          className='border-none p-2 text-gray-700 rounded-md outline-hidden focus:border-gray-400 focus:border dark:text-white'
-          onClick={() => setNavbar(!navbar)}
           aria-label='toggle menu'
+          className='rounded-md border-none p-2 text-gray-700 outline-hidden focus:border focus:border-gray-400 dark:text-white'
+          initial={{ x: 500, opacity: 0, scale: 0.5 }}
+          transition={{ duration: 0.9 }}
+          onClick={() => setNavbar(!navbar)}
         >
           {navbar ? <X size={30} /> : <Menu size={30} />}
         </motion.button>

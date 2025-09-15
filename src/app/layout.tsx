@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import { Geist, Inter } from 'next/font/google';
 
+import { Geist, Inter } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
@@ -27,21 +27,17 @@ const inter = Inter({
   variable: '--font-inter',
 });
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang='en' suppressHydrationWarning>
+    <html suppressHydrationWarning lang='en'>
       <body
         className={`${geist.variable} ${inter.variable} antialiased transition-colors duration-300`}
       >
         <ThemeProvider
+          disableTransitionOnChange
+          enableSystem
           attribute='class'
           defaultTheme='light'
-          enableSystem
-          disableTransitionOnChange
         >
           <Navbar />
           {children}

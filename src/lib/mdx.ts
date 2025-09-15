@@ -1,10 +1,11 @@
+import type { BlogPost, BlogPostMetadata } from './blog-types';
+
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
 import matter from 'gray-matter';
 
 export type { BlogPost, BlogPostMetadata } from './blog-types';
-import type { BlogPost, BlogPostMetadata } from './blog-types';
 
 export function getBlogPost(slug: string): BlogPost {
   const contentDirectory = join(process.cwd(), 'src/content');
@@ -26,7 +27,7 @@ export function getBlogPost(slug: string): BlogPost {
       content,
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
 
     // Fallback for posts without frontmatter
     return {

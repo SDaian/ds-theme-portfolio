@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main className='mx-auto md:max-w-[1400px] px-6 sm:px-6'>
+    <main className='mx-auto px-6 sm:px-6 md:max-w-[1400px]'>
       <HashScrollHandler />
       <HeroSection />
       <AboutSection />

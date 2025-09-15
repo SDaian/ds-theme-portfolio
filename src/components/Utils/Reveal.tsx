@@ -32,27 +32,25 @@ export const Reveal = ({
 
   return (
     <div
-      className={className}
       ref={ref}
+      className={className}
       style={{ position: 'relative', width, overflow: 'hidden' }}
     >
       <motion.div
+        animate={mainControls}
+        initial='hidden'
+        transition={{ duration: 0.6, delay: 0.3 }}
         variants={{
           hidden: { opacity: 0, x: index % 2 === 0 ? -150 : 150, scale: 0.5 },
           visible: { opacity: 1, x: 0, scale: 1 },
         }}
-        initial='hidden'
-        animate={mainControls}
-        transition={{ duration: 0.6, delay: 0.3 }}
       >
         {children}
       </motion.div>
       {showEaseIn && (
         <motion.div
-          variants={{ hidden: { left: 0 }, visible: { left: '100%' } }}
-          initial='hidden'
           animate={slideControls}
-          transition={{ duration: 0.5, ease: 'easeIn' }}
+          initial='hidden'
           style={{
             position: 'absolute',
             top: 4,
@@ -62,7 +60,9 @@ export const Reveal = ({
             background: 'var(--color-brand)',
             zIndex: 20,
           }}
-        ></motion.div>
+          transition={{ duration: 0.5, ease: 'easeIn' }}
+          variants={{ hidden: { left: 0 }, visible: { left: '100%' } }}
+        />
       )}
     </div>
   );
