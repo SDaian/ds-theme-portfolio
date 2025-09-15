@@ -3,8 +3,15 @@ title: 'Feature-Based Architecture Patterns for Scalable Angular Applications'
 description: 'Master feature-based architecture patterns in Angular 19 with standalone components, signals, and modular design principles for building maintainable large-scale applications.'
 publishedAt: '2025-09-15'
 author: 'Daian Scuarissi'
-tags: ['angular', 'architecture', 'scalability', 'best-practices', 'design-patterns']
-image: '/blog/angular-feature-architecture.png'
+tags:
+  [
+    'angular',
+    'architecture',
+    'scalability',
+    'best-practices',
+    'design-patterns',
+  ]
+image: '/blog/setup-image.png'
 ---
 
 Building scalable Angular applications requires more than just knowing the framework - it demands a deep understanding of architectural patterns that support growth, maintainability, and team collaboration. After working with Angular applications ranging from small prototypes to enterprise-scale platforms with hundreds of components, I've learned that **feature-based architecture** is not just a recommendation—it's essential for long-term success.
@@ -73,7 +80,7 @@ Each feature should be as self-contained as possible, with minimal dependencies 
     <app-user-details [user]="user" />
     <app-product-recommendations [userId]="user.id" />
     <app-order-history [userId]="user.id" />
-  `
+  `,
 })
 export class UserProfileComponent {
   // This component knows too much about other features
@@ -86,11 +93,13 @@ export class UserProfileComponent {
     <app-user-details [user]="user" />
     <app-feature-widget
       [feature]="'product-recommendations'"
-      [context]="{ userId: user.id }" />
+      [context]="{ userId: user.id }"
+    />
     <app-feature-widget
       [feature]="'order-history'"
-      [context]="{ userId: user.id }" />
-  `
+      [context]="{ userId: user.id }"
+    />
+  `,
 })
 export class UserProfileComponent {
   // Features communicate through well-defined interfaces
@@ -102,11 +111,13 @@ export class UserProfileComponent {
 Distinguish between code that belongs to a specific feature and code that should be shared across features. This distinction is crucial for maintaining clean boundaries and avoiding circular dependencies.
 
 **Feature-Specific Code:**
+
 - Business logic unique to that feature
 - Components used only within that feature
 - Feature-specific data models and services
 
 **Shared Code:**
+
 - UI components used across multiple features (buttons, modals, forms)
 - Common services (HTTP interceptors, authentication, logging)
 - Shared data models and utilities
@@ -195,7 +206,7 @@ import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService {
   private readonly http = inject(HttpClient);
@@ -204,29 +215,28 @@ export class ProductService {
   private readonly filterSignal = signal<ProductFilter>({});
 
   // Reactive product stream
-  private readonly products$ = this.http.get<Product[]>('/api/products')
+  private readonly products$ = this.http
+    .get<Product[]>('/api/products')
     .pipe(shareReplay(1));
 
   // Filtered products computed from filter signal
   readonly filteredProducts$ = combineLatest([
     this.products$,
-    this.toObservable(this.filterSignal)
-  ]).pipe(
-    map(([products, filter]) => this.applyFilter(products, filter))
-  );
+    this.toObservable(this.filterSignal),
+  ]).pipe(map(([products, filter]) => this.applyFilter(products, filter)));
 
   updateFilter(filter: Partial<ProductFilter>): void {
-    this.filterSignal.update(current => ({ ...current, ...filter }));
+    this.filterSignal.update((current) => ({ ...current, ...filter }));
   }
 
   getProduct(id: string): Observable<Product | undefined> {
     return this.products$.pipe(
-      map(products => products.find(p => p.id === id))
+      map((products) => products.find((p) => p.id === id))
     );
   }
 
   private applyFilter(products: Product[], filter: ProductFilter): Product[] {
-    return products.filter(product => {
+    return products.filter((product) => {
       if (filter.category && product.categoryId !== filter.category) {
         return false;
       }
@@ -244,9 +254,11 @@ export class ProductService {
 
       if (filter.searchTerm) {
         const searchLower = filter.searchTerm.toLowerCase();
-        return product.name.toLowerCase().includes(searchLower) ||
-               product.description.toLowerCase().includes(searchLower) ||
-               product.tags.some(tag => tag.toLowerCase().includes(searchLower));
+        return (
+          product.name.toLowerCase().includes(searchLower) ||
+          product.description.toLowerCase().includes(searchLower) ||
+          product.tags.some((tag) => tag.toLowerCase().includes(searchLower))
+        );
       }
 
       return true;
@@ -255,7 +267,7 @@ export class ProductService {
 
   private toObservable<T>(signal: () => T): Observable<T> {
     // Utility to convert signal to observable
-    return new Observable(subscriber => {
+    return new Observable((subscriber) => {
       const unsubscribe = effect(() => {
         subscriber.next(signal());
       });
@@ -280,24 +292,23 @@ import { ProductCardComponent } from '../product-card/product-card.component';
   template: `
     <div class="product-grid">
       @if (isLoading()) {
-        <div class="loading-skeleton">
-          @for (placeholder of loadingPlaceholders; track $index) {
-            <div class="product-card-skeleton"></div>
-          }
-        </div>
-      } @else if (products().length === 0) {
-        <div class="empty-state">
-          <h3>No products found</h3>
-          <p>Try adjusting your filters or search criteria.</p>
-        </div>
-      } @else {
-        @for (product of products(); track product.id) {
-          <app-product-card
-            [product]="product"
-            (addToCart)="onAddToCart($event)"
-            (viewDetails)="onViewDetails($event)" />
+      <div class="loading-skeleton">
+        @for (placeholder of loadingPlaceholders; track $index) {
+        <div class="product-card-skeleton"></div>
         }
-      }
+      </div>
+      } @else if (products().length === 0) {
+      <div class="empty-state">
+        <h3>No products found</h3>
+        <p>Try adjusting your filters or search criteria.</p>
+      </div>
+      } @else { @for (product of products(); track product.id) {
+      <app-product-card
+        [product]="product"
+        (addToCart)="onAddToCart($event)"
+        (viewDetails)="onViewDetails($event)"
+      />
+      } }
     </div>
   `,
 })
@@ -312,7 +323,9 @@ export class ProductListComponent {
   viewDetails = output<Product>();
 
   // Reactive data
-  readonly products = toSignal(this.productService.filteredProducts$, { initialValue: [] });
+  readonly products = toSignal(this.productService.filteredProducts$, {
+    initialValue: [],
+  });
 
   readonly loadingPlaceholders = Array(8).fill(0);
 
@@ -344,7 +357,7 @@ export interface AppEvent<T = any> {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EventBusService {
   private readonly events$ = new Subject<AppEvent>();
@@ -353,43 +366,48 @@ export class EventBusService {
     this.events$.next({
       type,
       payload,
-      timestamp: new Date()
+      timestamp: new Date(),
     });
   }
 
   on<T>(eventType: string) {
     return this.events$.pipe(
-      filter(event => event.type === eventType),
-      map(event => event.payload as T)
+      filter((event) => event.type === eventType),
+      map((event) => event.payload as T)
     );
   }
 }
 
 // Usage in shopping cart feature
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ShoppingCartService {
   private readonly eventBus = inject(EventBusService);
   private readonly cartItems = signal<CartItem[]>([]);
 
   addToCart(product: Product): void {
-    const existingItem = this.cartItems().find(item => item.productId === product.id);
+    const existingItem = this.cartItems().find(
+      (item) => item.productId === product.id
+    );
 
     if (existingItem) {
       this.updateQuantity(product.id, existingItem.quantity + 1);
     } else {
-      this.cartItems.update(items => [...items, {
-        productId: product.id,
-        quantity: 1,
-        addedAt: new Date()
-      }]);
+      this.cartItems.update((items) => [
+        ...items,
+        {
+          productId: product.id,
+          quantity: 1,
+          addedAt: new Date(),
+        },
+      ]);
     }
 
     // Notify other features about cart changes
     this.eventBus.emit('cart.item-added', {
       productId: product.id,
-      totalItems: this.getTotalItems()
+      totalItems: this.getTotalItems(),
     });
   }
 
@@ -415,13 +433,13 @@ interface UserState {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserStore {
   private readonly state = signal<UserState>({
     currentUser: null,
     isLoading: false,
-    error: null
+    error: null,
   });
 
   // Computed selectors
@@ -432,28 +450,28 @@ export class UserStore {
 
   // Actions
   setLoading(loading: boolean): void {
-    this.state.update(state => ({ ...state, isLoading: loading }));
+    this.state.update((state) => ({ ...state, isLoading: loading }));
   }
 
   setUser(user: User | null): void {
-    this.state.update(state => ({
+    this.state.update((state) => ({
       ...state,
       currentUser: user,
       isLoading: false,
-      error: null
+      error: null,
     }));
   }
 
   setError(error: string): void {
-    this.state.update(state => ({
+    this.state.update((state) => ({
       ...state,
       error,
-      isLoading: false
+      isLoading: false,
     }));
   }
 
   clearError(): void {
-    this.state.update(state => ({ ...state, error: null }));
+    this.state.update((state) => ({ ...state, error: null }));
   }
 }
 ```
@@ -469,29 +487,37 @@ import { Routes } from '@angular/router';
 export const PRODUCT_CATALOG_ROUTES: Routes = [
   {
     path: '',
-    loadComponent: () => import('./components/product-layout/product-layout.component')
-      .then(m => m.ProductLayoutComponent),
+    loadComponent: () =>
+      import('./components/product-layout/product-layout.component').then(
+        (m) => m.ProductLayoutComponent
+      ),
     children: [
       {
         path: '',
-        loadComponent: () => import('./components/product-list-page/product-list-page.component')
-          .then(m => m.ProductListPageComponent)
+        loadComponent: () =>
+          import(
+            './components/product-list-page/product-list-page.component'
+          ).then((m) => m.ProductListPageComponent),
       },
       {
         path: 'category/:categoryId',
-        loadComponent: () => import('./components/product-list-page/product-list-page.component')
-          .then(m => m.ProductListPageComponent)
+        loadComponent: () =>
+          import(
+            './components/product-list-page/product-list-page.component'
+          ).then((m) => m.ProductListPageComponent),
       },
       {
         path: ':id',
-        loadComponent: () => import('./components/product-detail-page/product-detail-page.component')
-          .then(m => m.ProductDetailPageComponent),
+        loadComponent: () =>
+          import(
+            './components/product-detail-page/product-detail-page.component'
+          ).then((m) => m.ProductDetailPageComponent),
         resolve: {
-          product: () => inject(ProductResolver)
-        }
-      }
-    ]
-  }
+          product: () => inject(ProductResolver),
+        },
+      },
+    ],
+  },
 ];
 ```
 
@@ -502,24 +528,33 @@ import { Routes } from '@angular/router';
 export const APP_ROUTES: Routes = [
   {
     path: 'products',
-    loadChildren: () => import('../features/product-catalog/product-catalog.routes')
-      .then(m => m.PRODUCT_CATALOG_ROUTES)
+    loadChildren: () =>
+      import('../features/product-catalog/product-catalog.routes').then(
+        (m) => m.PRODUCT_CATALOG_ROUTES
+      ),
   },
   {
     path: 'user',
-    loadChildren: () => import('../features/user-management/user-management.routes')
-      .then(m => m.USER_MANAGEMENT_ROUTES)
+    loadChildren: () =>
+      import('../features/user-management/user-management.routes').then(
+        (m) => m.USER_MANAGEMENT_ROUTES
+      ),
   },
   {
     path: 'cart',
-    loadChildren: () => import('../features/shopping-cart/shopping-cart.routes')
-      .then(m => m.SHOPPING_CART_ROUTES)
+    loadChildren: () =>
+      import('../features/shopping-cart/shopping-cart.routes').then(
+        (m) => m.SHOPPING_CART_ROUTES
+      ),
   },
   { path: '', redirectTo: '/products', pathMatch: 'full' },
-  { path: '**', loadComponent: () => import('./shared/components/not-found/not-found.component') }
+  {
+    path: '**',
+    loadComponent: () =>
+      import('./shared/components/not-found/not-found.component'),
+  },
 ];
 ```
-
 
 ## Performance Considerations
 
@@ -545,7 +580,6 @@ If you're migrating from a monolithic structure:
 2. **Gradual Migration**: Move existing components one feature at a time
 3. **Shared Dependencies**: Extract common dependencies to shared modules first
 4. **Update Build Process**: Modify your build pipeline to support the new structure
-
 
 ## Best Practices and Common Pitfalls
 
@@ -573,27 +607,34 @@ Document your architectural decisions:
 # ADR-001: Adopt Feature-Based Architecture
 
 ## Status
+
 Accepted
 
 ## Context
+
 Our Angular application has grown to 50+ components with increasing complexity and team size.
 Current layer-based structure is causing merge conflicts and making it difficult to isolate features.
 
 ## Decision
+
 Adopt feature-based architecture with the following principles:
+
 - Each feature is self-contained with its own components, services, and models
 - Features communicate through well-defined interfaces and events
 - Shared code is extracted to shared modules
 - Each feature can be developed and tested independently
 
 ## Consequences
+
 Positive:
+
 - Better code organization and maintainability
 - Reduced merge conflicts
 - Easier onboarding for new developers
 - Clearer ownership and responsibilities
 
 Negative:
+
 - Initial migration effort required
 - Need to establish new conventions and training
 - Potential for code duplication if not managed properly
@@ -608,7 +649,7 @@ Implement monitoring for each feature:
 ```typescript
 // shared/services/performance-monitor.service.ts
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PerformanceMonitorService {
   private readonly performanceEntries = new Map<string, PerformanceEntry>();
@@ -632,7 +673,7 @@ export class PerformanceMonitorService {
       event: 'feature-load',
       feature: featureName,
       duration: measure.duration,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
   }
 
@@ -674,4 +715,4 @@ Start with one feature, establish the patterns, and gradually expand the approac
 
 ---
 
-*What challenges have you faced when scaling Angular applications? How has feature-based architecture helped (or hindered) your development workflow? I'd love to hear about your experiences and lessons learned.*
+_What challenges have you faced when scaling Angular applications? How has feature-based architecture helped (or hindered) your development workflow? I'd love to hear about your experiences and lessons learned._
