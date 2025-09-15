@@ -22,24 +22,22 @@ const skills: Skill[] = [
 
 const ProfileImage = () => (
   <div className='flex flex-col items-center md:items-start'>
-    <h3 className='text-center text-2xl font-bold mb-6 md:text-left'>
-      My (dreaming) Setup
-    </h3>
+    <h3 className='mb-6 text-center text-2xl font-bold md:text-left'>My (dreaming) Setup</h3>
     <Image
-      className='shadow-2xl rounded-lg transition-transform duration-300 hover:scale-105'
-      src='/setup-image.png'
-      alt='Daian Scuarissi setup image'
-      width={420}
-      height={300}
-      style={{ width: 'auto', height: 'auto' }}
       priority
+      alt='Daian Scuarissi setup image'
+      className='rounded-lg shadow-2xl transition-transform duration-300 hover:scale-105'
+      height={300}
+      src='/setup-image.png'
+      style={{ width: 'auto', height: 'auto' }}
+      width={420}
     />
   </div>
 );
 
 const SkillBadge = ({ skill }: { skill: Skill }) => (
   <span
-    className='bg-gray-200 dark:bg-gray-700 px-4 py-2 mr-2 mt-2 text-gray-700 dark:text-gray-200 rounded-md font-medium cursor-pointer transition-all duration-200 hover:bg-brand hover:text-white hover:scale-105'
+    className='hover:bg-brand mt-2 mr-2 cursor-pointer rounded-md bg-gray-200 px-4 py-2 font-medium text-gray-700 transition-all duration-200 hover:scale-105 hover:text-white dark:bg-gray-700 dark:text-gray-200'
     role='button'
     tabIndex={0}
   >
@@ -49,9 +47,7 @@ const SkillBadge = ({ skill }: { skill: Skill }) => (
 
 const SkillsSection = () => (
   <div className='flex flex-col items-center md:items-start'>
-    <h3 className='text-center text-2xl font-bold mb-6 md:text-left'>
-      My Skills
-    </h3>
+    <h3 className='mb-6 text-center text-2xl font-bold md:text-left'>My Skills</h3>
     <div className='flex flex-wrap justify-center md:justify-start' role='list'>
       {skills.map((skill, idx) => (
         <SkillBadge key={`${skill.name}-${idx}`} skill={skill} />
@@ -61,38 +57,34 @@ const SkillsSection = () => (
 );
 
 const AboutContent = () => (
-  <div className='lg:w-1/2 text-lg space-y-6'>
+  <div className='space-y-6 text-lg lg:w-1/2'>
     <header>
-      <h3 className='text-center text-2xl font-bold mb-6 md:text-left'>
-        Get to know me!
-      </h3>
+      <h3 className='mb-6 text-center text-2xl font-bold md:text-left'>Get to know me!</h3>
     </header>
 
     <div className='space-y-4 text-center md:text-left'>
-      <p className='font-medium leading-relaxed'>
-        Hey there, I&apos;m{' '}
-        <span className='font-bold text-brand'>Daian Scuarissi</span>, a{' '}
-        <span className='text-brand font-semibold'>software engineer</span> with
-        over 7 years of experience developing applications and web interfaces.
-        My expertise lies in frontend technologies, and I have a passion for
-        creating engaging and intuitive user experiences.
+      <p className='leading-relaxed font-medium'>
+        Hey there, I&apos;m <span className='text-brand font-bold'>Daian Scuarissi</span>, a{' '}
+        <span className='text-brand font-semibold'>software engineer</span> with over 7 years of
+        experience developing applications and web interfaces. My expertise lies in frontend
+        technologies, and I have a passion for creating engaging and intuitive user experiences.
       </p>
 
-      <p className='font-medium leading-relaxed'>
+      <p className='leading-relaxed font-medium'>
         I specialize in modern frontend frameworks like{' '}
         <span className='text-brand font-semibold'>React</span> and{' '}
-        <span className='text-brand font-semibold'>Angular</span>, building
-        responsive web applications and dynamic user interfaces. I&apos;m always{' '}
-        <span className='text-brand underline underline-offset-4 decoration-2'>
+        <span className='text-brand font-semibold'>Angular</span>, building responsive web
+        applications and dynamic user interfaces. I&apos;m always{' '}
+        <span className='text-brand underline decoration-2 underline-offset-4'>
           learning and improving my skills
         </span>{' '}
         to stay current with the latest technologies.
       </p>
 
-      <p className='font-medium leading-relaxed'>
-        Looking ahead, I&apos;m excited to continue growing as a software
-        engineer and tackle challenging projects that showcase my expertise.{' '}
-        <span className='underline underline-offset-4 decoration-2'>
+      <p className='leading-relaxed font-medium'>
+        Looking ahead, I&apos;m excited to continue growing as a software engineer and tackle
+        challenging projects that showcase my expertise.{' '}
+        <span className='underline decoration-2 underline-offset-4'>
           I&apos;m always open to new opportunities and eager to collaborate
         </span>{' '}
         with other passionate professionals.
@@ -102,27 +94,22 @@ const AboutContent = () => (
 );
 
 const AboutSection = () => {
+  const asd = 0;
+
   return (
-    <section
-      aria-labelledby='about-heading'
-      id='about'
-      className='scroll-mt-16'
-    >
+    <section aria-labelledby='about-heading' className='scroll-mt-16' id='about'>
       <div className='container mx-auto py-16 md:py-24'>
-        <header className='text-center mb-16'>
-          <h2
-            id='about-heading'
-            className='text-4xl md:text-5xl font-bold mb-4'
-          >
+        <header className='mb-16 text-center'>
+          <h2 className='mb-4 text-4xl font-bold md:text-5xl' id='about-heading'>
             About Me
           </h2>
-          <div className='w-16 h-1 mx-auto bg-brand rounded-full' />
+          <div className='bg-brand mx-auto h-1 w-16 rounded-full' />
         </header>
 
-        <div className='flex flex-col lg:flex-row gap-12 lg:gap-16 items-start'>
+        <div className='flex flex-col items-start gap-12 lg:flex-row lg:gap-16'>
           <AboutContent />
 
-          <aside className='lg:w-1/2 space-y-12'>
+          <aside className='space-y-12 lg:w-1/2'>
             <SkillsSection />
             <ProfileImage />
           </aside>

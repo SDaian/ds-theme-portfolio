@@ -6,6 +6,7 @@ export const HashScrollHandler = () => {
   useEffect(() => {
     const handleHashScroll = () => {
       const hash = window.location.hash.replace('#', '');
+
       if (hash) {
         // Small delay to ensure page is rendered
         setTimeout(() => {

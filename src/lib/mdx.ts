@@ -1,28 +1,10 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
+
 import matter from 'gray-matter';
 
-export interface BlogPost {
-  slug: string;
-  title: string;
-  description: string;
-  publishedAt: string;
-  modifiedAt?: string;
-  author: string;
-  tags: string[];
-  image?: string;
-  content: string;
-}
-
-export interface BlogPostMetadata {
-  title: string;
-  description: string;
-  publishedAt: string;
-  modifiedAt?: string;
-  author: string;
-  tags: string[];
-  image?: string;
-}
+export type { BlogPost, BlogPostMetadata } from './blog-types';
+import type { BlogPost, BlogPostMetadata } from './blog-types';
 
 export function getBlogPost(slug: string): BlogPost {
   const contentDirectory = join(process.cwd(), 'src/content');
@@ -45,6 +27,7 @@ export function getBlogPost(slug: string): BlogPost {
     };
   } catch (error) {
     console.log(error);
+
     // Fallback for posts without frontmatter
     return {
       slug,
@@ -60,6 +43,7 @@ export function getBlogPost(slug: string): BlogPost {
 
 export function getBlogPostMetadata(slug: string): BlogPostMetadata {
   const post = getBlogPost(slug);
+
   return {
     title: post.title,
     description: post.description,
@@ -75,13 +59,7 @@ export function generateBlogUrl(slug: string): string {
   return `/blog/${slug}`;
 }
 
-export function formatDate(date: string): string {
-  return new Date(date).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-}
+export { formatDate } from './date-utils';
 
 export function getAllBlogPosts(): BlogPost[] {
   const blogSlugs = [
@@ -99,8 +77,5 @@ export function getAllBlogPosts(): BlogPost[] {
 
   return blogSlugs
     .map((slug) => getBlogPost(slug))
-    .sort(
-      (a, b) =>
-        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-    );
+    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 }
