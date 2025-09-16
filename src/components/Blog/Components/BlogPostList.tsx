@@ -3,18 +3,26 @@
 import type { BlogPost } from '@/lib/blog-types';
 
 import Link from 'next/link';
-import { Search, FileText } from 'lucide-react';
+import { Search, FileText, Lightbulb } from 'lucide-react';
 
 import { formatDate } from '@/lib/date-utils';
 import { getTagColor } from '@/lib/tag-colors';
+import { getFilterableTags } from '@/lib/blog-filters';
 
 interface BlogPostListProps {
   posts: BlogPost[];
   selectedTags: string[];
   isLoading?: boolean;
+  allPosts?: BlogPost[];
 }
 
-function EmptyState({ selectedTags }: { selectedTags: string[] }) {
+function EmptyState({
+  selectedTags,
+  allPosts = [],
+}: {
+  selectedTags: string[];
+  allPosts?: BlogPost[];
+}) {
   if (selectedTags.length === 0) {
     return (
       <div className='py-16 text-center'>
@@ -29,25 +37,50 @@ function EmptyState({ selectedTags }: { selectedTags: string[] }) {
     );
   }
 
+  // Get latest posts as recommendations
+  const latestPosts = allPosts
+    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+    .slice(0, 3);
+
   return (
     <div className='py-16 text-center'>
       <Search className='mx-auto mb-4 h-12 w-12 text-gray-400 dark:text-gray-600' />
       <h3 className='mb-2 text-lg font-medium text-gray-900 dark:text-gray-100'>No posts found</h3>
-      <p className='mx-auto mb-4 max-w-sm text-gray-500 dark:text-gray-400'>
+      <p className='mx-auto mb-6 max-w-sm text-gray-500 dark:text-gray-400'>
         No blog posts match the selected tags. Try selecting different tags or clearing your
         filters.
       </p>
-      <div className='flex flex-wrap justify-center gap-2'>
-        <span className='text-sm text-gray-500 dark:text-gray-400'>Selected tags:</span>
-        {selectedTags.map((tag) => (
-          <span
-            key={tag}
-            className={`rounded-md px-2 py-1 text-xs font-medium ${getTagColor(tag)}`}
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
+
+      {/* Recommendations */}
+      {latestPosts.length > 0 && (
+        <div className='mx-auto max-w-2xl'>
+          <div className='mb-6 flex items-center justify-center gap-2'>
+            <Lightbulb className='h-5 w-5 text-yellow-500' />
+            <h4 className='font-medium text-gray-900 dark:text-gray-100'>
+              Maybe you&apos;d be interested in:
+            </h4>
+          </div>
+
+          {/* Latest Posts */}
+          <div>
+            <p className='mb-3 text-sm text-gray-600 dark:text-gray-400'>Recent posts:</p>
+            <div className='space-y-2 text-left'>
+              {latestPosts.map((post) => (
+                <Link
+                  key={post.slug}
+                  className='block rounded-lg border border-gray-200 p-3 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800'
+                  href={`/blog/${post.slug}`}
+                >
+                  <h5 className='font-medium text-gray-900 dark:text-gray-100'>{post.title}</h5>
+                  <p className='mt-1 text-sm text-gray-600 dark:text-gray-400'>
+                    {post.description}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -89,13 +122,18 @@ function LoadingSkeleton() {
   );
 }
 
-export function BlogPostList({ posts, selectedTags, isLoading = false }: BlogPostListProps) {
+export function BlogPostList({
+  posts,
+  selectedTags,
+  isLoading = false,
+  allPosts = [],
+}: BlogPostListProps) {
   if (isLoading) {
     return <LoadingSkeleton />;
   }
 
   if (posts.length === 0) {
-    return <EmptyState selectedTags={selectedTags} />;
+    return <EmptyState allPosts={allPosts} selectedTags={selectedTags} />;
   }
 
   return (
@@ -129,9 +167,9 @@ export function BlogPostList({ posts, selectedTags, isLoading = false }: BlogPos
                   )}
                 </div>
 
-                {post.tags.length > 0 && (
+                {getFilterableTags(post.tags).length > 0 && (
                   <div className='flex flex-wrap gap-2'>
-                    {post.tags.map((tag) => (
+                    {getFilterableTags(post.tags).map((tag) => (
                       <span
                         key={tag}
                         className={`rounded-md px-2 py-1 text-xs font-medium transition-colors ${getTagColor(tag)}`}

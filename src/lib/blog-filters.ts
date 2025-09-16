@@ -1,29 +1,57 @@
 import type { BlogPost } from './blog-types';
 
+// Tags that should be excluded from filtering UI (implementation details, too broad, etc.)
+const EXCLUDED_FILTER_TAGS = [
+  'mdx', // Implementation detail
+  'blog', // Redundant in blog context
+  'image-handling', // Too specific/technical
+  'onpush', // Too technical
+  'directive', // Too technical
+  'migration', // Too specific
+  'signals', // Too technical
+  'seo', // Too specific
+  'wcag', // Technical standard acronym
+  'scaling', // Subset of architecture/performance
+  'lazy-loading', // Technical implementation detail
+  'open-graph', // Too specific/technical
+  'social-media', // Narrow subset
+  'inclusive-design', // Subset of accessibility
+  'custom-rules', // Too specific/technical
+];
+
 export interface FilterState {
   selectedTags: string[];
   searchTerm: string;
 }
 
 /**
- * Extract all unique tags from blog posts
+ * Filter tags to only include those suitable for filtering UI
  */
-export function extractUniqueTagsFromPosts(posts: BlogPost[]): string[] {
-  const allTags = posts.flatMap((post) => post.tags);
-
-  return Array.from(new Set(allTags)).sort();
+export function getFilterableTags(tags: string[]): string[] {
+  return tags.filter((tag) => !EXCLUDED_FILTER_TAGS.includes(tag));
 }
 
 /**
- * Filter posts by selected tags
+ * Extract all unique tags from blog posts (filtered for UI)
+ */
+export function extractUniqueTagsFromPosts(posts: BlogPost[]): string[] {
+  const allTags = posts.flatMap((post) => post.tags);
+  const uniqueTags = Array.from(new Set(allTags));
+
+  return getFilterableTags(uniqueTags).sort();
+}
+
+/**
+ * Filter posts by selected tags (AND logic)
  * If no tags are selected, return all posts
+ * Posts must have ALL selected tags to be included
  */
 export function filterPostsByTags(posts: BlogPost[], selectedTags: string[]): BlogPost[] {
   if (selectedTags.length === 0) {
     return posts;
   }
 
-  return posts.filter((post) => selectedTags.some((tag) => post.tags.includes(tag)));
+  return posts.filter((post) => selectedTags.every((tag) => post.tags.includes(tag)));
 }
 
 /**

@@ -33,17 +33,31 @@ export function BlogContent({ posts }: BlogContentProps) {
 
   return (
     <>
-      <div className='mb-8'>
-        <BlogFilterPopover
-          availableTags={availableTags}
-          filteredPostsCount={filteredPosts.length}
-          posts={posts}
-          selectedTags={selectedTags}
-          onTagsChange={handleTagsChange}
-        />
-      </div>
+      <header className='mb-12'>
+        <div className='flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between'>
+          <h1 className='text-4xl font-bold text-gray-900 dark:text-gray-100'>Blog</h1>
+          <div className='flex-shrink-0'>
+            <BlogFilterPopover
+              availableTags={availableTags}
+              filteredPostsCount={filteredPosts.length}
+              posts={posts}
+              selectedTags={selectedTags}
+              onTagsChange={handleTagsChange}
+            />
+          </div>
+        </div>
+        <p className='mt-4 text-lg text-gray-600 dark:text-gray-400'>
+          Technical insights about web development, Angular, React, Next.js, TypeScript, and modern
+          software engineering practices.
+        </p>
+      </header>
 
-      <BlogPostList isLoading={isLoading} posts={filteredPosts} selectedTags={selectedTags} />
+      <BlogPostList
+        allPosts={posts}
+        isLoading={isLoading}
+        posts={filteredPosts}
+        selectedTags={selectedTags}
+      />
     </>
   );
 }
