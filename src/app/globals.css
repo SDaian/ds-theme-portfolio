@@ -145,16 +145,113 @@
   @apply font-semibold text-gray-900 dark:text-gray-100;
 }
 
+/* Inline code styling */
 .prose code:not(pre code) {
-  @apply bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-sm font-mono text-gray-800 dark:text-gray-200 border;
+  @apply bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-sm font-mono text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-700;
 }
 
+/* Enhanced code block container */
 .prose pre {
-  @apply bg-gray-900 dark:bg-gray-950 rounded-lg p-6 overflow-x-auto my-6 border border-gray-200 dark:border-gray-700;
+  @apply relative rounded-xl my-6 border border-gray-200 dark:border-gray-700 overflow-hidden bg-gradient-to-br from-gray-900 to-gray-950 dark:from-white dark:to-gray-50 shadow-lg pt-12;
 }
 
+/* Code block header with subtle brand accent */
+.prose pre::before {
+  content: '';
+  @apply absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand to-brand-lighter;
+}
+
+/* Language labels */
+.prose pre .language-label {
+  @apply absolute top-3 left-4 px-2 py-1 bg-gray-800 dark:bg-gray-200 text-gray-300 dark:text-gray-700 text-xs font-medium rounded border border-gray-700 dark:border-gray-300 z-10;
+}
+
+.prose pre .language-label.javascript {
+  @apply bg-yellow-500/10 text-yellow-400 border-yellow-500/20;
+}
+
+.prose pre .language-label.typescript {
+  @apply bg-blue-500/10 text-blue-400 border-blue-500/20;
+}
+
+.prose pre .language-label.bash {
+  @apply bg-green-500/10 text-green-400 border-green-500/20;
+}
+
+.prose pre .language-label.json {
+  @apply bg-purple-500/10 text-purple-400 border-purple-500/20;
+}
+
+/* Copy button */
+.prose pre .copy-button {
+  @apply absolute top-3 right-4 w-8 h-8 bg-gray-800 dark:bg-gray-200 hover:bg-gray-700 dark:hover:bg-gray-300 text-gray-300 dark:text-gray-700 hover:text-white dark:hover:text-gray-900 rounded border border-gray-700 dark:border-gray-300 hover:border-brand transition-all cursor-pointer flex items-center justify-center;
+}
+
+.prose pre .copy-button svg {
+  @apply w-4 h-4;
+}
+
+/* Code content styling */
 .prose pre code {
-  @apply text-gray-100 font-mono text-sm leading-relaxed bg-transparent p-0 border-0;
+  @apply block p-6 text-gray-100 dark:text-gray-900 font-mono text-sm leading-relaxed bg-transparent border-0 overflow-x-auto;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  tab-size: 2;
+  counter-reset: line;
+}
+
+/* Line numbers */
+.prose pre.line-numbers code {
+  @apply pl-16;
+}
+
+.prose pre.line-numbers code .line {
+  @apply block relative;
+}
+
+.prose pre.line-numbers code .line::before {
+  content: counter(line);
+  counter-increment: line;
+  @apply absolute left-[-3rem] w-8 text-right text-gray-500 text-xs select-none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .prose pre {
+    @apply rounded-lg;
+  }
+
+  .prose pre code {
+    @apply p-4 text-xs;
+  }
+
+  .prose pre .copy-button {
+    @apply opacity-100;
+  }
+
+  .prose pre.line-numbers code {
+    @apply pl-12;
+  }
+
+  .prose pre.line-numbers code .line::before {
+    @apply left-[-2.5rem] w-6;
+  }
+}
+
+/* Improved scrollbar for code blocks */
+.prose pre code::-webkit-scrollbar {
+  @apply h-2;
+}
+
+.prose pre code::-webkit-scrollbar-track {
+  @apply bg-gray-800;
+}
+
+.prose pre code::-webkit-scrollbar-thumb {
+  @apply bg-gray-600 rounded;
+}
+
+.prose pre code::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500;
 }
 
 .prose hr {

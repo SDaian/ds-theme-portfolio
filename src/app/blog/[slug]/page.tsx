@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 
 import { getBlogPostMetadata, generateBlogUrl, formatDate } from '@/lib/mdx';
 import { getTagColor } from '@/lib/tag-colors';
+import CodeEnhancer from '@/components/CodeEnhancer';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -96,12 +97,14 @@ export default async function Page({ params }: Props) {
       <div className='prose prose-lg dark:prose-invert max-w-none'>
         <Post />
       </div>
+      <CodeEnhancer />
     </article>
   );
 }
 
 export function generateStaticParams() {
   return [
+    { slug: 'modern-code-quality-pipeline-eslint-prettier-husky' },
     { slug: 'angular-feature-based-architecture' },
     { slug: 'web-accessibility-inclusive-ui' },
     { slug: 'react-microfrontends-vite' },
