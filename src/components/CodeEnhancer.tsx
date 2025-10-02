@@ -76,6 +76,16 @@ export default function CodeEnhancer() {
         let langClass = '';
 
         if (
+          content.includes('interface ') ||
+          content.includes(': string') ||
+          content.includes(': number') ||
+          content.includes('@Component') ||
+          content.includes('signal(') ||
+          content.includes('export class')
+        ) {
+          language = 'TypeScript';
+          langClass = 'typescript';
+        } else if (
           content.includes('function ') ||
           content.includes('const ') ||
           content.includes('console.log')
@@ -92,13 +102,6 @@ export default function CodeEnhancer() {
         } else if (content.includes('{') && content.includes('}') && content.includes('"')) {
           language = 'JSON';
           langClass = 'json';
-        } else if (
-          content.includes('interface ') ||
-          content.includes(': string') ||
-          content.includes(': number')
-        ) {
-          language = 'TypeScript';
-          langClass = 'typescript';
         }
 
         // Add language label if detected

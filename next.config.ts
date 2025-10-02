@@ -1,6 +1,7 @@
 import type { NextConfig } from 'next';
 
 import createMDX from '@next/mdx';
+import rehypePrettyCode from 'rehype-pretty-code';
 import remarkFrontmatter from 'remark-frontmatter';
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 
@@ -15,6 +16,15 @@ const nextConfig: NextConfig = {
 const withMDX = createMDX({
   options: {
     remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
+    rehypePlugins: [
+      [
+        rehypePrettyCode,
+        {
+          theme: 'one-dark-pro',
+          keepBackground: true,
+        },
+      ],
+    ],
   },
 });
 

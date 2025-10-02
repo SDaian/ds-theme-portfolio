@@ -104,6 +104,7 @@ export default async function Page({ params }: Props) {
 
 export function generateStaticParams() {
   return [
+    { slug: 'exploring-angular-19-control-flow' },
     { slug: 'modern-code-quality-pipeline-eslint-prettier-husky' },
     { slug: 'angular-feature-based-architecture' },
     { slug: 'web-accessibility-inclusive-ui' },

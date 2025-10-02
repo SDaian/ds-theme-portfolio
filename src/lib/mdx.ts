@@ -64,6 +64,7 @@ export { formatDate } from './date-utils';
 
 export function getAllBlogPosts(): BlogPost[] {
   const blogSlugs = [
+    'exploring-angular-19-control-flow',
     'modern-code-quality-pipeline-eslint-prettier-husky',
     'angular-feature-based-architecture',
     'web-accessibility-inclusive-ui',
