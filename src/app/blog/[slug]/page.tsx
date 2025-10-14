@@ -104,6 +104,7 @@ export default async function Page({ params }: Props) {
 
 export function generateStaticParams() {
   return [
+    { slug: 'angular-constructor-vs-inject' },
     { slug: 'exploring-angular-control-flow-syntax' },
     { slug: 'modern-code-quality-pipeline-eslint-prettier-husky' },
     { slug: 'angular-feature-based-architecture' },
