@@ -2,209 +2,72 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Visual Development & Testing
+## Commands
 
-### Design System
+Package manager is **pnpm**.
 
-The project follows S-Tier SaaS design standards inspired by Stripe, Airbnb, and Linear. All UI development must adhere to:
+- `pnpm dev` — Next.js dev server on http://localhost:3000
+- `pnpm build` — production build
+- `pnpm start` — serve the production build
+- `pnpm lint` — `next lint`, scoped to `src/` (see `eslint.config.mjs`, `next.config.ts`)
 
-- **Design Principles**: `/context/design-principles.md` - Comprehensive checklist for world-class UI
-- **Component Library**: NextUI with custom Tailwind configuration
+There is no test runner configured in this project — no Jest, Vitest, or Playwright dependency exists. Don't invent test commands; verify changes by building and running the app.
 
-### Quick Visual Check
+## Commits and pull requests
 
-**IMMEDIATELY after implementing any front-end change:**
+Husky is active, so commits run real checks:
 
-1. **Identify what changed** - Review the modified components/pages
-2. **Navigate to affected pages** - Use `mcp__playwright__browser_navigate` to visit each changed view
-3. **Verify design compliance** - Compare against `/context/design-principles.md`
-4. **Validate feature implementation** - Ensure the change fulfills the user's specific request
-5. **Check acceptance criteria** - Review any provided context files or requirements
-6. **Capture evidence** - Take full page screenshot at desktop viewport (1440px) of each changed view
-7. **Check for errors** - Run `mcp__playwright__browser_console_messages` ⚠️
+- `.husky/pre-commit` → `lint-staged` (`.lintstagedrc.json`): Prettier + `eslint --fix` on staged JS/TS, Prettier on staged JSON/MD/YML
+- `.husky/commit-msg` → `commitlint` with `@commitlint/config-conventional`
 
-This verification ensures changes meet design standards and user requirements.
+Commit messages:
 
-### Comprehensive Design Review
+- **One line only.** Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`, …), no body, no bullet list of changes. Write a subject that explains itself.
+- Never mention Claude — no "Generated with Claude Code", no "Co-Authored-By: Claude".
+- If commitlint rejects a message, fix the message; never bypass hooks with `--no-verify`.
 
-For significant UI changes or before merging PRs, use the design review agent:
+Pull requests:
 
-```bash
-# Option 1: Use the slash command
-/design-review
+- **Leave the description empty.** The commit message is self-explanatory, so a PR body is redundant. Do not write Summary, What changed, Verification, Test plan, or similar sections.
+- Title matches the commit subject.
 
-# Option 2: Invoke the agent directly
-@agent-design-review
-```
+## Architecture
 
-The design review agent will:
+Next.js 15 App Router portfolio + blog. React 19, TypeScript (strict), Tailwind CSS v4.
 
-- Test all interactive states and user flows
-- Verify responsiveness (desktop/tablet/mobile)
-- Check accessibility (WCAG 2.1 AA compliance)
-- Validate visual polish and consistency
-- Test edge cases and error states
-- Provide categorized feedback (Blockers/High/Medium/Nitpicks)
+Deployed at https://daian-scuarissi.vercel.app/
 
-### Playwright MCP Integration
+### Content pipeline
 
-#### Essential Commands for UI Testing
+Blog posts are MDX files in `src/content/`, compiled by `@next/mdx` (configured in `next.config.ts`) with `remark-frontmatter` + `remark-mdx-frontmatter` for YAML frontmatter and `rehype-pretty-code`/Shiki (`one-dark-pro`) for syntax highlighting. `mdx-components.tsx` at the repo root supplies the MDX component overrides.
 
-```javascript
-// Navigation & Screenshots
-mcp__playwright__browser_navigate(url); // Navigate to page
-mcp__playwright__browser_take_screenshot(); // Capture visual evidence
-mcp__playwright__browser_resize(width, height); // Test responsiveness
+At runtime, `src/lib/mdx.ts` reads the same files off disk with `gray-matter` to pull metadata (title, description, publishedAt, modifiedAt, author, tags, image) for listings and SEO tags. So each post is read two ways: compiled as a component, and parsed as frontmatter.
 
-// Interaction Testing
-mcp__playwright__browser_click(element); // Test clicks
-mcp__playwright__browser_type(element, text); // Test input
-mcp__playwright__browser_hover(element); // Test hover states
+**Adding a blog post takes three edits, not one:**
 
-// Validation
-mcp__playwright__browser_console_messages(); // Check for errors
-mcp__playwright__browser_snapshot(); // Accessibility check
-mcp__playwright__browser_wait_for(text / element); // Ensure loading
-```
+1. Create `src/content/<slug>.mdx` with the frontmatter fields above
+2. Add the slug to `generateStaticParams()` in `src/app/blog/[slug]/page.tsx`
+3. Add the slug to the `blogSlugs` array in `src/lib/mdx.ts` (drives listings/sorting)
 
-### Design Compliance Checklist
+`dynamicParams = false` on the blog route, so a slug missing from step 2 renders a 404 no matter that the MDX file exists.
 
-When implementing UI features, verify:
+### Layout
 
-- [ ] **Visual Hierarchy**: Clear focus flow, appropriate spacing
-- [ ] **Consistency**: Uses design tokens, follows patterns
-- [ ] **Responsiveness**: Works on mobile (375px), tablet (768px), desktop (1440px)
-- [ ] **Accessibility**: Keyboard navigable, proper contrast, semantic HTML
-- [ ] **Performance**: Fast load times, smooth animations (150-300ms)
-- [ ] **Error Handling**: Clear error states, helpful messages
-- [ ] **Polish**: Micro-interactions, loading states, empty states
+- `src/app/` — routes; `layout.tsx`, home `page.tsx`, `blog/`, `frontend-interview-preparation/`, `globals.css`
+- `src/components/` — feature components. Non-trivial ones are folders following the `Components/` + `Data/` + `Models/` + `index.tsx` convention (see `src/components/Experience/`): components, static data, and TypeScript types kept side by side.
+- `src/styles/components/ui/` — shadcn/ui primitives (new-york style, `components.json`), built on Radix UI + `class-variance-authority` + `tailwind-merge`. Note the non-default location: shadcn aliases point at `@/styles/*`, not `@/components/*`. This project does **not** use NextUI.
+- `src/lib/` — `mdx.ts`, `blog-types.ts`, `blog-filters.ts`, `date-utils.ts`, `tag-colors.ts`
+- `src/hooks/` — `useDebounce`, `useScrollSpy`
+- `helpers/` — interview-prep markdown source, not application code
 
-## When to Use Automated Visual Testing
+Path aliases (`tsconfig.json`, `baseUrl: ./src`): `@/components/*`, `@/styles/*`, `@/content/*`, `@/lib/*`, `@/hooks/*`.
 
-### Use Quick Visual Check for:
+### Theming
 
-- Every front-end change, no matter how small
-- After implementing new components or features
-- When modifying existing UI elements
-- After fixing visual bugs
-- Before committing UI changes
+Light/dark/system via `next-themes`, driven by CSS variables in `src/app/globals.css`. Components must work in both themes.
 
-### Use Comprehensive Design Review for:
+## UI changes
 
-- Major feature implementations
-- Before creating pull requests with UI changes
-- When refactoring component architecture
-- After significant design system updates
-- When accessibility compliance is critical
+For front-end work, follow the standards in `context/design-principles.md` and the visual-verification flow in `context/design-review.md` (Playwright MCP: navigate the changed views, screenshot at 1440px, check the console).
 
-### Skip Visual Testing for:
-
-- Backend-only changes (API, database)
-- Configuration file updates
-- Documentation changes
-- Test file modifications
-- Non-visual utility functions
-
-## Development Commands
-
-- **Development**: `pnpm dev` (starts Next.js dev server on localhost:3000)
-- **Build**: `pnpm build` (production build)
-- **Linting**: `pnpm lint` (ESLint with Next.js config)
-- **Start**: `pnpm start` (starts production server)
-
-## Architecture Overview
-
-This is a personal portfolio website built with Next.js 15 App Router, TypeScript, and Tailwind CSS. The site features:
-
-### Tech Stack
-
-- **Framework**: Next.js 15 with App Router
-- **Styling**: Tailwind CSS v4 with custom theme
-- **Content**: MDX support for blog posts
-- **Theme**: Dark/light mode with next-themes
-- **Icons**: Lucide React and React Icons
-- **Analytics**: Vercel Analytics and Speed Insights
-
-### Project Structure
-
-- **App Router**: Uses Next.js 13+ app directory structure
-- **Components**: Organized by feature with Models/Data/Components subfolders
-- **Path Mapping**: TypeScript paths configured for `@/components/*`, `@/styles/*`, `@/content/*`
-- **Content**: MDX files in `src/content/` for blog posts
-
-### Component Organization
-
-Components follow a structured pattern:
-
-- `Components/` - React components
-- `Data/` - Static data and configuration
-- `Models/` - TypeScript interfaces/types
-- `index.tsx` - Main export file
-
-Example: `src/components/Experience/` contains experience data, models, and components.
-
-### Key Features
-
-- **Responsive Design**: Mobile-first with Tailwind breakpoints
-- **Theme Switching**: Light/dark/system theme support
-- **Blog Support**: MDX-powered blog with dynamic routing
-- **Resume Integration**: PDF resume download functionality
-- **Analytics**: Built-in Vercel analytics and speed insights
-
-### Styling
-
-- Uses Tailwind CSS v4 with custom brand colors
-- Custom UI components in `src/styles/components/ui/`
-- Global styles in `src/app/globals.css`
-- Theme-aware components with CSS variables
-
-### Package Manager
-
-Uses `pnpm` for dependency management (see pnpm-lock.yaml).
-
-## Visual Development
-
-### Design Principles
-
-- Comprehensive design checklist in `/context/design-principles.md`
-- Brand style guide in `/context/style-guide.md`
-- When making visual (front-end, UI/UX) changes, always refer to these files for guidance
-
-### Quick Visual Check
-
-IMMEDIATELY after implementing any front-end change:
-
-1. **Identify what changed** - Review the modified components/pages
-2. **Navigate to affected pages** - Use `mcp__playwright__browser_navigate` to visit each changed view
-3. **Verify design compliance** - Compare against `/context/design-principles.md` and `/context/style-guide.md`
-4. **Validate feature implementation** - Ensure the change fulfills the user's specific request
-5. **Check acceptance criteria** - Review any provided context files or requirements
-6. **Capture evidence** - Take full page screenshot at desktop viewport (1440px) of each changed view
-7. **Check for errors** - Run `mcp__playwright__browser_console_messages`
-
-This verification ensures changes meet design standards and user requirements.
-
-### Comprehensive Design Review
-
-Invoke the `@agent-design-review` subagent for thorough design validation when:
-
-- Completing significant UI/UX features
-- Before finalizing PRs with visual changes
-- Needing comprehensive accessibility and responsiveness testing
-
-### Code Review
-
-Invoke the `@agent-code-reviewer` subagent for code reviewing after:
-
-- Completing any significant feature
-- Before finalizing PRs with visual changes
-
-## Additional Context
-
-- Design review agent configuration: `/.claude/agents/design-review-agent.md`
-- Design principles checklist: `/context/design-principles.md`
-- Custom slash commands: `/context/design-review-slash-command.md`
-
-- Add to memory. The website is https://daian-scuarissi.vercel.app/
-- Add to memory. Every time you create a new blog entry, you need to add that to @src/app/blog/[slug]/page.tsx and @src/lib/mdx.ts
-- Add to memory. Every time you create a commit, avoid mention Claude and just add the message to the commit. Never include "Generated with Claude Code" or "Co-Authored-By: Claude" in commit messages.
+Slash commands available in `.claude/commands/`: `/design-review` for comprehensive design validation, `/code-review` for code review.
