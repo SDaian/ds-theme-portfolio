@@ -24,6 +24,7 @@ Commit messages:
 
 - **One line only.** Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`, …), no body, no bullet list of changes. Write a subject that explains itself.
 - Never mention Claude — no "Generated with Claude Code", no "Co-Authored-By: Claude".
+- **Author must be `Daian Scuarissi <scuarissid@gmail.com>`.** A `SessionStart` hook in `.claude/settings.json` sets this, but sandboxes ship with a global `user.name=Claude`, so verify with `git log -1 --format='%an <%ae>'` before pushing.
 - If commitlint rejects a message, fix the message; never bypass hooks with `--no-verify`.
 
 Pull requests:
