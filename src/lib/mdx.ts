@@ -64,6 +64,7 @@ export { formatDate } from './date-utils';
 
 export function getAllBlogPosts(): BlogPost[] {
   const blogSlugs = [
+    'nextjs-15-to-16-upgrade',
     'angular-constructor-vs-inject',
     'exploring-angular-control-flow-syntax',
     'modern-code-quality-pipeline-eslint-prettier-husky',
