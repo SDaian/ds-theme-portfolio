@@ -9,7 +9,7 @@ Package manager is **pnpm**.
 - `pnpm dev` — Next.js dev server on http://localhost:3000
 - `pnpm build` — production build
 - `pnpm start` — serve the production build
-- `pnpm lint` — `next lint`, scoped to `src/` (see `eslint.config.mjs`, `next.config.ts`)
+- `pnpm lint` — `eslint .` across the whole repo (see `eslint.config.mjs`). `next lint` was removed in Next 16; `next build` no longer lints, so this is the only lint gate.
 
 There is no test runner configured in this project — no Jest, Vitest, or Playwright dependency exists. Don't invent test commands; verify changes by building and running the app.
 
@@ -34,13 +34,15 @@ Pull requests:
 
 ## Architecture
 
-Next.js 15 App Router portfolio + blog. React 19, TypeScript (strict), Tailwind CSS v4.
+Next.js 16 App Router portfolio + blog, built with **Turbopack** (the default bundler in 16). React 19, TypeScript (strict), Tailwind CSS v4. Requires Node >= 20.9.
 
 Deployed at https://daian-scuarissi.vercel.app/
 
 ### Content pipeline
 
 Blog posts are MDX files in `src/content/`, compiled by `@next/mdx` (configured in `next.config.ts`) with `remark-frontmatter` + `remark-mdx-frontmatter` for YAML frontmatter and `rehype-pretty-code`/Shiki (`one-dark-pro`) for syntax highlighting. `mdx-components.tsx` at the repo root supplies the MDX component overrides.
+
+Those plugins are named as **strings** in `next.config.ts`, not imported functions. Turbopack serializes loader options, and a function reference isn't serializable — passing imports there fails the build.
 
 At runtime, `src/lib/mdx.ts` reads the same files off disk with `gray-matter` to pull metadata (title, description, publishedAt, modifiedAt, author, tags, image) for listings and SEO tags. So each post is read two ways: compiled as a component, and parsed as frontmatter.
 
@@ -72,3 +74,13 @@ Light/dark/system via `next-themes`, driven by CSS variables in `src/app/globals
 For front-end work, follow the standards in `context/design-principles.md` and the visual-verification flow in `context/design-review.md` (Playwright MCP: navigate the changed views, screenshot at 1440px, check the console).
 
 Slash commands available in `.claude/commands/`: `/design-review` for comprehensive design validation, `/code-review` for code review.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
