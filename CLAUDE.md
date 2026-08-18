@@ -13,16 +13,23 @@ Package manager is **pnpm**.
 
 There is no test runner configured in this project — no Jest, Vitest, or Playwright dependency exists. Don't invent test commands; verify changes by building and running the app.
 
-## Git hooks
+## Commits and pull requests
 
 Husky is active, so commits run real checks:
 
 - `.husky/pre-commit` → `lint-staged` (`.lintstagedrc.json`): Prettier + `eslint --fix` on staged JS/TS, Prettier on staged JSON/MD/YML
 - `.husky/commit-msg` → `commitlint` with `@commitlint/config-conventional`
 
-Commit subjects **must** follow Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`, …) or the commit is rejected. Fix the message rather than bypassing hooks.
+Commit messages:
 
-Never mention Claude in commit messages — no "Generated with Claude Code", no "Co-Authored-By: Claude".
+- **One line only.** Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`, …), no body, no bullet list of changes. Write a subject that explains itself.
+- Never mention Claude — no "Generated with Claude Code", no "Co-Authored-By: Claude".
+- If commitlint rejects a message, fix the message; never bypass hooks with `--no-verify`.
+
+Pull requests:
+
+- **Leave the description empty.** The commit message is self-explanatory, so a PR body is redundant. Do not write Summary, What changed, Verification, Test plan, or similar sections.
+- Title matches the commit subject.
 
 ## Architecture
 
