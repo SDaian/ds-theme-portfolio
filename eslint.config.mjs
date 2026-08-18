@@ -59,10 +59,7 @@ export default [
       ...eslintPluginJsxA11y.configs.recommended.rules,
       ...eslintPluginReactHooks.configs.recommended.rules,
       'react/jsx-boolean-value': ['error', 'never'],
-      'react/jsx-curly-brace-presence': [
-        'error',
-        { props: 'never', children: 'never' },
-      ],
+      'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }],
       'react/jsx-no-useless-fragment': 'error',
       'react/prop-types': 'off',
       'react/jsx-uses-react': 'off',
