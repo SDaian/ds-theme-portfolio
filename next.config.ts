@@ -1,24 +1,20 @@
 import type { NextConfig } from 'next';
 
 import createMDX from '@next/mdx';
-import rehypePrettyCode from 'rehype-pretty-code';
-import remarkFrontmatter from 'remark-frontmatter';
-import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 
 const nextConfig: NextConfig = {
   /* config options here */
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
-  eslint: {
-    dirs: ['src'],
-  },
 };
 
+// Plugins are named as strings, not imported functions: Turbopack serializes
+// loader options, and a function reference is not serializable.
 const withMDX = createMDX({
   options: {
-    remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
+    remarkPlugins: [['remark-frontmatter'], ['remark-mdx-frontmatter']],
     rehypePlugins: [
       [
-        rehypePrettyCode,
+        'rehype-pretty-code',
         {
           theme: 'one-dark-pro',
           keepBackground: true,

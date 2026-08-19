@@ -104,6 +104,7 @@ export default async function Page({ params }: Props) {
 
 export function generateStaticParams() {
   return [
+    { slug: 'nextjs-15-to-16-upgrade' },
     { slug: 'angular-constructor-vs-inject' },
     { slug: 'exploring-angular-control-flow-syntax' },
     { slug: 'modern-code-quality-pipeline-eslint-prettier-husky' },

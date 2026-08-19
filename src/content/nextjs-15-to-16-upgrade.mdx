@@ -1,0 +1,225 @@
+---
+title: 'Upgraded My Portfolio to Next.js 16.3: This Is What I Learned'
+description: 'Measured before-and-after numbers from moving a Next.js portfolio and blog from 15 to 16: build times 2.5x faster, dev server boot 3.6x faster, and the two changes you need to make first.'
+publishedAt: '2026-08-19'
+author: 'Daian Scuarissi'
+tags: ['nextjs', 'upgrade', 'migration', 'turbopack', 'performance']
+image: '/setup-image.png'
+---
+
+I moved my whole site from Next.js 15.3.8 to 16.3.1: the portfolio pages, the experience timeline, the interview-prep section, and the MDX blog. Turbopack is now the default bundler for both `dev` and `build`, and the difference shows up immediately in the numbers. Here is what the upgrade bought, measured rather than estimated, followed by the two changes you will need to make to get there.
+
+## The Numbers
+
+Three cold production builds of this site on each version, same machine, same content, `.next` deleted between runs:
+
+{/* Written as JSX with explicit classes: this project's MDX pipeline has no
+    remark-gfm, so pipe tables render as literal text, and the mdx-components
+    overrides don't apply to literal JSX tags. Classes mirror those overrides. */}
+
+<div className='mb-4 overflow-x-auto'>
+  <table className='min-w-full divide-y divide-gray-200 dark:divide-gray-700'>
+    <thead className='bg-gray-50 dark:bg-gray-800'>
+      <tr>
+        <th className='px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase dark:text-gray-400'>
+          Metric
+        </th>
+        <th className='px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase dark:text-gray-400'>
+          15.3.8 (webpack)
+        </th>
+        <th className='px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase dark:text-gray-400'>
+          16.3.1 (Turbopack)
+        </th>
+      </tr>
+    </thead>
+    <tbody className='divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900'>
+      <tr>
+        <td className='px-6 py-4 text-sm whitespace-nowrap text-gray-900 dark:text-gray-100'>
+          `pnpm build` end to end
+        </td>
+        <td className='px-6 py-4 text-sm whitespace-nowrap text-gray-900 dark:text-gray-100'>
+          42.1s / 42.4s / 42.7s
+        </td>
+        <td className='px-6 py-4 text-sm whitespace-nowrap text-gray-900 dark:text-gray-100'>
+          16.9s / 17.1s / 17.4s
+        </td>
+      </tr>
+      <tr>
+        <td className='px-6 py-4 text-sm whitespace-nowrap text-gray-900 dark:text-gray-100'>
+          Compile step
+        </td>
+        <td className='px-6 py-4 text-sm whitespace-nowrap text-gray-900 dark:text-gray-100'>
+          16.0s
+        </td>
+        <td className='px-6 py-4 text-sm whitespace-nowrap text-gray-900 dark:text-gray-100'>
+          9.4s
+        </td>
+      </tr>
+      <tr>
+        <td className='px-6 py-4 text-sm whitespace-nowrap text-gray-900 dark:text-gray-100'>
+          Static generation
+        </td>
+        <td className='px-6 py-4 text-sm whitespace-nowrap text-gray-900 dark:text-gray-100'>
+          serial
+        </td>
+        <td className='px-6 py-4 text-sm whitespace-nowrap text-gray-900 dark:text-gray-100'>
+          3 workers, 1.4s
+        </td>
+      </tr>
+      <tr>
+        <td className='px-6 py-4 text-sm whitespace-nowrap text-gray-900 dark:text-gray-100'>
+          `pnpm dev` ready
+        </td>
+        <td className='px-6 py-4 text-sm whitespace-nowrap text-gray-900 dark:text-gray-100'>
+          1552ms / 1588ms
+        </td>
+        <td className='px-6 py-4 text-sm whitespace-nowrap text-gray-900 dark:text-gray-100'>
+          421ms / 431ms
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+Full builds run about 2.5x faster and the dev server boots about 3.6x faster. The variance across runs was under 2%, so these are stable numbers rather than one lucky sample.
+
+One honest caveat on the end-to-end figure: Next 15's build ran ESLint as part of `next build`, and Next 16 does not. Part of that 42s to 17s gap is a lint pass that simply moved elsewhere. The compile step, 16.0s to 9.4s, is the cleaner bundler-to-bundler comparison, and static generation went from serial to three parallel workers.
+
+## What That Feels Like
+
+The build number matters on every deploy, but the dev server boot is the one that changes how the work feels. Under 500ms is fast enough that restarting the dev server stops being a decision you weigh. You just do it.
+
+Parallel static generation scales with page count, which is what makes it worth having on a site that keeps growing. All 19 routes here, the portfolio pages plus 14 blog posts, prerender in 1.4 seconds across three workers. On the old serial path that number climbed with every post I added.
+
+## The Other Wins
+
+**React 19.2**, up from 19.1, arriving alongside the React Server Components security patches that landed just before this upgrade. Staying current on the framework is what makes staying current on React cheap.
+
+**Shiki 4.** The syntax highlighter behind every code block here went up a major version for free, because `rehype-pretty-code@0.14.5` already declares support for `^4.0.0`. Worth checking your own peer ranges before assuming a major will hurt.
+
+**A lint gate that covers the whole repo.** This one arrived disguised as a breaking change, which I will get to below, but the outcome is a genuine improvement.
+
+## Change #1: Name Your MDX Plugins as Strings
+
+The first build after the upgrade failed:
+
+```
+Error: loader /node_modules/@next/mdx/mdx-js-loader.js for match "{*,next-mdx-rule}"
+does not have serializable options. Ensure that options passed are plain JavaScript
+objects and values.
+```
+
+The cause was in `next.config.ts`, where the MDX plugins were passed as imported functions:
+
+```ts
+// Before: works under webpack, fails under Turbopack
+import rehypePrettyCode from 'rehype-pretty-code';
+import remarkFrontmatter from 'remark-frontmatter';
+import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
+
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
+    rehypePlugins: [[rehypePrettyCode, { theme: 'one-dark-pro', keepBackground: true }]],
+  },
+});
+```
+
+Turbopack serializes loader options so it can pass them to its Rust pipeline, and a function reference cannot be serialized. Naming the plugins as strings lets the loader resolve them on its own side:
+
+```ts
+// After: plugin names as strings, options stay serializable
+import createMDX from '@next/mdx';
+
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: [['remark-frontmatter'], ['remark-mdx-frontmatter']],
+    rehypePlugins: [
+      ['rehype-pretty-code', { theme: 'one-dark-pro', keepBackground: true }],
+    ],
+  },
+});
+```
+
+The imports disappear entirely. If you run an MDX site, expect to hit this before anything else.
+
+## Change #2: `next lint` Is Gone
+
+Next 16 removes the `next lint` command, and `next build` no longer runs ESLint. The script change is small:
+
+```json
+{
+  "scripts": {
+    "lint": "eslint ."
+  }
+}
+```
+
+Since the build no longer lints, the `eslint` block in `next.config.ts` is dead configuration and can be deleted:
+
+```ts
+// Only ever affected `next lint` and build-time linting
+eslint: {
+  dirs: ['src'],
+},
+```
+
+There is a codemod, `npx @next/codemod@latest next-lint-to-eslint-cli .`, and it handles the common case well. I did this by hand because it rewrites your ESLint config toward an `eslint-config-next` template, and this repo has a long hand-written flat config built directly on `@next/eslint-plugin-next`. Check what a codemod will do to your specific setup before running it.
+
+The second half of this change is the one to plan for: if your only lint gate was the build, you no longer have a lint gate. Wire `eslint .` into CI or a pre-commit hook.
+
+### The Upside Hiding in It
+
+`next lint` was scoped to `src/`. `eslint .` is not. Widening the scope surfaced 27 pre-existing warnings in files that had never been checked, including `mdx-components.tsx`, which defines every MDX component override the site renders. They were all mechanical formatting issues and `--fix` cleared them, but they had been sitting there unseen. The forced migration turned into a free audit.
+
+## Three Dependency Bumps Worth Refusing
+
+I swept about thirty dependencies alongside the framework. Most were routine. Three were not, and each is a case where taking the newest version would have been wrong.
+
+**TypeScript 7** was on offer. But `typescript-eslint@8.67.0` declares `"typescript": ">=4.8.4 <6.1.0"` in its peer dependencies, so TypeScript 7 breaks linting outright. That is a declared incompatibility you can confirm in seconds with `npm view typescript-eslint peerDependencies`. TypeScript stays on 5.x until the ecosystem catches up.
+
+**lucide-react 1.x** removed the brand icons. The build failed with `Export Github doesn't exist in target module`. There are 6074 exports in v1 and none of them is a GitHub, LinkedIn, or Twitter mark. My footer uses all three. Replacing them means choosing new artwork, which is a design decision rather than a dependency bump, so lucide stays on the 0.x line at 0.577.0.
+
+**eslint-plugin-react-hooks 7** adds `react-hooks/set-state-in-effect`, which errors on the standard `next-themes` hydration guard:
+
+```tsx
+const [mounted, setMounted] = useState(false);
+
+useEffect(() => {
+  setMounted(true);
+}, []);
+
+if (!mounted) return null;
+```
+
+The rule is reasonable in general, since calling `setState` in an effect body does cause a cascading render. But rewriting a working hydration guard in the middle of a version upgrade is a good way to ship a subtle hydration bug. I set the rule to `warn` with a comment naming both affected files, which keeps the finding visible without blocking the upgrade.
+
+## Smaller Things Worth Knowing
+
+- **Node 20.9 is the floor.** Next 16 declares `"node": ">=20.9.0"`. Adding a matching `engines` field keeps the constraint visible in the repo instead of surfacing it on a failed deploy.
+- **`next build` rewrites `tsconfig.json`.** It sets `"jsx": "react-jsx"` and adds `.next/dev/types/**/*.ts` to `include`. It also reformats every array in the file, so run Prettier afterwards unless you want twenty lines of noise around two real changes.
+- **`next dev` writes into `CLAUDE.md`.** Next 16 appends an agent-instructions block and logs `✓ Generated CLAUDE.md for AI agents`. Commit it or set `agentRules: false` in `next.config.ts`, otherwise every dev run dirties your working tree.
+- **`next-env.d.ts` needs an ESLint ignore.** Flat config does not read `.gitignore`, so `eslint .` lints a file Next regenerates on every build.
+
+## Verifying It
+
+There is no test runner on this project, so verification is the build plus a browser: every route in light and dark at 1440px, the portfolio sections as well as the blog. Two things were worth checking carefully.
+
+The build reported 18 static pages where Next 15 reported 19. I diffed the emitted HTML against the registered slugs before assuming anything: all 13 posts were present, and Next 16 counts one internal entry differently. The summary line changed, the output did not.
+
+I also asserted specifically that Shiki highlighting survived, by counting `data-rehype-pretty-code-figure` elements and coloured token spans in the built HTML. Under a new bundler this is the thing most likely to break quietly, and a page that loads fine will not tell you the code blocks lost their colours.
+
+One false alarm worth mentioning: my first full-page screenshot showed the Experience timeline completely empty, which looked like the animation library major had broken it. The section uses `useInView` to reveal on scroll, and a full-page screenshot never scrolls, so everything below the fold stayed at `opacity: 0`. Scrolling to it showed every entry at full opacity.
+
+## Additional Resources
+
+- **Next.js 16 Upgrade Guide**: [nextjs.org/docs/app/guides/upgrading/version-16](https://nextjs.org/docs/app/guides/upgrading/version-16)
+- **Next.js Codemods**: [nextjs.org/docs/app/guides/upgrading/codemods](https://nextjs.org/docs/app/guides/upgrading/codemods)
+- **Turbopack**: [nextjs.org/docs/app/api-reference/turbopack](https://nextjs.org/docs/app/api-reference/turbopack)
+- **MDX with Next.js**: [nextjs.org/docs/app/guides/mdx](https://nextjs.org/docs/app/guides/mdx)
+- **rehype-pretty-code**: [rehype-pretty.pages.dev](https://rehype-pretty.pages.dev)
+- **typescript-eslint**: [typescript-eslint.io](https://typescript-eslint.io)
+
+---
+
+_Measured on this site: a Next.js App Router portfolio with 14 MDX posts, Tailwind v4, and no test suite. Your numbers will differ, but the shape of the win, faster builds and a much faster dev loop, should hold._
