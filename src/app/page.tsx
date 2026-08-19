@@ -4,6 +4,7 @@ import AboutSection from '@/components/AboutSection';
 import ContactSection from '@/components/ContactSection';
 import ExperienceSection from '@/components/Experience/Components/ExperienceSection';
 import HeroSection from '@/components/HeroSection';
+import ProjectsSection from '@/components/Projects/Components/ProjectsSection';
 import { HashScrollHandler } from '@/components/HashScrollHandler';
 
 export const metadata: Metadata = {
@@ -44,6 +45,7 @@ export default function Home() {
       <HeroSection />
       <AboutSection />
       <ExperienceSection />
+      <ProjectsSection />
       <ContactSection />
     </main>
   );
