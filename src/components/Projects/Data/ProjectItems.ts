@@ -30,6 +30,8 @@ export const PROJECT_ITEMS: Project[] = [
     stack: ['Next.js 16', 'TypeScript', 'Tailwind v4', 'MDX', 'Vercel'],
     liveUrl: 'https://daian-scuarissi.vercel.app/',
     repoUrl: 'https://github.com/SDaian/ds-theme-portfolio',
+    image: '/projects/portfolio-home.jpg',
+    imageAlt: 'The portfolio home page, showing the hero introduction and navigation',
     year: '2025—26',
     featured: true,
   },
