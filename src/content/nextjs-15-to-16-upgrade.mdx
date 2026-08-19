@@ -1,13 +1,13 @@
 ---
-title: 'Upgrading This Blog to Next.js 16: Builds Got 2.5x Faster'
-description: 'Measured before-and-after numbers from moving an MDX blog from Next.js 15 to 16: build times, dev server boot, parallel static generation, and the two changes you need to make first.'
+title: 'Upgraded My Portfolio to Next.js 16.3: This Is What I Learned'
+description: 'Measured before-and-after numbers from moving a Next.js portfolio and blog from 15 to 16: build times 2.5x faster, dev server boot 3.6x faster, and the two changes you need to make first.'
 publishedAt: '2026-08-19'
 author: 'Daian Scuarissi'
 tags: ['nextjs', 'upgrade', 'migration', 'turbopack', 'performance']
 image: '/setup-image.png'
 ---
 
-I moved this blog from Next.js 15.3.8 to 16.3.1. Turbopack is now the default bundler for both `dev` and `build`, and the difference shows up immediately in the numbers. Here is what the upgrade bought, measured rather than estimated, followed by the two changes you will need to make to get there.
+I moved my whole site from Next.js 15.3.8 to 16.3.1: the portfolio pages, the experience timeline, the interview-prep section, and the MDX blog. Turbopack is now the default bundler for both `dev` and `build`, and the difference shows up immediately in the numbers. Here is what the upgrade bought, measured rather than estimated, followed by the two changes you will need to make to get there.
 
 ## The Numbers
 
@@ -89,7 +89,7 @@ One honest caveat on the end-to-end figure: Next 15's build ran ESLint as part o
 
 The build number matters on every deploy, but the dev server boot is the one that changes how the work feels. Under 500ms is fast enough that restarting the dev server stops being a decision you weigh. You just do it.
 
-Parallel static generation scales with content, which matters for a blog specifically. This site has 14 posts and generates them in 1.4 seconds. On the old serial path that number grew linearly with every post I wrote.
+Parallel static generation scales with page count, which is what makes it worth having on a site that keeps growing. All 19 routes here, the portfolio pages plus 14 blog posts, prerender in 1.4 seconds across three workers. On the old serial path that number climbed with every post I added.
 
 ## The Other Wins
 
@@ -170,7 +170,7 @@ The second half of this change is the one to plan for: if your only lint gate wa
 
 ### The Upside Hiding in It
 
-`next lint` was scoped to `src/`. `eslint .` is not. Widening the scope surfaced 27 pre-existing warnings in files that had never been checked, including `mdx-components.tsx`, which defines every MDX component override on this blog. They were all mechanical formatting issues and `--fix` cleared them, but they had been sitting there unseen. The forced migration turned into a free audit.
+`next lint` was scoped to `src/`. `eslint .` is not. Widening the scope surfaced 27 pre-existing warnings in files that had never been checked, including `mdx-components.tsx`, which defines every MDX component override the site renders. They were all mechanical formatting issues and `--fix` cleared them, but they had been sitting there unseen. The forced migration turned into a free audit.
 
 ## Three Dependency Bumps Worth Refusing
 
@@ -203,7 +203,7 @@ The rule is reasonable in general, since calling `setState` in an effect body do
 
 ## Verifying It
 
-There is no test runner on this project, so verification is the build plus a browser. Two things were worth checking carefully.
+There is no test runner on this project, so verification is the build plus a browser: every route in light and dark at 1440px, the portfolio sections as well as the blog. Two things were worth checking carefully.
 
 The build reported 18 static pages where Next 15 reported 19. I diffed the emitted HTML against the registered slugs before assuming anything: all 13 posts were present, and Next 16 counts one internal entry differently. The summary line changed, the output did not.
 
@@ -222,4 +222,4 @@ One false alarm worth mentioning: my first full-page screenshot showed the Exper
 
 ---
 
-_Measured on this repository: 14 MDX posts, App Router, Tailwind v4. Your numbers will differ, but the shape of the win, faster builds and a much faster dev loop, should hold._
+_Measured on this site: a Next.js App Router portfolio with 14 MDX posts, Tailwind v4, and no test suite. Your numbers will differ, but the shape of the win, faster builds and a much faster dev loop, should hold._
