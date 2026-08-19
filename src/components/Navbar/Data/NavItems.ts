@@ -14,6 +14,10 @@ export const NAV_ITEMS: NavItem[] = [
     page: 'experience',
   },
   {
+    label: 'Projects',
+    page: 'projects',
+  },
+  {
     label: 'Blog',
     page: '/blog',
     isExternal: true,
