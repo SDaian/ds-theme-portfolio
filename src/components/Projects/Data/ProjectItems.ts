@@ -18,6 +18,9 @@ export const PROJECT_ITEMS: Project[] = [
     ],
     liveUrl: 'https://capitolledger.io',
     repoUrl: 'https://github.com/SDaian/crush-monitoring',
+    image: '/projects/capitol-ledger.jpg',
+    imageAlt:
+      'The Capitol Ledger home page, showing the daily email preview with recent congressional stock disclosures',
     year: '2026',
     featured: true,
   },
