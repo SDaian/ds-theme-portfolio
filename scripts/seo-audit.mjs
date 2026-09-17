@@ -80,6 +80,34 @@ for (const file of pages.sort()) {
   }
 }
 
+// Cross-check the sitemap against the pages themselves. The two settings live
+// in different files, so this is the guard that catches them drifting apart:
+// a noindex page still advertised, or an indexable page the sitemap forgot.
+const sitemapFile = join(ROOT, 'sitemap.xml.body');
+
+if (existsSync(sitemapFile)) {
+  const listed = new Set(
+    [...readFileSync(sitemapFile, 'utf8').matchAll(/<loc>([^<]*)<\/loc>/g)].map(
+      (m) => m[1].replace(/^https?:\/\/[^/]+/, '').replace(/\/$/, '') || '/',
+    ),
+  );
+
+  for (const file of pages) {
+    const html = readFileSync(file, 'utf8');
+    const route =
+      '/' +
+      relative(ROOT, file)
+        .replace(/\.html$/, '')
+        .replace(/^index$/, '');
+    const noindex = /<meta name="robots" content="[^"]*noindex/.test(html);
+
+    if (noindex && listed.has(route)) warn(route, 'marked noindex but listed in sitemap.xml');
+    if (!noindex && !listed.has(route)) warn(route, 'indexable but missing from sitemap.xml');
+  }
+} else {
+  warn('/sitemap.xml', 'not generated — sitemap cross-check skipped');
+}
+
 if (findings.length === 0) {
   console.log(`✓ ${pages.length} pages audited, no findings`);
 } else {

@@ -22,6 +22,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     creator: post.author,
     publisher: post.author,
     keywords: post.tags,
+    // Same frontmatter flag sitemap.ts filters on, so the two can't disagree.
+    ...(post.noindex && { robots: { index: false, follow: true } }),
     openGraph: {
       type: 'article',
       title: `${post.title} | Daian Scuarissi`,
