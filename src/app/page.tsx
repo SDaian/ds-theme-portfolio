@@ -8,7 +8,6 @@ import ProjectsSection from '@/components/Projects/Components/ProjectsSection';
 import { HashScrollHandler } from '@/components/HashScrollHandler';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://daian-scuarissi.vercel.app/'),
   title: 'Daian Scuarissi | Software Engineer | Frontend Developer',
   description:
     'Software Engineer based in Madrid, Spain. Turning ideas into visually stunning and performant web applications using Angular or React.',
@@ -40,13 +39,13 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main className='mx-auto px-6 sm:px-6 md:max-w-[1400px]'>
+    <div className='mx-auto px-6 sm:px-6 md:max-w-[1400px]'>
       <HashScrollHandler />
       <HeroSection />
       <AboutSection />
       <ExperienceSection />
       <ProjectsSection />
       <ContactSection />
-    </main>
+    </div>
   );
 }

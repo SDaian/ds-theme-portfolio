@@ -1,24 +1,11 @@
-import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/site-metadata';
 
-export const metadata: Metadata = {
-  title: 'Frontend Interview Preparation | Daian Scuarissi',
+export const metadata = pageMetadata({
+  title: 'Frontend Interview Preparation',
   description:
     'Comprehensive frontend interview preparation guide covering JavaScript, React, Angular, and more.',
-  openGraph: {
-    title: 'Frontend Interview Preparation | Daian Scuarissi',
-    description:
-      'Comprehensive frontend interview preparation guide covering JavaScript, React, Angular, and more.',
-    url: '/frontend-interview-preparation',
-    siteName: 'Daian Scuarissi - Software Engineer',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Frontend Interview Preparation | Daian Scuarissi',
-    description:
-      'Comprehensive frontend interview preparation guide covering JavaScript, React, Angular, and more.',
-    creator: '@daianscuarissi',
-  },
-};
+  path: '/frontend-interview-preparation',
+});
 
 export default function FrontendInterviewPreparationLayout({
   children,
