@@ -1,24 +1,13 @@
-import type { Metadata } from 'next';
-
 import { getAllBlogPosts } from '@/lib/mdx';
+import { pageMetadata } from '@/lib/site-metadata';
 import { BlogContent } from '@/components/Blog/Components/BlogContent';
 
-export const metadata: Metadata = {
-  title: 'Blog | Daian Scuarissi',
+export const metadata = pageMetadata({
+  title: 'Blog',
   description:
     'Technical blog posts about web development, React, Next.js, TypeScript, and modern software engineering practices.',
-  openGraph: {
-    title: 'Blog | Daian Scuarissi',
-    description:
-      'Technical blog posts about web development, React, Next.js, TypeScript, and modern software engineering practices.',
-    type: 'website',
-  },
-  twitter: {
-    title: 'Blog | Daian Scuarissi',
-    description:
-      'Technical blog posts about web development, React, Next.js, TypeScript, and modern software engineering practices.',
-  },
-};
+  path: '/blog',
+});
 
 export default function BlogPage() {
   const posts = getAllBlogPosts();

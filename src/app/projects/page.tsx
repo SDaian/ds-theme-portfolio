@@ -1,24 +1,15 @@
-import type { Metadata } from 'next';
-
 import { PROJECT_ITEMS } from '@/components/Projects/Data/ProjectItems';
 import { ProjectCard } from '@/components/Projects/Components/ProjectCard';
+import { pageMetadata } from '@/lib/site-metadata';
 
 const description =
   'Things I have designed and built, with the stack behind each one and links to the live site and source.';
 
-export const metadata: Metadata = {
-  title: 'Projects | Daian Scuarissi',
+export const metadata = pageMetadata({
+  title: 'Projects',
   description,
-  openGraph: {
-    title: 'Projects | Daian Scuarissi',
-    description,
-    type: 'website',
-  },
-  twitter: {
-    title: 'Projects | Daian Scuarissi',
-    description,
-  },
-};
+  path: '/projects',
+});
 
 export default function ProjectsPage() {
   return (
@@ -31,7 +22,7 @@ export default function ProjectsPage() {
 
       <div className='flex flex-col gap-16 md:gap-24'>
         {PROJECT_ITEMS.map((project, i) => (
-          <ProjectCard key={project.slug} index={i} project={project} />
+          <ProjectCard key={project.slug} headingLevel='h2' index={i} project={project} />
         ))}
       </div>
     </div>

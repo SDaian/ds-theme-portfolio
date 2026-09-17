@@ -7,6 +7,8 @@ type ProjectCardProps = {
   project: Project;
   /** Even rows put the screenshot first, odd rows reverse it. */
   index: number;
+  /** h3 under the home section's h2; h2 under the /projects page's h1. */
+  headingLevel?: 'h2' | 'h3';
 };
 
 const Screenshot = ({ image, imageAlt, name }: Pick<Project, 'image' | 'imageAlt' | 'name'>) => (
@@ -28,9 +30,10 @@ const Screenshot = ({ image, imageAlt, name }: Pick<Project, 'image' | 'imageAlt
   </div>
 );
 
-export const ProjectCard = ({ project, index }: ProjectCardProps) => {
+export const ProjectCard = ({ project, index, headingLevel = 'h3' }: ProjectCardProps) => {
   const { name, eyebrow, description, stack, liveUrl, repoUrl, image, imageAlt, year } = project;
   const isReversed = index % 2 === 1;
+  const Heading = headingLevel;
 
   return (
     <article className='grid items-center gap-8 md:grid-cols-2 md:gap-12'>
@@ -47,7 +50,7 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => {
           <span className='text-xs text-gray-400 dark:text-gray-500'>{year}</span>
         </div>
 
-        <h3 className='text-3xl font-bold tracking-tight'>{name}</h3>
+        <Heading className='text-3xl font-bold tracking-tight'>{name}</Heading>
 
         <p className='leading-relaxed text-gray-700 dark:text-gray-300'>{description}</p>
 
