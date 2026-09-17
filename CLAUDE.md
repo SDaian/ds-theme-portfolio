@@ -10,7 +10,8 @@ Package manager is **pnpm**.
 - `pnpm build` — production build
 - `pnpm start` — serve the production build
 - `pnpm lint` — `eslint .` across the whole repo (see `eslint.config.mjs`). `next lint` was removed in Next 16; `next build` no longer lints, so this is the only lint gate.
-- `pnpm audit:seo` — after `pnpm build`, walks every prerendered page and reports missing titles/canonicals/og:images, descriptions over 150 chars, wrong `<h1>` counts, heading-level jumps, and missing skip links (`scripts/seo-audit.mjs`). Warns only, never fails. Every route gets its head tags from `pageMetadata()` in `src/lib/site-metadata.ts` — the single owner of canonical/OG/Twitter — and `src/app/sitemap.ts` reads the same `blogSlugs` list the blog does.
+- `pnpm audit:seo` — after `pnpm build`, walks every prerendered page and reports missing titles/canonicals/og:images, descriptions over 150 chars, wrong `<h1>` counts, heading-level jumps, and missing skip links (`scripts/seo-audit.mjs`). Warns only, never fails. Every route gets its head tags from `pageMetadata()` in `src/lib/site-metadata.ts` — the single owner of canonical/OG/Twitter — and `src/app/sitemap.ts` reads the same `blogSlugs` list the blog does. To keep a page out of the index, set `noindex: true` on its entry in `src/lib/routes.ts` (static routes) or in the post's frontmatter; both the page's robots tag and the sitemap filter read that one flag, and the audit warns if they ever disagree.
+- `pnpm indexnow` — after a deploy is live, pushes the live sitemap's URLs to IndexNow (Bing, Yandex, DuckDuckGo, Yahoo). `--dry-run` prints the payload. The ownership key is the public `public/<key>.txt` file; it is not a secret.
 
 There is no test runner configured in this project — no Jest, Vitest, or Playwright dependency exists. Don't invent test commands; verify changes by building and running the app.
 
