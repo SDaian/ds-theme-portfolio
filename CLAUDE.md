@@ -10,6 +10,7 @@ Package manager is **pnpm**.
 - `pnpm build` — production build
 - `pnpm start` — serve the production build
 - `pnpm lint` — `eslint .` across the whole repo (see `eslint.config.mjs`). `next lint` was removed in Next 16; `next build` no longer lints, so this is the only lint gate.
+- `pnpm audit:seo` — after `pnpm build`, walks every prerendered page and reports missing titles/canonicals/og:images, descriptions over 150 chars, wrong `<h1>` counts, heading-level jumps, and missing skip links (`scripts/seo-audit.mjs`). Warns only, never fails. Every route gets its head tags from `pageMetadata()` in `src/lib/site-metadata.ts` — the single owner of canonical/OG/Twitter — and `src/app/sitemap.ts` reads the same `blogSlugs` list the blog does.
 
 There is no test runner configured in this project — no Jest, Vitest, or Playwright dependency exists. Don't invent test commands; verify changes by building and running the app.
 
