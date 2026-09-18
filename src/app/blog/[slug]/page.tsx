@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { getBlogPostMetadata, generateBlogUrl, formatDate } from '@/lib/mdx';
 import { getTagColor } from '@/lib/tag-colors';
 import CodeEnhancer from '@/components/CodeEnhancer';
+import PostOutro from '@/components/PostOutro/Components/PostOutro';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -100,6 +101,7 @@ export default async function Page({ params }: Props) {
         <Post />
       </div>
       <CodeEnhancer />
+      <PostOutro currentSlug={slug} />
     </article>
   );
 }
