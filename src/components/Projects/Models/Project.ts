@@ -3,6 +3,8 @@ export type Project = {
   name: string;
   /** Small label above the title, e.g. "Recently shipped". */
   eyebrow: string;
+  /** One short line for compact listings. Falls back to the first sentence of description. */
+  tagline?: string;
   description: string;
   stack: string[];
   liveUrl?: string;
