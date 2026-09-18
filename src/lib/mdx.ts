@@ -24,6 +24,7 @@ export function getBlogPost(slug: string): BlogPost {
       author: data.author || 'Daian Scuarissi',
       tags: data.tags || [],
       image: data.image,
+      noindex: data.noindex === true,
       content,
     };
   } catch (error) {
@@ -53,6 +54,7 @@ export function getBlogPostMetadata(slug: string): BlogPostMetadata {
     author: post.author,
     tags: post.tags,
     image: post.image,
+    noindex: post.noindex,
   };
 }
 

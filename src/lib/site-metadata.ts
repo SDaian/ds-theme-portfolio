@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 
+import { isNoindex } from './routes';
+
 // Single owner for every head tag a route needs. Routes call pageMetadata()
 // so none can forget the canonical, the Open Graph card, or the Twitter card,
 // and adding a tag site-wide means editing this file.
@@ -55,6 +57,8 @@ export function pageMetadata({
   return {
     title: fullTitle,
     description,
+    // Read from the same registry sitemap.ts filters on, so the two can't disagree.
+    ...(isNoindex(path) && { robots: { index: false, follow: true } }),
     alternates: {
       canonical: path,
     },

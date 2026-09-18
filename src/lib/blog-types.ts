@@ -7,6 +7,8 @@ export interface BlogPost {
   author: string;
   tags: string[];
   image?: string;
+  /** Frontmatter `noindex: true` keeps the post out of the index and the sitemap. */
+  noindex?: boolean;
   content: string;
 }
 
@@ -18,4 +20,5 @@ export interface BlogPostMetadata {
   author: string;
   tags: string[];
   image?: string;
+  noindex?: boolean;
 }
