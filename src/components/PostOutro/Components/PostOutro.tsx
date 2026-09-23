@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
 import { PROJECT_ITEMS } from '@/components/Projects/Data/ProjectItems';
+import { projectTagline } from '@/components/Projects/Models/Project';
 import { SocialItems } from '@/components/Shared/SocialIcons/Data/SocialItems';
 import { getAllBlogPosts, generateBlogUrl, formatDate } from '@/lib/mdx';
 
@@ -22,9 +23,6 @@ const entryLinkClass =
 /** Inline so the arrow trails the last word when a title wraps. */
 const entryArrowClass = 'ml-1.5 inline h-4 w-4 align-[-0.125em]';
 const entryMetaClass = 'mt-1 text-sm text-gray-600 dark:text-gray-400';
-
-/** First sentence of a paragraph, for projects that don't set a tagline. */
-const firstSentence = (text: string) => text.split(/(?<=\.)\s/)[0];
 
 export const PostOutro = ({ currentSlug }: PostOutroProps) => {
   const projects = PROJECT_ITEMS.filter((project) => project.featured);
@@ -69,7 +67,8 @@ export const PostOutro = ({ currentSlug }: PostOutroProps) => {
         <div>
           <span className={eyebrowClass}>Things I&apos;ve built</span>
           <ul className='mt-4 flex flex-col gap-5'>
-            {projects.map(({ slug, name, liveUrl, repoUrl, tagline, description }) => {
+            {projects.map((project) => {
+              const { slug, name, liveUrl, repoUrl } = project;
               const href = liveUrl ?? repoUrl;
 
               if (!href) return null;
@@ -81,7 +80,7 @@ export const PostOutro = ({ currentSlug }: PostOutroProps) => {
                     <ArrowRight aria-hidden='true' className={entryArrowClass} />
                     <span className='sr-only'>(opens in a new tab)</span>
                   </a>
-                  <p className={entryMetaClass}>{tagline ?? firstSentence(description)}</p>
+                  <p className={entryMetaClass}>{projectTagline(project)}</p>
                 </li>
               );
             })}

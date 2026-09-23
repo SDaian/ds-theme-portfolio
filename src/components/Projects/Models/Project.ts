@@ -16,3 +16,7 @@ export type Project = {
   /** Shown in the home page teaser. */
   featured: boolean;
 };
+
+/** One short line for a project: its tagline, or the first sentence of its description. */
+export const projectTagline = ({ tagline, description }: Project): string =>
+  tagline ?? description.split(/(?<=\.)\s/)[0];
