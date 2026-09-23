@@ -62,6 +62,9 @@ export const NavItems = ({ navbar, setNavbar }: NavItemsProps) => {
                   smooth
                   className={`navbarButton ${isActive ? 'navbarButton--active' : ''}`}
                   duration={500}
+                  // A real href keeps the link crawlable; react-scroll still
+                  // prevents the jump and scrolls smoothly on click.
+                  href={`#${item.page}`}
                   offset={-100}
                   to={item.page}
                   onClick={() => setNavbar(!navbar)}
