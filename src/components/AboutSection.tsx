@@ -23,14 +23,13 @@ const skills: Skill[] = [
 const ProfileImage = () => (
   <div className='flex flex-col items-center md:items-start'>
     <h3 className='mb-6 text-center text-2xl font-bold md:text-left'>My (dreaming) Setup</h3>
+    {/* width/height set the aspect ratio; h-auto lets it shrink on phones without shifting. */}
     <Image
-      priority
       alt='Daian Scuarissi setup image'
-      className='rounded-lg shadow-2xl transition-transform duration-300 hover:scale-105'
-      height={300}
+      className='h-auto w-full max-w-[540px] rounded-lg shadow-2xl transition-transform duration-300 hover:scale-105'
+      height={304}
       src='/setup-image.png'
-      style={{ width: 'auto', height: 'auto' }}
-      width={420}
+      width={540}
     />
   </div>
 );

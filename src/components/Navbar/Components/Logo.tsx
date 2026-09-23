@@ -45,7 +45,7 @@ export const Logo = ({
   return (
     <div className='flex grow items-center justify-between py-2 md:block'>
       {isHomePage ? (
-        <Link smooth className='cursor-pointer' duration={500} offset={-100} to='home'>
+        <Link smooth className='cursor-pointer' duration={500} href='#home' offset={-100} to='home'>
           {logoContent}
         </Link>
       ) : (

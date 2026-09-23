@@ -1,6 +1,8 @@
 import { PROJECT_ITEMS } from '@/components/Projects/Data/ProjectItems';
 import { ProjectCard } from '@/components/Projects/Components/ProjectCard';
 import { pageMetadata } from '@/lib/site-metadata';
+import { breadcrumbNode, jsonLdGraph } from '@/lib/structured-data';
+import { JsonLd } from '@/components/JsonLd';
 
 const description =
   'Things I have designed and built, with the stack behind each one and links to the live site and source.';
@@ -14,6 +16,7 @@ export const metadata = pageMetadata({
 export default function ProjectsPage() {
   return (
     <div className='mx-auto mt-[65px] min-h-[calc(100vh-165px)] max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8'>
+      <JsonLd data={jsonLdGraph(breadcrumbNode({ name: 'Projects', path: '/projects' }))} />
       <header className='mb-16 text-center'>
         <h1 className='mb-4 text-4xl font-bold md:text-5xl'>Projects</h1>
         <div className='bg-brand mx-auto mb-6 h-1 w-16 rounded-full' />
