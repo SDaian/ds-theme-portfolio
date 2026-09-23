@@ -10,24 +10,29 @@ import { SITE_URL } from '@/lib/site-metadata';
 // Both filters read the same noindex flag the page itself emits (the route
 // registry for static pages, frontmatter for posts), so a page marked noindex
 // can never be advertised here.
+//
+// Only real dates go in lastmod: a post's own date, and the newest post's for
+// the blog index. Static pages get none rather than a made-up one. changefreq
+// and priority are left out because Google ignores both.
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const posts = getAllBlogPosts().filter((post) => !post.noindex);
+  const postDate = (post: (typeof posts)[number]) => new Date(post.modifiedAt ?? post.publishedAt);
+  const newestPost = posts.length
+    ? new Date(Math.max(...posts.map((post) => postDate(post).getTime())))
+    : undefined;
+
   const staticEntries: MetadataRoute.Sitemap = STATIC_ROUTES.filter((route) => !route.noindex).map(
     ({ path }) => ({
       url: `${SITE_URL}${path === '/' ? '' : path}`,
-      changeFrequency: path === '/' ? 'monthly' : 'weekly',
-      priority: path === '/' ? 1 : 0.8,
+      ...(path === '/blog' && newestPost && { lastModified: newestPost }),
     }),
   );
 
-  const postEntries: MetadataRoute.Sitemap = getAllBlogPosts()
-    .filter((post) => !post.noindex)
-    .map((post) => ({
-      url: `${SITE_URL}/blog/${post.slug}`,
-      lastModified: new Date(post.modifiedAt ?? post.publishedAt),
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    }));
+  const postEntries: MetadataRoute.Sitemap = posts.map((post) => ({
+    url: `${SITE_URL}/blog/${post.slug}`,
+    lastModified: postDate(post),
+  }));
 
   return [...staticEntries, ...postEntries];
 }
