@@ -1,8 +1,11 @@
 import type { Metadata } from 'next';
 
-import { getBlogPostMetadata, generateBlogUrl, formatDate } from '@/lib/mdx';
+import { getBlogPost, getBlogPostMetadata, generateBlogUrl, formatDate } from '@/lib/mdx';
+import { DEFAULT_POST_IMAGE, pageMetadata } from '@/lib/site-metadata';
+import { blogPostingNode, breadcrumbNode, jsonLdGraph } from '@/lib/structured-data';
 import { getTagColor } from '@/lib/tag-colors';
 import CodeEnhancer from '@/components/CodeEnhancer';
+import { JsonLd } from '@/components/JsonLd';
 import PostOutro from '@/components/PostOutro/Components/PostOutro';
 
 type Props = {
@@ -13,63 +16,40 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = getBlogPostMetadata(slug);
 
-  const blogUrl = generateBlogUrl(slug);
-  const ogImage = post.image || '/blog/default-og.svg';
-
-  return {
-    title: `${post.title} | Daian Scuarissi`,
+  return pageMetadata({
+    title: post.title,
     description: post.description,
-    authors: [{ name: post.author }],
-    creator: post.author,
-    publisher: post.author,
-    keywords: post.tags,
+    path: generateBlogUrl(slug),
+    // A post's own image has no declared size; the default's is known.
+    image: post.image ? { url: post.image } : DEFAULT_POST_IMAGE,
+    imageAlt: post.title,
     // Same frontmatter flag sitemap.ts filters on, so the two can't disagree.
-    ...(post.noindex && { robots: { index: false, follow: true } }),
-    openGraph: {
-      type: 'article',
-      title: `${post.title} | Daian Scuarissi`,
-      description: post.description,
-      url: blogUrl,
-      siteName: 'Daian Scuarissi - Software Engineer',
-      images: [
-        {
-          url: ogImage,
-          width: 1200,
-          height: 627,
-          alt: post.title,
-        },
-      ],
+    noindex: post.noindex === true,
+    article: {
+      author: post.author,
       publishedTime: post.publishedAt,
       modifiedTime: post.modifiedAt,
-      authors: [post.author],
       tags: post.tags,
     },
-    twitter: {
-      card: 'summary_large_image',
-      title: `${post.title} | Daian Scuarissi`,
-      description: post.description,
-      images: [ogImage],
-      creator: '@daianscuarissi',
-    },
-    alternates: {
-      canonical: blogUrl,
-    },
-    other: {
-      'article:author': post.author,
-      'article:published_time': post.publishedAt,
-      ...(post.modifiedAt && { 'article:modified_time': post.modifiedAt }),
-      'article:tag': post.tags.join(','),
-    },
-  };
+  });
 }
 
 export default async function Page({ params }: Props) {
   const { slug } = await params;
   const { default: Post } = await import(`../../../content/${slug}.mdx`);
-  const post = getBlogPostMetadata(slug);
+  const post = getBlogPost(slug);
 
   return (
     <article className='mx-auto mt-[65px] max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8'>
+      <JsonLd
+        data={jsonLdGraph(
+          blogPostingNode(post),
+          breadcrumbNode(
+            { name: 'Blog', path: '/blog' },
+            { name: post.title, path: `/blog/${slug}` },
+          ),
+        )}
+      />
       <header className='mb-8'>
         <h1 className='mb-4 text-4xl font-bold text-gray-900 dark:text-gray-100'>{post.title}</h1>
         <div className='mb-4 text-sm text-gray-600 dark:text-gray-400'>

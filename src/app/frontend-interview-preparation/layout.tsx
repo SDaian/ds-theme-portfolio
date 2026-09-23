@@ -1,10 +1,15 @@
 import { pageMetadata } from '@/lib/site-metadata';
+import { breadcrumbNode, jsonLdGraph } from '@/lib/structured-data';
+import { JsonLd } from '@/components/JsonLd';
+
+const TITLE = 'Frontend Interview Preparation';
+const PATH = '/frontend-interview-preparation';
 
 export const metadata = pageMetadata({
-  title: 'Frontend Interview Preparation',
+  title: TITLE,
   description:
     'Comprehensive frontend interview preparation guide covering JavaScript, React, Angular, and more.',
-  path: '/frontend-interview-preparation',
+  path: PATH,
 });
 
 export default function FrontendInterviewPreparationLayout({
@@ -12,5 +17,10 @@ export default function FrontendInterviewPreparationLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return (
+    <>
+      <JsonLd data={jsonLdGraph(breadcrumbNode({ name: TITLE, path: PATH }))} />
+      {children}
+    </>
+  );
 }
