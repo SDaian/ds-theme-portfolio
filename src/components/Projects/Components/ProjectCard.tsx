@@ -68,7 +68,7 @@ export const ProjectCard = ({ project, index, headingLevel = 'h3' }: ProjectCard
         <div className='flex flex-wrap gap-6 pt-1'>
           {liveUrl && (
             <a
-              className='text-brand hover:text-brand-lighter flex items-center gap-2 font-semibold transition-colors'
+              className='text-brand-text hover:text-brand-text-hover flex items-center gap-2 font-semibold transition-colors'
               href={liveUrl}
               rel='noreferrer'
               target='_blank'
@@ -80,7 +80,7 @@ export const ProjectCard = ({ project, index, headingLevel = 'h3' }: ProjectCard
           )}
           {repoUrl && (
             <a
-              className='text-brand hover:text-brand-lighter flex items-center gap-2 font-semibold transition-colors'
+              className='text-brand-text hover:text-brand-text-hover flex items-center gap-2 font-semibold transition-colors'
               href={repoUrl}
               rel='noreferrer'
               target='_blank'

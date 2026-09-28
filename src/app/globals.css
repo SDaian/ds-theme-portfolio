@@ -11,6 +11,8 @@
   /* Brand colors - consistent OKLCH format */
   --color-brand: oklch(0.72 0.11 178);
   --color-brand-lighter: oklch(0.82 0.11 178);
+  /* Label on a brand fill. Near-black passes 4.5:1 on teal in both themes; white does not. */
+  --color-brand-foreground: oklch(0.145 0 0);
 
   /* Semantic colors - Light mode defaults */
   --color-background: oklch(1 0 0);
@@ -33,6 +35,15 @@
   --color-ring: oklch(0.708 0 0);
 }
 
+/* Brand-colored text. Tokens in the inline block above are baked into each
+   utility as a fixed value, so a .dark override never reaches them. These sit
+   in a plain @theme block, which compiles to var() references, so the .dark
+   values below apply. Light: the lightest teal that passes 4.5:1 on white. */
+@theme {
+  --color-brand-text: oklch(0.55 0.11 178);
+  --color-brand-text-hover: oklch(0.48 0.11 178);
+}
+
 /* Dark mode overrides */
 .dark {
   --color-background: oklch(0.145 0 0);
@@ -51,6 +62,8 @@
   --color-border: oklch(1 0 0 / 10%);
   --color-input: oklch(1 0 0 / 15%);
   --color-ring: oklch(0.556 0 0);
+  --color-brand-text: oklch(0.72 0.11 178);
+  --color-brand-text-hover: oklch(0.82 0.11 178);
 }
 
 @theme {
@@ -92,7 +105,7 @@
 }
 
 @utility navbarButton--active {
-  @apply text-brand font-semibold;
+  @apply text-brand-text font-semibold;
 
   &::after {
     @apply w-0 md:w-full;
@@ -138,7 +151,7 @@
 }
 
 .prose a {
-  @apply text-brand hover:text-brand-lighter underline underline-offset-2 transition-colors;
+  @apply text-brand-text hover:text-brand-text-hover underline underline-offset-2 transition-colors;
 }
 
 .prose strong {

@@ -41,7 +41,7 @@ const Navbar = () => {
         transition={{ duration: 0.9 }}
       >
         <Button
-          className='bg-brand hover:bg-brand-lighter px-8 py-4 text-white'
+          className='bg-brand hover:bg-brand-lighter text-brand-foreground px-8 py-4'
           variant='default'
           onClick={() => window.open('/resume-daian-scuarissi.pdf', '_blank')}
         >

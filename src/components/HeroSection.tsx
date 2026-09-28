@@ -26,7 +26,7 @@ const HeroSection = () => {
             Hey, I&#39;m Daian<span className='text-brand'>.</span>
           </h1>
           <p className='mt-4 mb-6 sm:text-lg xl:text-2xl'>
-            I&#39;m a <span className='text-brand font-semibold'>Software Engineer </span>
+            I&#39;m a <span className='text-brand-text font-semibold'>Software Engineer </span>
             based in Madrid, Spain.
             <br />
             Turning ideas into visually stunning and performant web applications.
@@ -36,7 +36,7 @@ const HeroSection = () => {
                 crawlable <a>, not a <button> nested inside an href-less <a>. */}
             <Button
               asChild
-              className='bg-brand hover:bg-brand/80 flex-1 cursor-pointer px-8 py-6 text-lg md:flex-initial'
+              className='bg-brand hover:bg-brand/80 text-brand-foreground flex-1 cursor-pointer px-8 py-6 text-lg md:flex-initial'
               size='lg'
             >
               <Link href='#experience' to='experience'>

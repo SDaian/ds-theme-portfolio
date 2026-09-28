@@ -146,7 +146,7 @@ export function BlogPostList({
           <Link className='block hover:no-underline' href={`/blog/${post.slug}`}>
             <div className='flex flex-col space-y-4'>
               <div>
-                <h2 className='group-hover:text-brand text-2xl font-semibold text-gray-900 transition-colors dark:text-gray-100'>
+                <h2 className='group-hover:text-brand-text text-2xl font-semibold text-gray-900 transition-colors dark:text-gray-100'>
                   {post.title}
                 </h2>
                 <p className='mt-2 leading-relaxed text-gray-600 dark:text-gray-400'>

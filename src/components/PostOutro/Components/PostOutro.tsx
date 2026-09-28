@@ -19,7 +19,7 @@ const LINKEDIN_URL = SocialItems.find((item) => item.name === 'Linkedin')?.link;
 const eyebrowClass =
   'text-xs font-medium tracking-wider text-gray-500 uppercase dark:text-gray-400';
 const entryLinkClass =
-  'hover:text-brand font-medium text-gray-900 transition-colors dark:text-gray-100';
+  'hover:text-brand-text font-medium text-gray-900 transition-colors dark:text-gray-100';
 /** Inline so the arrow trails the last word when a title wraps. */
 const entryArrowClass = 'ml-1.5 inline h-4 w-4 align-[-0.125em]';
 const entryMetaClass = 'mt-1 text-sm text-gray-600 dark:text-gray-400';
@@ -50,7 +50,7 @@ export const PostOutro = ({ currentSlug }: PostOutroProps) => {
           </p>
           {LINKEDIN_URL && (
             <a
-              className='text-brand hover:text-brand-lighter mt-1 inline-flex items-center gap-1.5 font-semibold transition-colors'
+              className='text-brand-text hover:text-brand-text-hover mt-1 inline-flex items-center gap-1.5 font-semibold transition-colors'
               href={LINKEDIN_URL}
               rel='noreferrer'
               target='_blank'

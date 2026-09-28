@@ -38,7 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       >
         {/* First focusable element on every page, off-screen until focused. */}
         <a
-          className='bg-brand sr-only z-50 rounded-md px-4 py-2 font-semibold text-white focus:not-sr-only focus:fixed focus:top-4 focus:left-4'
+          className='bg-brand text-brand-foreground sr-only z-50 rounded-md px-4 py-2 font-semibold focus:not-sr-only focus:fixed focus:top-4 focus:left-4'
           href='#main-content'
         >
           Skip to content

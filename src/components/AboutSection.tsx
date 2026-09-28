@@ -63,18 +63,18 @@ const AboutContent = () => (
 
     <div className='space-y-4 text-center md:text-left'>
       <p className='leading-relaxed font-medium'>
-        Hey there, I&apos;m <span className='text-brand font-bold'>Daian Scuarissi</span>, a{' '}
-        <span className='text-brand font-semibold'>software engineer</span> with over 7 years of
-        experience developing applications and web interfaces. My expertise lies in frontend
+        Hey there, I&apos;m <span className='text-brand-text font-bold'>Daian Scuarissi</span>, a{' '}
+        <span className='text-brand-text font-semibold'>software engineer</span> with over 7 years
+        of experience developing applications and web interfaces. My expertise lies in frontend
         technologies, and I have a passion for creating engaging and intuitive user experiences.
       </p>
 
       <p className='leading-relaxed font-medium'>
         I specialize in modern frontend frameworks like{' '}
-        <span className='text-brand font-semibold'>React</span> and{' '}
-        <span className='text-brand font-semibold'>Angular</span>, building responsive web
+        <span className='text-brand-text font-semibold'>React</span> and{' '}
+        <span className='text-brand-text font-semibold'>Angular</span>, building responsive web
         applications and dynamic user interfaces. I&apos;m always{' '}
-        <span className='text-brand underline decoration-2 underline-offset-4'>
+        <span className='text-brand-text underline decoration-2 underline-offset-4'>
           learning and improving my skills
         </span>{' '}
         to stay current with the latest technologies.

@@ -81,7 +81,7 @@ const ContactSection = () => {
             <div className='flex justify-end'>
               <Button
                 aria-label='contact me'
-                className='bg-brand hover:bg-brand/80 w-full rounded-lg px-12 py-6 text-lg text-white md:w-auto'
+                className='bg-brand hover:bg-brand/80 text-brand-foreground w-full rounded-lg px-12 py-6 text-lg md:w-auto'
                 type='submit'
               >
                 Submit
