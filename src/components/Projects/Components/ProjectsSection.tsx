@@ -1,4 +1,5 @@
 'use client';
+import { Fragment } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
@@ -21,11 +22,15 @@ const ProjectsSection = () => {
           <div className='bg-brand mx-auto h-1 w-16 rounded-full' />
         </header>
 
-        <div className='flex flex-col gap-16 md:gap-24'>
+        {/* Half the old gap on each side of the divider keeps the same total spacing. */}
+        <div className='flex flex-col gap-8 md:gap-12'>
           {featured.map((project, i) => (
-            <Reveal key={project.slug} index={i} width='100%'>
-              <ProjectCard index={i} project={project} />
-            </Reveal>
+            <Fragment key={project.slug}>
+              {i > 0 && <hr className='border-gray-200 dark:border-gray-700' />}
+              <Reveal index={i} width='100%'>
+                <ProjectCard index={i} project={project} />
+              </Reveal>
+            </Fragment>
           ))}
         </div>
 

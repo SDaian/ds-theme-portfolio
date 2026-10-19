@@ -1,3 +1,5 @@
+import { Fragment } from 'react';
+
 import { PROJECT_ITEMS } from '@/components/Projects/Data/ProjectItems';
 import { ProjectCard } from '@/components/Projects/Components/ProjectCard';
 import { pageMetadata } from '@/lib/site-metadata';
@@ -23,9 +25,13 @@ export default function ProjectsPage() {
         <p className='mx-auto max-w-2xl text-gray-600 dark:text-gray-400'>{description}</p>
       </header>
 
-      <div className='flex flex-col gap-16 md:gap-24'>
+      {/* Half the old gap on each side of the divider keeps the same total spacing. */}
+      <div className='flex flex-col gap-8 md:gap-12'>
         {PROJECT_ITEMS.map((project, i) => (
-          <ProjectCard key={project.slug} headingLevel='h2' index={i} project={project} />
+          <Fragment key={project.slug}>
+            {i > 0 && <hr className='border-gray-200 dark:border-gray-700' />}
+            <ProjectCard headingLevel='h2' index={i} project={project} />
+          </Fragment>
         ))}
       </div>
     </div>
