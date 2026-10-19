@@ -2,17 +2,17 @@ import { SocialItem } from '../Models/SocialItem';
 
 export const SocialItems: Array<SocialItem> = [
   {
-    name: 'Github',
+    name: 'GitHub',
     link: 'https://github.com/SDaian',
     icon: 'AiOutlineGithub',
   },
   {
-    name: 'Linkedin',
+    name: 'LinkedIn',
     link: 'https://www.linkedin.com/in/daian-scuarissi/',
     icon: 'AiOutlineLinkedin',
   },
   {
-    name: 'Twitter',
+    name: 'X',
     link: 'https://x.com/ASDaian',
     icon: 'AiOutlineTwitter',
   },

@@ -22,7 +22,7 @@ const skills: Skill[] = [
 
 const ProfileImage = () => (
   <div className='flex flex-col items-center md:items-start'>
-    <h3 className='mb-6 text-center text-2xl font-bold md:text-left'>My (dreaming) Setup</h3>
+    <h3 className='mb-6 text-center text-2xl font-bold md:text-left'>My (dreaming) setup</h3>
     {/* width/height set the aspect ratio; h-auto lets it shrink on phones without shifting. */}
     <Image
       alt='Daian Scuarissi setup image'
@@ -44,7 +44,7 @@ const SkillBadge = ({ skill }: { skill: Skill }) => (
 
 const SkillsSection = () => (
   <div className='flex flex-col items-center md:items-start'>
-    <h3 className='mb-6 text-center text-2xl font-bold md:text-left'>My Skills</h3>
+    <h3 className='mb-6 text-center text-2xl font-bold md:text-left'>My skills</h3>
     <ul className='flex flex-wrap justify-center md:justify-start'>
       {skills.map((skill, idx) => (
         <SkillBadge key={`${skill.name}-${idx}`} skill={skill} />
@@ -89,7 +89,7 @@ const AboutSection = () => {
       <div className='container mx-auto py-16 md:py-24'>
         <header className='mb-16 text-center'>
           <h2 className='mb-4 text-4xl font-bold md:text-5xl' id='about-heading'>
-            About Me
+            About me
           </h2>
           <div className='bg-brand mx-auto h-1 w-16 rounded-full' />
         </header>

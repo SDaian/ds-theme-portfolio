@@ -14,7 +14,7 @@ type PostOutroProps = {
 
 const AUTHOR = 'Daian Scuarissi';
 const BIO = 'Software Engineer in Madrid, Spain.';
-const LINKEDIN_URL = SocialItems.find((item) => item.name === 'Linkedin')?.link;
+const LINKEDIN_URL = SocialItems.find((item) => item.name === 'LinkedIn')?.link;
 
 const eyebrowClass =
   'text-xs font-medium tracking-wider text-gray-500 uppercase dark:text-gray-400';

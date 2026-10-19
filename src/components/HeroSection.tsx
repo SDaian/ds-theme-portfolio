@@ -41,7 +41,7 @@ const HeroSection = () => {
               size='lg'
             >
               <Link href='#experience' to='experience'>
-                View My Work
+                View my work
                 <ArrowRight className='ml-2 h-4 w-4' />
               </Link>
             </Button>
@@ -53,7 +53,7 @@ const HeroSection = () => {
               variant='outline'
             >
               <Link href='#contact' to='contact'>
-                Get In Touch
+                Get in touch
               </Link>
             </Button>
             {/* <Link

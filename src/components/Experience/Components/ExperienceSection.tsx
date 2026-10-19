@@ -48,7 +48,7 @@ const ExperienceSection = () => {
                       <div className='content ribbon relative grow rounded-xl bg-slate-200 p-4 md:w-2/5 md:grow-0'>
                         <div className='mb-2 flex flex-col justify-between gap-0.5 md:flex-row'>
                           <a
-                            aria-label={`company URL: ${company}`}
+                            aria-label={`${company} website (opens in a new tab)`}
                             href={companyUrl}
                             rel='noreferrer'
                             target='_blank'
@@ -71,7 +71,8 @@ const ExperienceSection = () => {
                             {client && <span>| Client: {client}</span>}
                           </span>
                           <button
-                            aria-label={expandedItems.has(i) ? 'Hide details' : 'Show details'}
+                            // The company plus client tells the seven toggles apart in a screen reader's list.
+                            aria-label={`${expandedItems.has(i) ? 'Hide' : 'Show'} details for ${company}${client ? `, ${client}` : ''}`}
                             className='ml-2 rounded-md p-1 transition-colors duration-200 hover:bg-slate-300'
                             onClick={() => toggleExpanded(i)}
                           >
