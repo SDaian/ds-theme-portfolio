@@ -1,6 +1,6 @@
 'use client';
 import { Menu, X } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import { Link } from 'react-scroll';
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -26,6 +26,7 @@ export const Logo = ({
 }: LogoProps) => {
   const pathname = usePathname();
   const isHomePage = pathname === '/';
+  const smoothScroll = !useReducedMotion();
 
   const logoContent = (
     <motion.div
@@ -45,7 +46,14 @@ export const Logo = ({
   return (
     <div className='flex grow items-center justify-between py-2 md:block'>
       {isHomePage ? (
-        <Link smooth className='cursor-pointer' duration={500} href='#home' offset={-100} to='home'>
+        <Link
+          className='cursor-pointer'
+          duration={500}
+          href='#home'
+          offset={-100}
+          smooth={smoothScroll}
+          to='home'
+        >
           {logoContent}
         </Link>
       ) : (

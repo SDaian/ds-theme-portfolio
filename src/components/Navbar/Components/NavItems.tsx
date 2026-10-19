@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import { Link } from 'react-scroll';
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -16,6 +16,8 @@ type NavItemsProps = {
 export const NavItems = ({ navbar, setNavbar }: NavItemsProps) => {
   const pathname = usePathname();
   const isHomePage = pathname === '/';
+  // Jump straight to the section when the visitor has asked for less motion.
+  const smoothScroll = !useReducedMotion();
 
   // Get section IDs for home page navigation
   const sectionIds = NAV_ITEMS.filter((item) => !item.isExternal).map((item) => item.page);
@@ -59,13 +61,13 @@ export const NavItems = ({ navbar, setNavbar }: NavItemsProps) => {
               return (
                 <Link
                   key={i}
-                  smooth
                   className={`navbarButton ${isActive ? 'navbarButton--active' : ''}`}
                   duration={500}
                   // A real href keeps the link crawlable; react-scroll still
                   // prevents the jump and scrolls smoothly on click.
                   href={`#${item.page}`}
                   offset={-100}
+                  smooth={smoothScroll}
                   to={item.page}
                   onClick={() => setNavbar(!navbar)}
                 >

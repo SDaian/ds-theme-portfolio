@@ -8,6 +8,7 @@ import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { AnalyticsWrapper } from '@/components/Analytics';
+import { MotionProvider } from '@/components/MotionProvider';
 import { SITE_NAME, SITE_URL } from '@/lib/site-metadata';
 
 // The only metadataBase in the app. Routes set their own canonical via
@@ -49,10 +50,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           attribute='class'
           defaultTheme='light'
         >
-          <Navbar />
-          <main id='main-content'>{children}</main>
-          <AnalyticsWrapper />
-          <Footer />
+          <MotionProvider>
+            <Navbar />
+            <main id='main-content'>{children}</main>
+            <AnalyticsWrapper />
+            <Footer />
+          </MotionProvider>
         </ThemeProvider>
         <SpeedInsights />
       </body>

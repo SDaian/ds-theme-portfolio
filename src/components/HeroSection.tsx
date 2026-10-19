@@ -93,7 +93,7 @@ const HeroSection = () => {
       </div>
       <div className='hidden flex-row justify-center md:flex'>
         <Link activeClass='active' aria-label='Scroll to About' href='#about' to='about'>
-          <CircleArrowDown aria-hidden='true' className='animate-bounce' size={35} />
+          <CircleArrowDown aria-hidden='true' className='motion-safe:animate-bounce' size={35} />
         </Link>
       </div>
     </section>

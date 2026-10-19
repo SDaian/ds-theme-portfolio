@@ -11,7 +11,8 @@ export const HashScrollHandler = () => {
         // Small delay to ensure page is rendered
         setTimeout(() => {
           scroller.scrollTo(hash, {
-            smooth: true,
+            // Jump instead of gliding when the visitor has asked for less motion.
+            smooth: !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
             offset: -100,
             duration: 500,
           });
