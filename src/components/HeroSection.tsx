@@ -26,7 +26,7 @@ const HeroSection = () => {
             Hey, I&#39;m Daian<span className='text-brand'>.</span>
           </h1>
           <p className='mt-4 mb-6 sm:text-lg xl:text-2xl'>
-            I&#39;m a <span className='text-brand-text font-semibold'>Software Engineer </span>
+            I&#39;m a <span className='font-semibold'>Software Engineer </span>
             based in Madrid, Spain.
             <br />
             Turning ideas into visually stunning and performant web applications.

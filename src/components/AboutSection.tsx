@@ -61,30 +61,23 @@ const AboutContent = () => (
 
     <div className='space-y-4 text-center md:text-left'>
       <p className='leading-relaxed font-medium'>
-        Hey there, I&apos;m <span className='text-brand-text font-bold'>Daian Scuarissi</span>, a{' '}
-        <span className='text-brand-text font-semibold'>software engineer</span> with over 7 years
-        of experience developing applications and web interfaces. My expertise lies in frontend
-        technologies, and I have a passion for creating engaging and intuitive user experiences.
+        Hey there, I&apos;m <span className='font-bold'>Daian Scuarissi</span>, a{' '}
+        <span className='font-semibold'>software engineer</span> with over 7 years of experience
+        developing applications and web interfaces. My expertise lies in frontend technologies, and
+        I have a passion for creating engaging and intuitive user experiences.
       </p>
 
       <p className='leading-relaxed font-medium'>
-        I specialize in modern frontend frameworks like{' '}
-        <span className='text-brand-text font-semibold'>React</span> and{' '}
-        <span className='text-brand-text font-semibold'>Angular</span>, building responsive web
-        applications and dynamic user interfaces. I&apos;m always{' '}
-        <span className='text-brand-text underline decoration-2 underline-offset-4'>
-          learning and improving my skills
-        </span>{' '}
-        to stay current with the latest technologies.
+        I specialize in modern frontend frameworks like <span className='font-semibold'>React</span>{' '}
+        and <span className='font-semibold'>Angular</span>, building responsive web applications and
+        dynamic user interfaces. I&apos;m always learning and improving my skills to stay current
+        with the latest technologies.
       </p>
 
       <p className='leading-relaxed font-medium'>
         Looking ahead, I&apos;m excited to continue growing as a software engineer and tackle
-        challenging projects that showcase my expertise.{' '}
-        <span className='underline decoration-2 underline-offset-4'>
-          I&apos;m always open to new opportunities and eager to collaborate
-        </span>{' '}
-        with other passionate professionals.
+        challenging projects that showcase my expertise. I&apos;m always open to new opportunities
+        and eager to collaborate with other passionate professionals.
       </p>
     </div>
   </div>

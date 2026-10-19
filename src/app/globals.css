@@ -13,6 +13,8 @@
   --color-brand-lighter: oklch(0.82 0.11 178);
   /* Label on a brand fill. Near-black passes 4.5:1 on teal in both themes; white does not. */
   --color-brand-foreground: oklch(0.145 0 0);
+  /* Links on surfaces that stay light in both themes (the Experience cards). 4.83:1 on slate-200. */
+  --color-brand-on-light: oklch(0.48 0.11 178);
 
   /* Semantic colors - Light mode defaults */
   --color-background: oklch(1 0 0);

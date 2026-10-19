@@ -53,7 +53,7 @@ const ExperienceSection = () => {
                             rel='noreferrer'
                             target='_blank'
                           >
-                            <h3 className='flex cursor-pointer items-center gap-2 text-xl font-semibold text-blue-700 md:mb-0'>
+                            <h3 className='text-brand-on-light flex cursor-pointer items-center gap-2 text-xl font-semibold underline-offset-4 hover:underline md:mb-0'>
                               {company}
                               <Link />
                             </h3>
@@ -72,7 +72,7 @@ const ExperienceSection = () => {
                           </span>
                           <button
                             aria-label={expandedItems.has(i) ? 'Hide details' : 'Show details'}
-                            className='ml-2 rounded-md p-1 transition-colors duration-200 hover:bg-slate-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 focus:outline-none'
+                            className='ml-2 rounded-md p-1 transition-colors duration-200 hover:bg-slate-300'
                             onClick={() => toggleExpanded(i)}
                           >
                             {expandedItems.has(i) ? (
