@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { Geist, Inter } from 'next/font/google';
+import { Geist } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
@@ -19,24 +19,17 @@ export const metadata: Metadata = {
   description: 'Personal portfolio and blog of Daian Scuarissi, a passionate software engineer.',
 };
 
+// No weight list: Geist loads as one variable font, so every weight the site
+// uses (400 to 800, including medium and semibold) renders as designed.
 const geist = Geist({
   subsets: ['latin'],
-  weight: ['400', '700', '800'],
   variable: '--font-geist',
-});
-
-const inter = Inter({
-  subsets: ['latin'],
-  weight: ['400', '700', '800'],
-  variable: '--font-inter',
 });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html suppressHydrationWarning lang='en'>
-      <body
-        className={`${geist.variable} ${inter.variable} antialiased transition-colors duration-300`}
-      >
+      <body className={`${geist.variable} antialiased transition-colors duration-300`}>
         {/* First focusable element on every page, off-screen until focused. */}
         <a
           className='bg-brand text-brand-foreground sr-only z-50 rounded-md px-4 py-2 font-semibold focus:not-sr-only focus:fixed focus:top-4 focus:left-4'

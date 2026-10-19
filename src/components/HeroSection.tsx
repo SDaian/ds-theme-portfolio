@@ -22,7 +22,7 @@ const HeroSection = () => {
         {/* </div> */}
         {/* <div className='md:mt-2 md:w-3/5'> */}
         <div>
-          <h1 className='font-header mt-6 text-5xl font-extrabold tracking-tight md:mt-0 md:text-8xl'>
+          <h1 className='mt-6 text-5xl font-extrabold tracking-tight md:mt-0 md:text-8xl'>
             Hey, I&#39;m Daian<span className='text-brand'>.</span>
           </h1>
           <p className='mt-4 mb-6 sm:text-lg xl:text-2xl'>

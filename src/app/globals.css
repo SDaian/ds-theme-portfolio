@@ -6,7 +6,6 @@
 @theme inline {
   /* Font configuration */
   --font-sans: var(--font-geist);
-  --font-header: var(--font-inter);
 
   /* Brand colors - consistent OKLCH format */
   --color-brand: oklch(0.72 0.11 178);
