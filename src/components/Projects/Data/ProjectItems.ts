@@ -31,13 +31,13 @@ export const PROJECT_ITEMS: Project[] = [
     eyebrow: 'You are looking at it',
     tagline: 'Next.js 16 site and MDX blog, built with Turbopack.',
     description:
-      'Personal site and technical blog on the Next.js App Router. Posts are MDX compiled at build time with Shiki syntax highlighting, the whole site works in light and dark, and the production build moved to Turbopack with Next.js 16 — which cut full builds from 42s to 17s.',
+      'Personal site and technical blog on the Next.js App Router. Posts are MDX compiled at build time with Shiki syntax highlighting, the whole site works in light and dark, and the production build moved to Turbopack with Next.js 16, which cut full builds from 42s to 17s.',
     stack: ['Next.js 16', 'TypeScript', 'Tailwind v4', 'MDX', 'Vercel'],
     liveUrl: 'https://daian-scuarissi.vercel.app/',
     repoUrl: 'https://github.com/SDaian/ds-theme-portfolio',
     image: '/projects/portfolio-home.jpg',
     imageAlt: 'The portfolio home page, showing the hero introduction and navigation',
-    year: '2025—26',
+    year: '2025–26',
     featured: true,
   },
 ];
