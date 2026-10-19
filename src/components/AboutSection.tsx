@@ -34,24 +34,22 @@ const ProfileImage = () => (
   </div>
 );
 
+// Static labels: a list item, not a control, so it takes no Tab stop and
+// doesn't react to hover as if it could be clicked.
 const SkillBadge = ({ skill }: { skill: Skill }) => (
-  <span
-    className='hover:bg-brand mt-2 mr-2 cursor-pointer rounded-md bg-gray-200 px-4 py-2 font-medium text-gray-700 transition-all duration-200 hover:scale-105 hover:text-white dark:bg-gray-700 dark:text-gray-200'
-    role='button'
-    tabIndex={0}
-  >
+  <li className='mt-2 mr-2 rounded-md bg-gray-200 px-4 py-2 font-medium text-gray-700 dark:bg-gray-700 dark:text-gray-200'>
     {skill.name}
-  </span>
+  </li>
 );
 
 const SkillsSection = () => (
   <div className='flex flex-col items-center md:items-start'>
     <h3 className='mb-6 text-center text-2xl font-bold md:text-left'>My Skills</h3>
-    <div className='flex flex-wrap justify-center md:justify-start' role='list'>
+    <ul className='flex flex-wrap justify-center md:justify-start'>
       {skills.map((skill, idx) => (
         <SkillBadge key={`${skill.name}-${idx}`} skill={skill} />
       ))}
-    </div>
+    </ul>
   </div>
 );
 
