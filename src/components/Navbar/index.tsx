@@ -31,7 +31,7 @@ const Navbar = () => {
         <SocialIcons className={'text-black'} />
       </nav> */}
 
-      <nav className='flex w-full grow basis-0 md:justify-center'>
+      <nav className='flex w-full grow basis-0 md:justify-center' id='primary-navigation'>
         <NavItems navbar={navbar} setNavbar={setNavbar} />
       </nav>
       <motion.div

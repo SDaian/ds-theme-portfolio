@@ -70,10 +70,14 @@ export const Logo = ({
         />
         <motion.button
           animate={{ x: 0, opacity: 1, scale: 1 }}
-          aria-label='toggle menu'
-          className='rounded-md border-none p-2 text-gray-700 outline-hidden focus:border focus:border-gray-400 dark:text-white'
+          // A fixed name plus aria-expanded tells screen readers whether the menu is open.
+          aria-controls='primary-navigation'
+          aria-expanded={navbar}
+          aria-label='Menu'
+          className='rounded-md border-none p-2 text-gray-700 dark:text-white'
           initial={{ x: 500, opacity: 0, scale: 0.5 }}
           transition={{ duration: 0.9 }}
+          type='button'
           onClick={() => setNavbar(!navbar)}
         >
           {navbar ? <X size={30} /> : <Menu size={30} />}
