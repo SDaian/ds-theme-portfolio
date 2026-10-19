@@ -13,13 +13,13 @@ export const SocialIcons = ({ className }: SocialIconsProps) => {
           <a
             key={item.name}
             aria-label={`Follow on ${item.name}`}
-            className='group relative transform rounded-full bg-gray-100 p-2 transition-all duration-300 hover:scale-110 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700'
+            className='group relative rounded-full bg-gray-100 p-2 transition-colors duration-150 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700'
             href={item.link}
             rel='noreferrer'
             target='_blank'
           >
             <Icon
-              className={`group-hover:text-brand-text dark:group-hover:text-brand-text text-gray-600 transition-colors duration-300 dark:text-gray-300 ${className}`}
+              className={`group-hover:text-brand-text dark:group-hover:text-brand-text text-gray-600 transition-colors duration-150 dark:text-gray-300 ${className}`}
               size={20}
             />
           </a>
