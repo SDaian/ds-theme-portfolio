@@ -5,6 +5,13 @@ import { Mail, MapPin, Phone } from 'lucide-react';
 
 import { Button } from '@/styles/components/ui/button';
 
+const EMAIL = 'scuarissid@gmail.com';
+const PHONE = '+34 641 936 070';
+
+// Same color as other links, so the address reads as something to click.
+const contactLinkClass =
+  'text-brand-text hover:text-brand-text-hover text-lg underline-offset-4 hover:underline';
+
 type Inputs = {
   name: string;
   email: string;
@@ -17,7 +24,7 @@ const ContactSection = () => {
 
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
     const { name, email, subject, message } = formData;
-    const mailtoUrl = `mailto:scuarissid@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Hi, my name is ${name} (${email}). ${message}`)}`;
+    const mailtoUrl = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Hi, my name is ${name} (${email}). ${message}`)}`;
 
     window.open(mailtoUrl, '_self');
   };
@@ -35,7 +42,9 @@ const ContactSection = () => {
           <div className='space-y-2'>
             <div className='flex items-center justify-center space-x-3'>
               <Phone className='contactIcon' />
-              <p className='text-lg'>+34 641 936 070</p>
+              <a className={contactLinkClass} href={`tel:${PHONE.replace(/\s/g, '')}`}>
+                {PHONE}
+              </a>
             </div>
 
             <div className='flex items-center justify-center space-x-3'>
@@ -45,7 +54,9 @@ const ContactSection = () => {
 
             <div className='flex items-center justify-center space-x-3'>
               <Mail className='contactIcon' />
-              <p className='text-lg'>scuarissid@gmail.com</p>
+              <a className={contactLinkClass} href={`mailto:${EMAIL}`}>
+                {EMAIL}
+              </a>
             </div>
           </div>
 
@@ -78,13 +89,18 @@ const ContactSection = () => {
               className='focus:ring-brand w-full rounded-lg border bg-white px-4 py-3 transition-colors focus:border-transparent dark:text-black'
               placeholder='Message'
             />
-            <div className='flex justify-end'>
+            {/* The form doesn't send anything itself: it hands the message to the
+                visitor's email app, so the label says exactly that. */}
+            <div className='flex flex-col gap-3 md:flex-row md:items-center md:justify-between'>
+              <p className='text-sm text-gray-600 dark:text-gray-400' id='contact-hint'>
+                {`This opens your email app with your message ready to send. No email app? Write to ${EMAIL}.`}
+              </p>
               <Button
-                aria-label='contact me'
+                aria-describedby='contact-hint'
                 className='bg-brand hover:bg-brand/80 text-brand-foreground w-full rounded-lg px-12 py-6 text-lg md:w-auto'
                 type='submit'
               >
-                Submit
+                Open in email app
               </Button>
             </div>
           </form>
