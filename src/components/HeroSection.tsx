@@ -22,25 +22,26 @@ const HeroSection = () => {
         {/* </div> */}
         {/* <div className='md:mt-2 md:w-3/5'> */}
         <div>
-          <h1 className='font-header mt-6 text-5xl font-extrabold tracking-tight md:mt-0 md:text-8xl'>
+          <h1 className='mt-6 text-5xl font-extrabold tracking-tight md:mt-0 md:text-8xl'>
             Hey, I&#39;m Daian<span className='text-brand'>.</span>
           </h1>
           <p className='mt-4 mb-6 sm:text-lg xl:text-2xl'>
-            I&#39;m a <span className='text-brand font-semibold'>Software Engineer </span>
+            I&#39;m a <span className='font-semibold'>Software Engineer </span>
             based in Madrid, Spain.
             <br />
             Turning ideas into visually stunning and performant web applications.
           </p>
-          <div className='flex justify-between gap-2 md:justify-start'>
+          {/* Wraps instead of overflowing when the two buttons don't fit side by side. */}
+          <div className='flex flex-wrap gap-3 md:justify-start'>
             {/* asChild renders the button styles onto the link itself: one real,
                 crawlable <a>, not a <button> nested inside an href-less <a>. */}
             <Button
               asChild
-              className='bg-brand hover:bg-brand/80 flex-1 cursor-pointer px-8 py-6 text-lg md:flex-initial'
+              className='bg-brand hover:bg-brand/80 text-brand-foreground flex-1 cursor-pointer px-8 py-6 text-lg md:flex-initial'
               size='lg'
             >
               <Link href='#experience' to='experience'>
-                View My Work
+                View my work
                 <ArrowRight className='ml-2 h-4 w-4' />
               </Link>
             </Button>
@@ -52,7 +53,7 @@ const HeroSection = () => {
               variant='outline'
             >
               <Link href='#contact' to='contact'>
-                Get In Touch
+                Get in touch
               </Link>
             </Button>
             {/* <Link
@@ -93,7 +94,7 @@ const HeroSection = () => {
       </div>
       <div className='hidden flex-row justify-center md:flex'>
         <Link activeClass='active' aria-label='Scroll to About' href='#about' to='about'>
-          <CircleArrowDown aria-hidden='true' className='animate-bounce' size={35} />
+          <CircleArrowDown aria-hidden='true' className='motion-safe:animate-bounce' size={35} />
         </Link>
       </div>
     </section>

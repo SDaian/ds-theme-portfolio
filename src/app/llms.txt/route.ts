@@ -10,12 +10,6 @@ import { SocialItems } from '@/components/Shared/SocialIcons/Data/SocialItems';
 
 export const dynamic = 'force-static';
 
-const SOCIAL_LABELS: Record<string, string> = {
-  Github: 'GitHub',
-  Linkedin: 'LinkedIn',
-  Twitter: 'X',
-};
-
 export function GET() {
   const posts = getAllBlogPosts().filter((post) => !post.noindex);
 
@@ -39,7 +33,7 @@ export function GET() {
     '## Links',
     '',
     `- Website: ${SITE_URL}`,
-    ...SocialItems.map((item) => `- ${SOCIAL_LABELS[item.name] ?? item.name}: ${item.link}`),
+    ...SocialItems.map((item) => `- ${item.name}: ${item.link}`),
     '',
     // Rendered once per build, so this is the date of the last deploy.
     `Last updated: ${new Date().toISOString().slice(0, 10)}`,

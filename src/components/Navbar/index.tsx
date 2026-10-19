@@ -31,7 +31,7 @@ const Navbar = () => {
         <SocialIcons className={'text-black'} />
       </nav> */}
 
-      <nav className='flex w-full grow basis-0 md:justify-center'>
+      <nav className='flex w-full grow basis-0 md:justify-center' id='primary-navigation'>
         <NavItems navbar={navbar} setNavbar={setNavbar} />
       </nav>
       <motion.div
@@ -41,7 +41,7 @@ const Navbar = () => {
         transition={{ duration: 0.9 }}
       >
         <Button
-          className='bg-brand hover:bg-brand-lighter px-8 py-4 text-white'
+          className='bg-brand hover:bg-brand-lighter text-brand-foreground px-8 py-4'
           variant='default'
           onClick={() => window.open('/resume-daian-scuarissi.pdf', '_blank')}
         >

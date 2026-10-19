@@ -22,7 +22,7 @@ const skills: Skill[] = [
 
 const ProfileImage = () => (
   <div className='flex flex-col items-center md:items-start'>
-    <h3 className='mb-6 text-center text-2xl font-bold md:text-left'>My (dreaming) Setup</h3>
+    <h3 className='mb-6 text-center text-2xl font-bold md:text-left'>My (dreaming) setup</h3>
     {/* width/height set the aspect ratio; h-auto lets it shrink on phones without shifting. */}
     <Image
       alt='Daian Scuarissi setup image'
@@ -34,24 +34,22 @@ const ProfileImage = () => (
   </div>
 );
 
+// Static labels: a list item, not a control, so it takes no Tab stop and
+// doesn't react to hover as if it could be clicked.
 const SkillBadge = ({ skill }: { skill: Skill }) => (
-  <span
-    className='hover:bg-brand mt-2 mr-2 cursor-pointer rounded-md bg-gray-200 px-4 py-2 font-medium text-gray-700 transition-all duration-200 hover:scale-105 hover:text-white dark:bg-gray-700 dark:text-gray-200'
-    role='button'
-    tabIndex={0}
-  >
+  <li className='mt-2 mr-2 rounded-md bg-gray-200 px-4 py-2 font-medium text-gray-700 dark:bg-gray-700 dark:text-gray-200'>
     {skill.name}
-  </span>
+  </li>
 );
 
 const SkillsSection = () => (
   <div className='flex flex-col items-center md:items-start'>
-    <h3 className='mb-6 text-center text-2xl font-bold md:text-left'>My Skills</h3>
-    <div className='flex flex-wrap justify-center md:justify-start' role='list'>
+    <h3 className='mb-6 text-center text-2xl font-bold md:text-left'>My skills</h3>
+    <ul className='flex flex-wrap justify-center md:justify-start'>
       {skills.map((skill, idx) => (
         <SkillBadge key={`${skill.name}-${idx}`} skill={skill} />
       ))}
-    </div>
+    </ul>
   </div>
 );
 
@@ -63,30 +61,23 @@ const AboutContent = () => (
 
     <div className='space-y-4 text-center md:text-left'>
       <p className='leading-relaxed font-medium'>
-        Hey there, I&apos;m <span className='text-brand font-bold'>Daian Scuarissi</span>, a{' '}
-        <span className='text-brand font-semibold'>software engineer</span> with over 7 years of
-        experience developing applications and web interfaces. My expertise lies in frontend
-        technologies, and I have a passion for creating engaging and intuitive user experiences.
+        Hey there, I&apos;m <span className='font-bold'>Daian Scuarissi</span>, a{' '}
+        <span className='font-semibold'>software engineer</span> with over 7 years of experience
+        developing applications and web interfaces. My expertise lies in frontend technologies, and
+        I have a passion for creating engaging and intuitive user experiences.
       </p>
 
       <p className='leading-relaxed font-medium'>
-        I specialize in modern frontend frameworks like{' '}
-        <span className='text-brand font-semibold'>React</span> and{' '}
-        <span className='text-brand font-semibold'>Angular</span>, building responsive web
-        applications and dynamic user interfaces. I&apos;m always{' '}
-        <span className='text-brand underline decoration-2 underline-offset-4'>
-          learning and improving my skills
-        </span>{' '}
-        to stay current with the latest technologies.
+        I specialize in modern frontend frameworks like <span className='font-semibold'>React</span>{' '}
+        and <span className='font-semibold'>Angular</span>, building responsive web applications and
+        dynamic user interfaces. I&apos;m always learning and improving my skills to stay current
+        with the latest technologies.
       </p>
 
       <p className='leading-relaxed font-medium'>
         Looking ahead, I&apos;m excited to continue growing as a software engineer and tackle
-        challenging projects that showcase my expertise.{' '}
-        <span className='underline decoration-2 underline-offset-4'>
-          I&apos;m always open to new opportunities and eager to collaborate
-        </span>{' '}
-        with other passionate professionals.
+        challenging projects that showcase my expertise. I&apos;m always open to new opportunities
+        and eager to collaborate with other passionate professionals.
       </p>
     </div>
   </div>
@@ -98,7 +89,7 @@ const AboutSection = () => {
       <div className='container mx-auto py-16 md:py-24'>
         <header className='mb-16 text-center'>
           <h2 className='mb-4 text-4xl font-bold md:text-5xl' id='about-heading'>
-            About Me
+            About me
           </h2>
           <div className='bg-brand mx-auto h-1 w-16 rounded-full' />
         </header>

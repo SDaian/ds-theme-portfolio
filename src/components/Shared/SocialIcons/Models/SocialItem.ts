@@ -8,9 +8,10 @@ export type SocialItem = {
 
 export const returnLibraryIcons = (lib: string): LucideIcon => {
   const LibraryIcons: { [key: string]: LucideIcon } = {
-    Github: Github,
-    Twitter: Twitter,
-    Linkedin: Linkedin,
+    GitHub: Github,
+    // lucide has no X logo, so X keeps the bird icon.
+    X: Twitter,
+    LinkedIn: Linkedin,
   };
 
   return LibraryIcons[lib];

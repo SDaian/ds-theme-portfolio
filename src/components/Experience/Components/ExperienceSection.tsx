@@ -48,18 +48,18 @@ const ExperienceSection = () => {
                       <div className='content ribbon relative grow rounded-xl bg-slate-200 p-4 md:w-2/5 md:grow-0'>
                         <div className='mb-2 flex flex-col justify-between gap-0.5 md:flex-row'>
                           <a
-                            aria-label={`company URL: ${company}`}
+                            aria-label={`${company} website (opens in a new tab)`}
                             href={companyUrl}
                             rel='noreferrer'
                             target='_blank'
                           >
-                            <h3 className='flex cursor-pointer items-center gap-2 text-xl font-semibold text-blue-600 md:mb-0'>
+                            <h3 className='text-brand-on-light flex cursor-pointer items-center gap-2 text-xl font-semibold underline-offset-4 hover:underline md:mb-0'>
                               {company}
                               <Link />
                             </h3>
                           </a>
                           <div className='mb-1 flex items-center justify-between md:mb-0'>
-                            <span className='text-sm text-slate-500 md:text-base'>
+                            <span className='text-sm text-slate-600 md:text-base'>
                               {from} - {actual ? 'Present' : to}
                             </span>
                           </div>
@@ -71,8 +71,9 @@ const ExperienceSection = () => {
                             {client && <span>| Client: {client}</span>}
                           </span>
                           <button
-                            aria-label={expandedItems.has(i) ? 'Hide details' : 'Show details'}
-                            className='ml-2 rounded-md p-1 transition-colors duration-200 hover:bg-slate-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 focus:outline-none'
+                            // The company plus client tells the seven toggles apart in a screen reader's list.
+                            aria-label={`${expandedItems.has(i) ? 'Hide' : 'Show'} details for ${company}${client ? `, ${client}` : ''}`}
+                            className='ml-2 rounded-md p-1 transition-colors duration-200 hover:bg-slate-300'
                             onClick={() => toggleExpanded(i)}
                           >
                             {expandedItems.has(i) ? (

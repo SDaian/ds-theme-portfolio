@@ -17,7 +17,7 @@ const Footer = () => {
               <SocialIcons />
             </div>
 
-            <p className='text-xs text-gray-400 dark:text-gray-500'>
+            <p className='text-xs text-gray-500 dark:text-gray-400'>
               Built with ❤️ using Next.js & Tailwind CSS
             </p>
           </div>

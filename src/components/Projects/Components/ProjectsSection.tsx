@@ -31,7 +31,7 @@ const ProjectsSection = () => {
 
         <div className='mt-14 text-center'>
           <Link
-            className='text-brand hover:text-brand-lighter inline-flex items-center gap-2 font-semibold transition-colors'
+            className='text-brand-text hover:text-brand-text-hover inline-flex items-center gap-2 font-semibold transition-colors'
             href='/projects'
           >
             See all projects
