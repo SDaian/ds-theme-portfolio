@@ -35,11 +35,12 @@ export const Logo = ({
       initial={{ x: -500, opacity: 0, scale: 0.5 }}
       transition={{ duration: 0.9 }}
     >
-      <h2 className='text-2xl font-bold'>
+      {/* A styled span, not a heading: the logo isn't a section of the page. */}
+      <span className='block text-2xl font-bold'>
         <span className='lg:hidden'>DS</span>
         <span className='hidden lg:inline-block'>Daian Scuarissi</span>
         <span className='text-brand'>.</span>
-      </h2>
+      </span>
     </motion.div>
   );
 
