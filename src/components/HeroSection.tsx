@@ -31,7 +31,8 @@ const HeroSection = () => {
             <br />
             Turning ideas into visually stunning and performant web applications.
           </p>
-          <div className='flex justify-between gap-2 md:justify-start'>
+          {/* Wraps instead of overflowing when the two buttons don't fit side by side. */}
+          <div className='flex flex-wrap gap-3 md:justify-start'>
             {/* asChild renders the button styles onto the link itself: one real,
                 crawlable <a>, not a <button> nested inside an href-less <a>. */}
             <Button
