@@ -12,6 +12,13 @@ const PHONE = '+34 641 936 070';
 const contactLinkClass =
   'text-brand-text hover:text-brand-text-hover text-lg underline-offset-4 hover:underline';
 
+// Visible labels, not placeholders: a placeholder disappears as soon as you type.
+// Required fields use the browser's own validation, which focuses and
+// announces the first empty one.
+const labelClass = 'text-sm font-medium';
+const fieldClass =
+  'focus:ring-brand w-full rounded-lg border bg-white px-4 py-3 transition-colors placeholder:text-gray-600 focus:border-transparent dark:text-black';
+
 type Inputs = {
   name: string;
   email: string;
@@ -61,34 +68,63 @@ const ContactSection = () => {
           </div>
 
           <form
-            className='mx-auto flex w-full flex-col space-y-2 md:w-4/5'
+            className='mx-auto flex w-full flex-col gap-4 md:w-4/5'
             onSubmit={handleSubmit(onSubmit)}
           >
-            <div className='flex flex-col gap-2 md:flex-row md:gap-0 md:space-x-2'>
+            <div className='flex flex-col gap-4 md:flex-row'>
+              <div className='flex w-full flex-col gap-1'>
+                <label className={labelClass} htmlFor='contact-name'>
+                  Name
+                </label>
+                <input
+                  {...register('name')}
+                  required
+                  autoComplete='name'
+                  className={fieldClass}
+                  id='contact-name'
+                  type='text'
+                />
+              </div>
+              <div className='flex w-full flex-col gap-1'>
+                <label className={labelClass} htmlFor='contact-email'>
+                  Email
+                </label>
+                <input
+                  {...register('email')}
+                  required
+                  autoComplete='email'
+                  className={fieldClass}
+                  id='contact-email'
+                  placeholder='name@example.com'
+                  type='email'
+                />
+              </div>
+            </div>
+            <div className='flex flex-col gap-1'>
+              <label className={labelClass} htmlFor='contact-subject'>
+                Subject
+                <span className='font-normal text-gray-600 dark:text-gray-400'>
+                  {' (optional)'}
+                </span>
+              </label>
               <input
-                {...register('name')}
-                className='focus:ring-brand w-full rounded-lg border bg-white px-4 py-3 transition-colors placeholder:text-gray-600 focus:border-transparent dark:text-black'
-                placeholder='Name'
+                {...register('subject')}
+                className={fieldClass}
+                id='contact-subject'
                 type='text'
               />
-              <input
-                {...register('email')}
-                className='focus:ring-brand w-full rounded-lg border bg-white px-4 py-3 transition-colors placeholder:text-gray-600 focus:border-transparent dark:text-black'
-                placeholder='Email'
-                type='email'
+            </div>
+            <div className='flex flex-col gap-1'>
+              <label className={labelClass} htmlFor='contact-message'>
+                Message
+              </label>
+              <textarea
+                {...register('message')}
+                required
+                className={fieldClass}
+                id='contact-message'
               />
             </div>
-            <input
-              {...register('subject')}
-              className='focus:ring-brand w-full rounded-lg border bg-white px-4 py-3 transition-colors placeholder:text-gray-600 focus:border-transparent dark:text-black'
-              placeholder='Subject'
-              type='text'
-            />
-            <textarea
-              {...register('message')}
-              className='focus:ring-brand w-full rounded-lg border bg-white px-4 py-3 transition-colors placeholder:text-gray-600 focus:border-transparent dark:text-black'
-              placeholder='Message'
-            />
             {/* The form doesn't send anything itself: it hands the message to the
                 visitor's email app, so the label says exactly that. */}
             <div className='flex flex-col gap-3 md:flex-row md:items-center md:justify-between'>
