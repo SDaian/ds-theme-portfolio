@@ -53,13 +53,13 @@ const ExperienceSection = () => {
                             rel='noreferrer'
                             target='_blank'
                           >
-                            <h3 className='flex cursor-pointer items-center gap-2 text-xl font-semibold text-blue-600 md:mb-0'>
+                            <h3 className='flex cursor-pointer items-center gap-2 text-xl font-semibold text-blue-700 md:mb-0'>
                               {company}
                               <Link />
                             </h3>
                           </a>
                           <div className='mb-1 flex items-center justify-between md:mb-0'>
-                            <span className='text-sm text-slate-500 md:text-base'>
+                            <span className='text-sm text-slate-600 md:text-base'>
                               {from} - {actual ? 'Present' : to}
                             </span>
                           </div>

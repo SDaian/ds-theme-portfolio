@@ -67,26 +67,26 @@ const ContactSection = () => {
             <div className='flex flex-col gap-2 md:flex-row md:gap-0 md:space-x-2'>
               <input
                 {...register('name')}
-                className='focus:ring-brand w-full rounded-lg border bg-white px-4 py-3 transition-colors focus:border-transparent dark:text-black'
+                className='focus:ring-brand w-full rounded-lg border bg-white px-4 py-3 transition-colors placeholder:text-gray-600 focus:border-transparent dark:text-black'
                 placeholder='Name'
                 type='text'
               />
               <input
                 {...register('email')}
-                className='focus:ring-brand w-full rounded-lg border bg-white px-4 py-3 transition-colors focus:border-transparent dark:text-black'
+                className='focus:ring-brand w-full rounded-lg border bg-white px-4 py-3 transition-colors placeholder:text-gray-600 focus:border-transparent dark:text-black'
                 placeholder='Email'
                 type='email'
               />
             </div>
             <input
               {...register('subject')}
-              className='focus:ring-brand w-full rounded-lg border bg-white px-4 py-3 transition-colors focus:border-transparent dark:text-black'
+              className='focus:ring-brand w-full rounded-lg border bg-white px-4 py-3 transition-colors placeholder:text-gray-600 focus:border-transparent dark:text-black'
               placeholder='Subject'
               type='text'
             />
             <textarea
               {...register('message')}
-              className='focus:ring-brand w-full rounded-lg border bg-white px-4 py-3 transition-colors focus:border-transparent dark:text-black'
+              className='focus:ring-brand w-full rounded-lg border bg-white px-4 py-3 transition-colors placeholder:text-gray-600 focus:border-transparent dark:text-black'
               placeholder='Message'
             />
             {/* The form doesn't send anything itself: it hands the message to the
